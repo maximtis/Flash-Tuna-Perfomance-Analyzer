@@ -36,7 +36,7 @@ namespace FlashTuna.Core.Common.Metric
         public virtual void Start()
         {
             isRunning = true;
-            startTime = DateTime.Now;
+            _startTime = DateTime.Now;
             _stopwatch.Start();
         }
 
@@ -44,7 +44,7 @@ namespace FlashTuna.Core.Common.Metric
         {
             isUsed = true;
             isRunning = false;
-            endTime = DateTime.Now;
+            _endTime = DateTime.Now;
             _stopwatch.Stop();
         }
 
