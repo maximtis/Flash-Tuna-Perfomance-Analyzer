@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\PerfomanceMetrics\ExceptionMetric\" />
     <Folder Include="Common\PerfomanceMetrics\TaskMetric\" />
     <Folder Include="Modules\Errors\" />
     <Folder Include="Modules\Usage\" />
