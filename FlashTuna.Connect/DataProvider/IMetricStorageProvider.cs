@@ -7,6 +7,6 @@ namespace FlashTuna.Connect.DataProvider
 {
     public interface IMetricStorageProvider
     {
-        IMetricStorage MetricStorage { get; set; }
+        IMetricStorage MetricStorage { get; }
     }
 }
