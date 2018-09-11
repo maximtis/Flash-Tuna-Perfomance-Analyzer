@@ -1,14 +1,20 @@
-﻿using System;
+﻿using FlashTuna.Connect.DataProvider;
+using FlashTuna.Core.Common.Metric.Interfaces;
+using FlashTuna.Core.Common.PerfomanceMetrics;
+using FlashTuna.Data.Storage;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-namespace FlashTuna.TimeLine;
+namespace FlashTuna.TimeLine { 
 
     public sealed class TimeLine : ITimeLine
     {
         IMetricStorageProvider _metricStorageProvider;
+        IMetricStorage _storage;
         public TimeLine(IMetricStorageProvider storageProvider){
             _metricStorageProvider = storageProvider;
+            _storage = storageProvider.MetricStorage;
         }
 
         public Task BoundMetric(IMetric metric)

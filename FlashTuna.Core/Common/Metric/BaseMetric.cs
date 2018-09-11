@@ -23,15 +23,15 @@ namespace FlashTuna.Core.Common.Metric
             ModuleName = moduleName;
             MetricType = metricType;
         }
+
         public long MetricId { get; set; }
-        public string MethodName { get; set; }
-        public string Tag { get; set; }
-        public string ModuleName { get; set; }
         public bool isRunning { get; set; }
         public bool isUsed { get ; set ; }
         public MetricTypes MetricType { get; }
         public ITimeLine BoundedTimeLine { get; }
-
+        public string MethodName { get; set; }
+        public string Tag { get; set; }
+        public string ModuleName { get; set; }
         protected Stopwatch _stopwatch;
         protected DateTime _startTime;
         protected DateTime _endTime;
