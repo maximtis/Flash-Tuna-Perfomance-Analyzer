@@ -1,5 +1,4 @@
-﻿using FlashTuna.Core.Modules.TimeLine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +13,5 @@ namespace FlashTuna.Core.Common.Metric.Interfaces
         void Start();
         void Stop();
         bool isRunning { get; set; }
-        bool isUsed { get; set; }
     }
 }

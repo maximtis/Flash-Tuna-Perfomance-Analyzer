@@ -10,9 +10,6 @@
     <Folder Include="Modules\Speed\" />
     <Folder Include="Modules\Tasks\" />
     <Folder Include="Modules\Perfomance\" />
-    <Folder Include="Services\Analysis\" />
-    <Folder Include="Services\Runtime\" />
-    <Folder Include="Services\Reporting\" />
   </ItemGroup>
 
 </Project>

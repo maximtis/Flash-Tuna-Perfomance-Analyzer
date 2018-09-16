@@ -15,12 +15,5 @@ namespace FlashTuna.Data.Storage
 
         Task AddMetricResult(IMetricResult result);
         Task<IEnumerable<IMetric>> GetMetrics();
-        Task<IEnumerable<IMetric>> GetMetrics(DateTime from, DateTime to);
-        Task<IEnumerable<IMetric>> GetMetrics(string tag, DateTime from, DateTime to);
-        Task<IEnumerable<IMetric>> GetMetrics(MetricTypes metricType,  string tag, DateTime from, DateTime to);
-        Task<IEnumerable<IMetric>> GetMetrics(DateTime from, DateTime to, string methodName);
-        Task<IEnumerable<IMetric>> GetMetrics(DateTime from, DateTime to, string methodName,string moduleName);
-        Task<IEnumerable<IMetric>> GetMetrics(DateTime from, DateTime to, MetricTypes metricType, string methodName);
-        Task<IEnumerable<IMetric>> GetMetrics(DateTime from, DateTime to, MetricTypes metricType, string methodName, string modeuleName);
     }
 }

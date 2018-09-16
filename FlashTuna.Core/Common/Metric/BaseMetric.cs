@@ -1,5 +1,6 @@
 ﻿using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics;
+using FlashTuna.Core.Common.TimeLine;
 using FlashTuna.Core.Modules.TimeLine;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,6 @@ namespace FlashTuna.Core.Common.Metric
 
         public long MetricId { get; set; }
         public bool isRunning { get; set; }
-        public bool isUsed { get ; set ; }
         public MetricTypes MetricType { get; }
         public ITimeLine BoundedTimeLine { get; }
         public string MethodName { get; set; }
@@ -40,7 +40,6 @@ namespace FlashTuna.Core.Common.Metric
         {
             if (isRunning)
             {
-                isUsed = true;
                 isRunning = false;
                 _endTime = DateTime.Now;
                 _stopwatch.Stop();
