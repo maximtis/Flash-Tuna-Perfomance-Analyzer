@@ -31,3 +31,4 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
             throw new NotImplementedException();
         }
     }
+}

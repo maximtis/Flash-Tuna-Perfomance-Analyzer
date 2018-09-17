@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FlashTuna.Connect\FlashTuna.Connect.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Analysis\" />
     <Folder Include="Reporting\" />
     <Folder Include="Runtime\" />

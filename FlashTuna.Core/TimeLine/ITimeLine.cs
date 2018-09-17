@@ -3,7 +3,7 @@ using FlashTuna.Core.Common.PerfomanceMetrics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FlashTuna.Core.Common.TimeLine
+namespace FlashTuna.Core.TimeLine
 {
     public interface ITimeLine
     {
