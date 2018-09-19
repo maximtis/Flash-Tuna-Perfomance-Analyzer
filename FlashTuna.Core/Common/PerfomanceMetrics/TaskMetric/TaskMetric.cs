@@ -1,6 +1,6 @@
 ﻿using FlashTuna.Core.Common.Metric;
 using FlashTuna.Core.Common.Metric.Interfaces;
-using FlashTuna.Core.Modules.TimeLine;
+using FlashTuna.Core.TimeLine;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +8,7 @@ using System.Text;
 namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
 {
 
-    public class TaskMetric : BaseMetric
+    public class TaskMetric : BaseMetric 
     {
         public string ExceptionName { get; set; }
         public string ExceptioType { get; set; }
