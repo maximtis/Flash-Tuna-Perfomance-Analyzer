@@ -2,6 +2,9 @@
 using System;
 using System.Threading;
 using System.Linq;
+using FlashTuna.Core.Common.Metric.Interfaces;
+using FlashTuna.Core.Common.Metric.MetricsFactory;
+using FlashTuna.Core.TimeLine;
 
 namespace DemoApp
 {
@@ -20,11 +23,11 @@ namespace DemoApp
         public Program()
         {
             var _perfomanceMethods = this.GetType().GetMethods().Where(x => x.GetCustomAttributes(typeof(PerfomanceMetricAttribute), true).Any());
-            _perfomanceMethods.First().Name
         }
         static void Main(string[] args)
         {
-            IMetric mainTest = MetricsFactory.CreateMetric("Main", "test", "Demo Project");
+            ITimeLine tl = new TimeLine(null);
+            IMetric mainTest = MetricsFactory.CreateMetric(tl,"Main", "test", "Demo Project");
             
             Console.WriteLine("Demo App started...");
 

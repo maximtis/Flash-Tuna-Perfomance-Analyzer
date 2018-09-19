@@ -1,7 +1,7 @@
 ﻿using FlashTuna.Core.Common.Metric;
 using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric;
-using FlashTuna.Core.Modules.TimeLine;
+using FlashTuna.Core.TimeLine;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,11 +20,7 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
 
         public override IMetricResult GetResult()
         {
-            if (!isUsed)
-            {
-                throw new InvalidOperationException($"Metric of {MethodName} method not used yet!");
-            }
-            if (!isRunning)
+            if (isRunning)
             {
                 throw new InvalidOperationException($"Metric of {MethodName} is not finished yet!");
             }

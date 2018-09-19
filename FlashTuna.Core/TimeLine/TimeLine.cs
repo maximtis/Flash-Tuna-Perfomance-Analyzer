@@ -1,5 +1,4 @@
-﻿using FlashTuna.Connect.DataProvider;
-using FlashTuna.Core.Common.Metric.Interfaces;
+﻿using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics;
 using FlashTuna.Core.DataConnector;
 using System;
