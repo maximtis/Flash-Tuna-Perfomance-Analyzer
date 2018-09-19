@@ -22,6 +22,7 @@ namespace FlashTuna.Core.Common.Metric
             Tag = tag;
             ModuleName = moduleName;
             MetricType = metricType;
+            _stopwatch = new Stopwatch();
         }
 
         public long MetricId { get; set; }
