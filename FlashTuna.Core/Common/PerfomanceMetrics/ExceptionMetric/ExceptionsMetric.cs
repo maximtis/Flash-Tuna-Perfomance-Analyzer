@@ -26,13 +26,14 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.ExceptionMetric
 
             if (isRunning)
             {
-                throw new InvalidOperationException($"Metric of {MethodName} is not finished yet!");
-            }
-            return new ExceptionMetricResult(ExceptionName,
+                return new ExceptionMetricResult(ExceptionName,
                                              ExceptioType,
                                              _startTime,
                                              _endTime,
                                              _stopwatch.ElapsedMilliseconds);
+            }
+            return null;
+            
         }
 
 

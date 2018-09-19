@@ -20,13 +20,14 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
 
         public override IMetricResult GetResult()
         {
-            if (isRunning)
+            if (!isRunning)
             {
-                throw new InvalidOperationException($"Metric of {MethodName} is not finished yet!");
-            }
-            return new OperationMetricResult(_startTime,
-                                             _endTime, 
+                return new OperationMetricResult(_startTime,
+                                             _endTime,
                                              _stopwatch.ElapsedMilliseconds);
+            }
+            return null;
+            
         }
 
         public override string ToMetricString()

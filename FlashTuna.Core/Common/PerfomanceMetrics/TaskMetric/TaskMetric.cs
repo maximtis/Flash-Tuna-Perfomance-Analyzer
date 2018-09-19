@@ -1,5 +1,6 @@
 ﻿using FlashTuna.Core.Common.Metric;
 using FlashTuna.Core.Common.Metric.Interfaces;
+using FlashTuna.Core.Modules.Tasks;
 using FlashTuna.Core.TimeLine;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
 
     public class TaskMetric : BaseMetric 
     {
-        public string ExceptionName { get; set; }
-        public string ExceptioType { get; set; }
+        public string Session { get { return SessionIdentifier.ToSessionString(); } }
+        public int ParallelTaskCount { get { return TaskSessionMetadata.CurrentSession.ParallelTaskCount; } }
 
         public TaskMetric(ITimeLine timeLine,
                               string methodName = "Undefined Task",
@@ -19,16 +20,38 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
                               string moduleName = "Undefned") :
                               base(MetricTypes.Task, timeLine, methodName, tag, moduleName)
         {
+
         }
 
         public override IMetricResult GetResult()
         {
-            throw new NotImplementedException();
+            if (!isRunning)
+            {
+                return new TaskMetricResult(MetricId,
+                                            Session,
+                                            ParallelTaskCount,
+                                            _startTime,
+                                            _endTime,
+                                            _stopwatch.ElapsedMilliseconds);
+            }
+            return null;
+            
+        }
+        public override void Start()
+        {
+            base.Start();
+            TaskSessionMetadata.CurrentSession.ParallelTaskCount++;
+        }
+        public override void Stop()
+        {
+            base.Stop();
+            TaskSessionMetadata.CurrentSession.ParallelTaskCount--;
         }
 
         public override string ToMetricString()
         {
-            throw new NotImplementedException();
+            return $"{_startTime.ToShortTimeString()} : {_endTime.ToShortTimeString()} ({_stopwatch.ElapsedMilliseconds})";
+
         }
     }
 }
