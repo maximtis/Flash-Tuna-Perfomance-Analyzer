@@ -8,8 +8,13 @@
     <Folder Include="Modules\Errors\" />
     <Folder Include="Modules\Usage\" />
     <Folder Include="Modules\Speed\" />
-    <Folder Include="Modules\Tasks\" />
     <Folder Include="Modules\Perfomance\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.EntityFrameworkCore">
+      <HintPath>..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore\2.0.3\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

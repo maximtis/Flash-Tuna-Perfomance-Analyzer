@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric
 {
-    class OperationMetricResult : IMetricResult
+    public class OperationMetricResult : IMetricResult
     {
         DateTime _startTime, _endTime;
         long _milliseconds;
