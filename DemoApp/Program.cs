@@ -1,7 +1,7 @@
-﻿using FlashTuna.Core.Common.Metric.Interfaces;
-using FlashTuna.Core.Common.Metric.MetricsFactory;
+﻿using FlashTuna.Attributes;
 using System;
 using System.Threading;
+using System.Linq;
 
 namespace DemoApp
 {
@@ -16,6 +16,11 @@ namespace DemoApp
                 Thread.Sleep(1000);
                 i--;
             }
+        }
+        public Program()
+        {
+            var _perfomanceMethods = this.GetType().GetMethods().Where(x => x.GetCustomAttributes(typeof(PerfomanceMetricAttribute), true).Any());
+            _perfomanceMethods.First().Name
         }
         static void Main(string[] args)
         {

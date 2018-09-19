@@ -7,13 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashTunaPerfomanceAnalyzer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashTuna.Core", "FlashTuna.Core\FlashTuna.Core.csproj", "{3191A1A2-CC31-4877-8931-0D4FCBD0A963}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashTuna.Data", "FlashTuna.Data\FlashTuna.Data.csproj", "{B8D6C187-E0D0-4D93-BEF5-AB8EB5526053}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashTuna.Connect", "FlashTuna.Connect\FlashTuna.Connect.csproj", "{EF8BC3DB-C56B-489A-80C6-94353977640E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp", "DemoApp\DemoApp.csproj", "{C3AB25DC-2A0C-4574-888A-88BEA92636D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashTuna.TimeLine", "FlashTuna.TimeLine\FlashTuna.TimeLine.csproj", "{02C04AE4-F759-4B9E-BAD2-759E085FA0DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashTuna.Service", "FlashTuna.Services\FlashTuna.Service.csproj", "{0AE43573-29EA-4E00-8C5A-BD86903FD12C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashTuna.Attributes", "FlashTuna.Attributes\FlashTuna.Attributes.csproj", "{80BDE2B4-9268-4898-9159-038F3C205570}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,22 +27,18 @@ Global
 		{3191A1A2-CC31-4877-8931-0D4FCBD0A963}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3191A1A2-CC31-4877-8931-0D4FCBD0A963}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3191A1A2-CC31-4877-8931-0D4FCBD0A963}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B8D6C187-E0D0-4D93-BEF5-AB8EB5526053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8D6C187-E0D0-4D93-BEF5-AB8EB5526053}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8D6C187-E0D0-4D93-BEF5-AB8EB5526053}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8D6C187-E0D0-4D93-BEF5-AB8EB5526053}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF8BC3DB-C56B-489A-80C6-94353977640E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF8BC3DB-C56B-489A-80C6-94353977640E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF8BC3DB-C56B-489A-80C6-94353977640E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF8BC3DB-C56B-489A-80C6-94353977640E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3AB25DC-2A0C-4574-888A-88BEA92636D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3AB25DC-2A0C-4574-888A-88BEA92636D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3AB25DC-2A0C-4574-888A-88BEA92636D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3AB25DC-2A0C-4574-888A-88BEA92636D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{02C04AE4-F759-4B9E-BAD2-759E085FA0DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02C04AE4-F759-4B9E-BAD2-759E085FA0DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02C04AE4-F759-4B9E-BAD2-759E085FA0DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02C04AE4-F759-4B9E-BAD2-759E085FA0DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AE43573-29EA-4E00-8C5A-BD86903FD12C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AE43573-29EA-4E00-8C5A-BD86903FD12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AE43573-29EA-4E00-8C5A-BD86903FD12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AE43573-29EA-4E00-8C5A-BD86903FD12C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80BDE2B4-9268-4898-9159-038F3C205570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80BDE2B4-9268-4898-9159-038F3C205570}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80BDE2B4-9268-4898-9159-038F3C205570}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80BDE2B4-9268-4898-9159-038F3C205570}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

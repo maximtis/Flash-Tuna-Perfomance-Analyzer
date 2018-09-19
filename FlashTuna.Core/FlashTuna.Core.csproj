@@ -5,15 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\PerfomanceMetrics\TaskMetric\" />
     <Folder Include="Modules\Errors\" />
     <Folder Include="Modules\Usage\" />
     <Folder Include="Modules\Speed\" />
     <Folder Include="Modules\Tasks\" />
     <Folder Include="Modules\Perfomance\" />
-    <Folder Include="Services\Analysis\" />
-    <Folder Include="Services\Runtime\" />
-    <Folder Include="Services\Reporting\" />
   </ItemGroup>
 
 </Project>

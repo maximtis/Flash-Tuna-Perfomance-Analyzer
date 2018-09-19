@@ -1,11 +1,9 @@
 ﻿using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace FlashTuna.Core.Modules.TimeLine
+namespace FlashTuna.Core.TimeLine
 {
     public interface ITimeLine
     {

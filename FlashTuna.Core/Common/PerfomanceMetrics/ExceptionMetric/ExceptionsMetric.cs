@@ -1,31 +1,44 @@
 ﻿using FlashTuna.Core.Common.Metric;
 using FlashTuna.Core.Common.Metric.Interfaces;
+using FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric;
+using FlashTuna.Core.TimeLine;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FlashTuna.Core.Common.PerfomanceMetrics.ExceptionMetric
 {
-    public class ExceptionsMetric : BaseMetric
+    public class ExceptionMetric : BaseMetric
     {
         public string ExceptionName { get; set; }
         public string ExceptioType { get; set; }
 
-        public ExceptionsMetric(string methodName = "Undefined Exception",
+        public ExceptionMetric(ITimeLine timeLine, 
+                              string methodName = "Undefined Exception",
                               string tag = "Operation",
                               string moduleName = "Undefned") :
-                              base(MetricTypes.Exception, methodName, tag, moduleName)
+                              base(MetricTypes.Exception, timeLine, methodName, tag, moduleName)
         {
         }
 
         public override IMetricResult GetResult()
         {
-            throw new NotImplementedException();
+
+            if (isRunning)
+            {
+                throw new InvalidOperationException($"Metric of {MethodName} is not finished yet!");
+            }
+            return new ExceptionMetricResult(ExceptionName,
+                                             ExceptioType,
+                                             _startTime,
+                                             _endTime,
+                                             _stopwatch.ElapsedMilliseconds);
         }
+
 
         public override string ToMetricString()
         {
-            throw new NotImplementedException();
+            return $"{_startTime.ToShortTimeString()} : {_endTime.ToShortTimeString()} ({_stopwatch.ElapsedMilliseconds})";
         }
     }
 }
