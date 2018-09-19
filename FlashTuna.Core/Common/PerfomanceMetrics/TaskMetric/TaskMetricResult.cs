@@ -6,13 +6,19 @@ using System.Text;
 namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
 {
 
-    class TaskMetricResult : IMetricResult
+    public class TaskMetricResult : IMetricResult
     {
+        public string Session { get; set; }
+        public int ParallelTaskCount { get; set; }
+
         DateTime _startTime, _endTime;
         long _milliseconds;
 
-        public TaskMetricResult(DateTime startTime, DateTime endTime, long milliseconds)
+        public TaskMetricResult(long metricId,string session,int taskCount,DateTime startTime, DateTime endTime, long milliseconds)
         {
+            MetricId = metricId;
+            Session = session;
+            ParallelTaskCount = taskCount;
             _startTime = startTime;
             _endTime = endTime;
             _milliseconds = milliseconds;
