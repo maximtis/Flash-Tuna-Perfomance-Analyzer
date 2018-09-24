@@ -22,7 +22,7 @@ namespace DemoApp
         }
         public Program()
         {
-            var _perfomanceMethods = this.GetType().GetMethods().Where(x => x.GetCustomAttributes(typeof(PerfomanceMetricAttribute), true).Any());
+            var _perfomanceMethods = this.GetType().GetMethods().Where(x => x.GetCustomAttributes(typeof(TaskMetricAttribute), true).Any());
         }
         static void Main(string[] args)
         {

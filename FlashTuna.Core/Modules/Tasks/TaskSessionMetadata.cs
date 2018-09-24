@@ -28,7 +28,9 @@ namespace FlashTuna.Core.Modules.Tasks
         }
 
         private static TaskSessionMetadata _instatnce;
-        public static TaskSessionMetadata CurrentSession { get
+        public static TaskSessionMetadata CurrentSession
+        {
+            get
             {
                 return _instatnce ?? new TaskSessionMetadata();
             }

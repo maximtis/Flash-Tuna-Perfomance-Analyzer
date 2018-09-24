@@ -20,6 +20,7 @@ namespace FlashTuna.Core.Common.Metric
                           string moduleName = "Undefned")
         {
             BoundedTimeLine = timeLine;
+            BoundedTimeLine.BoundMetric(this);
             MethodName = methodName;
             Tag = tag;
             ModuleName = moduleName;
@@ -63,7 +64,6 @@ namespace FlashTuna.Core.Common.Metric
         {
             if (!isRunning)
             {
-                BoundedTimeLine.BoundMetric(this);
                 isRunning = true;
                 _startTime = DateTime.Now;
                 _stopwatch.Start();
