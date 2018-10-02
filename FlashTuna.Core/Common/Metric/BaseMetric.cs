@@ -13,7 +13,8 @@ namespace FlashTuna.Core.Common.Metric
 {
     public abstract class BaseMetric : IMetric
     {
-        public BaseMetric(MetricTypes metricType,
+        public BaseMetric(string className,
+                          MetricTypes metricType,
                           ITimeLine timeLine,
                           string methodName = "Undefined",
                           string tag = "",
@@ -23,6 +24,7 @@ namespace FlashTuna.Core.Common.Metric
             BoundedTimeLine.BoundMetric(this);
             MethodName = methodName;
             Tag = tag;
+            ClassName = className;
             ModuleName = moduleName;
             MetricType = metricType;
             SessionIdentifier = TaskSessionMetadata.CurrentSession.SessionIdentifier;
@@ -35,10 +37,12 @@ namespace FlashTuna.Core.Common.Metric
         public MetricTypes MetricType { get; }
         public ITimeLine BoundedTimeLine { get; }
         public string MethodName { get; set; }
+
         public string Tag { get; set; }
         public string ModuleName { get; set; }
         [Key]
         public long MetricId { get; set ; }
+        public string ClassName { get; set ; }
 
         protected Stopwatch _stopwatch;
         protected DateTime _startTime;

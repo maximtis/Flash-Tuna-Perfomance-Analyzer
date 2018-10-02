@@ -10,4 +10,8 @@
     <Folder Include="Runtime\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FlashTuna.Core\FlashTuna.Core.csproj" />
+  </ItemGroup>
+
 </Project>

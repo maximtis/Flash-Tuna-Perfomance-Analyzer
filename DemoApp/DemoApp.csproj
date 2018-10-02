@@ -6,9 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FlashTuna.Attributes\FlashTuna.Attributes.csproj">
-      <Private>false</Private>
-    </ProjectReference>
     <ProjectReference Include="..\FlashTuna.Core\FlashTuna.Core.csproj" />
   </ItemGroup>
 

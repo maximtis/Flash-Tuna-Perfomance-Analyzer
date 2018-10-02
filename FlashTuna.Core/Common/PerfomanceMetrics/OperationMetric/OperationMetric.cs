@@ -10,11 +10,12 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
 {
     public class OperationMetric : BaseMetric
     {
-        public OperationMetric(ITimeLine timeLine,
+        public OperationMetric(string className,
+                              ITimeLine timeLine,
                               string methodName = "Undefined Operation", 
                               string tag = "Operation",
                               string moduleName = "Undefned") : 
-                              base(MetricTypes.Operation, timeLine, methodName, tag, moduleName)
+                              base(className,MetricTypes.Operation, timeLine, methodName, tag, moduleName)
         {
         }
 

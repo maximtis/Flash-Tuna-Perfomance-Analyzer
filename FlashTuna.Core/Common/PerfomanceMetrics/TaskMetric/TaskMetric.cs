@@ -14,11 +14,12 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
         public string Session { get { return SessionIdentifier.ToSessionString(); } }
         public int ParallelTaskCount { get { return TaskSessionMetadata.CurrentSession.ParallelTaskCount; } }
 
-        public TaskMetric(ITimeLine timeLine,
+        public TaskMetric(string className,
+                              ITimeLine timeLine,
                               string methodName = "Undefined Task",
                               string tag = "Task",
                               string moduleName = "Undefned") :
-                              base(MetricTypes.Task, timeLine, methodName, tag, moduleName)
+                              base(className,MetricTypes.Task, timeLine, methodName, tag, moduleName)
         {
 
         }
