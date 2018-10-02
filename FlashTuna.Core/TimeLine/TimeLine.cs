@@ -1,8 +1,9 @@
 ﻿using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics;
-using FlashTuna.Core.DataConnector;
+using FlashTuna.Core.Storage.DataBase;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,44 +12,33 @@ namespace FlashTuna.Core.TimeLine
 
     public sealed class TimeLine : ITimeLine
     {
-
-        public TimeLine(IMetricStorageTimeLineConnector storageProvider){
-
+        IFlashTunaDbContext db = null;
+        HashSet<IMetric> _metrics = new HashSet<IMetric>();
+        public TimeLine(IFlashTunaDbContext storageProvider){
+            db = storageProvider;
         }
 
-        public Task BoundMetric(IMetric metric)
+        public async Task BoundMetric(IMetric metric)
         {
-            throw new NotImplementedException();
+            _metrics.Add(metric);
         }
 
-        public Task CollectMetricResult(IMetricResult metric)
+        public async Task StartMetric(string className, string methodName)
         {
-            throw new NotImplementedException();
+            var targetMetric = _metrics.SingleOrDefault(x => x.ClassName == className && x.MethodName == methodName);
+            targetMetric.Start();
         }
 
-        public Task<IEnumerable<IMetric>> GetBoundMetrics()
+        public async Task StopMetric(string className, string methodName)
         {
-            throw new NotImplementedException();
+            var targetMetric = _metrics.SingleOrDefault(x => x.ClassName == className && x.MethodName == methodName);
+            targetMetric.Stop();
         }
 
-        public Task<IEnumerable<IMetricResult>> GetMetricResult(string tag)
+        public async Task<IEnumerable<IMetricResult>> CollectMetricResult(IMetricResult metric)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<IMetricResult>> GetMetricResult(MetricTypes metricsType)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<IMetricResult>> GetMetricResult(MetricTypes metricsType, string methodName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<IMetricResult>> GetMetricResult(MetricTypes metricsType, string methodName, string moduleName)
-        {
-            throw new NotImplementedException();
+            var metricsResult = _metrics.Select(x => x.GetResult());
+            return metricsResult;
         }
     }
 }

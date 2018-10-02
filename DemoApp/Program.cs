@@ -1,13 +1,32 @@
-﻿using FlashTuna.Attributes;
-using System;
+﻿using System;
 using System.Threading;
 using System.Linq;
 using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.Metric.MetricsFactory;
 using FlashTuna.Core.TimeLine;
+using FlashTuna.Core.Common.Metric;
+using FlashTuna.Core.Attributes;
 
 namespace DemoApp
 {
+
+    class ProductionClassA : MeteredClass
+    {
+        [OperationMetric(nameof(ProductionClassA))]
+        void LongOperation()
+        {
+            int i = 10;
+            while (i > 0)
+            {
+                Console.WriteLine("Do Iteration!");
+                Thread.Sleep(1000);
+                i--;
+            }
+        }
+
+    }
+
+
     class Program
     {
         private static void LongOperation()
@@ -26,15 +45,9 @@ namespace DemoApp
         }
         static void Main(string[] args)
         {
-            ITimeLine tl = new TimeLine(null);
-            IMetric mainTest = MetricsFactory.CreateMetric(tl,"Main", "test", "Demo Project");
             
             Console.WriteLine("Demo App started...");
-
-            mainTest.Start();
             LongOperation();
-            mainTest.Stop();
-
             Console.WriteLine("Demo App finished...");
             Console.ReadKey();
 

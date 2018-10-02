@@ -12,24 +12,25 @@ namespace FlashTuna.Core.Common.Metric.MetricsFactory
 {
     public class MetricsFactory
     {
-        public static BaseMetric CreateMetric(MetricTypes metricType,
+        public static BaseMetric CreateMetric(string className,
+                                              MetricTypes metricType,
                                               string methodName,
                                               string tag)
         {
             switch (metricType)
             {
                 case MetricTypes.Exception:
-                    return new ExceptionMetric(FlashTuna.Core.Configuration.FlashTuna.CurrentTimeLine,
+                    return new ExceptionMetric(className,FlashTuna.Core.Configuration.FlashTuna.CurrentTimeLine,
                                                methodName,
                                                tag,
                                                FlashTuna.Core.Configuration.FlashTuna.ModuleName);
                 case MetricTypes.Operation:
-                    return new OperationMetric(FlashTuna.Core.Configuration.FlashTuna.CurrentTimeLine,
+                    return new OperationMetric(className, FlashTuna.Core.Configuration.FlashTuna.CurrentTimeLine,
                                                methodName,
                                                tag,
                                                FlashTuna.Core.Configuration.FlashTuna.ModuleName);
                 case MetricTypes.Task:
-                    return new TaskMetric(FlashTuna.Core.Configuration.FlashTuna.CurrentTimeLine,
+                    return new TaskMetric(className, FlashTuna.Core.Configuration.FlashTuna.CurrentTimeLine,
                                                methodName,
                                                tag,
                                                FlashTuna.Core.Configuration.FlashTuna.ModuleName);

@@ -10,10 +10,12 @@ namespace FlashTuna.Core.Common.Metric.Interfaces
     {
         long MetricId { get; set; }
         string MethodName { get; set; }
+        string ClassName { get; set; }
         string Tag { get; set; }
         string ModuleName { get; set; }
         void Start();
         void Stop();
+        IMetricResult GetResult();
         bool isRunning { get; set; }
     }
 }
