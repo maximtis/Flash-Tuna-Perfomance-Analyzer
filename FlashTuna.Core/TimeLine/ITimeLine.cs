@@ -10,6 +10,7 @@ namespace FlashTuna.Core.TimeLine
         Task StartMetric(string className, string methodName);
         Task StopMetric(string className, string methodName);
         Task BoundMetric(IMetric metric);
-        Task<IEnumerable<IMetricResult>> CollectMetricResult(IMetricResult metric);
+        Task CollectMetricResult(IMetricResult metric);
+        Task<IEnumerable<IMetricResult>> ExtractMetricResult();
     }
 }

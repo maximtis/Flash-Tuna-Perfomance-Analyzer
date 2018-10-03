@@ -6,6 +6,7 @@ using FlashTuna.Core.Common.Metric.MetricsFactory;
 using FlashTuna.Core.TimeLine;
 using FlashTuna.Core.Common.Metric;
 using FlashTuna.Core.Attributes;
+using System.Threading.Tasks;
 
 namespace DemoApp
 {
@@ -39,6 +40,7 @@ namespace DemoApp
         [OperationMetric(nameof(ProductionClassB))]
         public void LongOperation()
         {
+            StartRecording();
             int i = 10;
             while (i > 0)
             {
@@ -46,6 +48,7 @@ namespace DemoApp
                 Thread.Sleep(1000);
                 i--;
             }
+            StopRecording();
         }
 
         [OperationMetric(nameof(ProductionClassB))]
@@ -59,6 +62,8 @@ namespace DemoApp
                 Thread.Sleep(100);
                 i--;
             }
+
+            StopRecording();
         }
 
     }
@@ -76,9 +81,9 @@ namespace DemoApp
 
             FlashTuna.Core.Configuration.FlashTuna.Initialize(
                             new FlashTuna.Core.Configuration.FlashTuna.FlashTunaBuilder()
-                                                            .SetTimeLine(new TimeLine(null))
+                                                            .SetStorage(null)
                                                             .SetModuleName("Test Module")
-                                                            .Build());
+                                                            .Build(typeof(Program)));
 
             ProductionClassA classA = new ProductionClassA();
             classA.LongOperation();
@@ -86,6 +91,15 @@ namespace DemoApp
             ProductionClassB classB = new ProductionClassB();
             classB.ShortOperation();
             classB.LongOperation();
+
+            print().RunSynchronously();
+
+        }
+
+        async static Task print()
+        {
+            var data = await FlashTuna.Core.Configuration.FlashTuna.PrintMetricsResult();
+            Console.WriteLine(data);
         }
     }
 }

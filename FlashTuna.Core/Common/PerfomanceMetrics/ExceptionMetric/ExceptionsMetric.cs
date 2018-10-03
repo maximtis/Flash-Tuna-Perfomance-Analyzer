@@ -29,6 +29,7 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.ExceptionMetric
             {
                 return new ExceptionMetricResult(ExceptionName,
                                              ExceptioType,
+                                             Identidier,
                                              _startTime,
                                              _endTime,
                                              _stopwatch.ElapsedMilliseconds);

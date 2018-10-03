@@ -16,32 +16,20 @@ namespace FlashTuna.Core.Common.Metric
     {
         private ITimeLine _timeLine;
         private Type _derivedClassName;
+        //private List<MethodInfo> _meteredMethods;
 
-        static MeteredClass()
-        {
-            var ass = Assembly.GetExecutingAssembly();//Use .GetCallingAssembly() if this method is in a library, or even both
-               var types = ass.GetTypes();
-            var methods = types.SelectMany(t => t.GetMethods());
-                   var hasAttr = methods.Where(m => m.GetCustomAttributes(typeof(OperationMetricAttribute), true).Length > 0)
-                      .ToList();
-        }
         public MeteredClass(Type derivedClass)
         {
             _timeLine = FlashTuna.Core.Configuration.FlashTuna.CurrentTimeLine;
             _derivedClassName = derivedClass;
-            Assembly clientAssembly = derivedClass.Assembly;
-
-            var ass = clientAssembly; //Assembly.GetExecutingAssembly();//Use .GetCallingAssembly() if this method is in a library, or even both
-            var types = ass.GetTypes();
-            var methods = types.SelectMany(t => t.GetMethods());
-            var hasAttr = methods.Where(m => m.GetCustomAttributes(typeof(OperationMetricAttribute), true).Length > 0)
-               .ToList();
+            //_meteredMethods = FlashTuna.Core.Configuration.FlashTuna.MeteredMethods.Where(x=>derivedClass.Name == x.DeclaringType.Name).ToList();
         }
 
         protected void StartRecording([CallerMemberName] string methodName = null)
         {
             _timeLine.StartMetric(_derivedClassName.Name, methodName);
         }
+
         protected void StopRecording([CallerMemberName] string methodName = null)
         {
             _timeLine.StopMetric(_derivedClassName.Name, methodName);

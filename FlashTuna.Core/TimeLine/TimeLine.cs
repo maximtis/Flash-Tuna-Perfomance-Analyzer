@@ -10,10 +10,12 @@ using System.Threading.Tasks;
 namespace FlashTuna.Core.TimeLine
 { 
 
-    public sealed class TimeLine : ITimeLine
+    internal sealed class TimeLine : ITimeLine
     {
-        IFlashTunaDbContext db = null;
-        HashSet<IMetric> _metrics = new HashSet<IMetric>();
+        private IFlashTunaDbContext db = null;
+        private HashSet<IMetric> _metrics = new HashSet<IMetric>();
+        private List<IMetricResult> _metricsResults = new List<IMetricResult>();
+
         public TimeLine(IFlashTunaDbContext storageProvider){
             db = storageProvider;
         }
@@ -26,19 +28,23 @@ namespace FlashTuna.Core.TimeLine
         public async Task StartMetric(string className, string methodName)
         {
             var targetMetric = _metrics.SingleOrDefault(x => x.ClassName == className && x.MethodName == methodName);
-            targetMetric.Start();
+            targetMetric?.Start();
         }
 
         public async Task StopMetric(string className, string methodName)
         {
             var targetMetric = _metrics.SingleOrDefault(x => x.ClassName == className && x.MethodName == methodName);
-            targetMetric.Stop();
+            targetMetric?.Stop();
         }
 
-        public async Task<IEnumerable<IMetricResult>> CollectMetricResult(IMetricResult metric)
+        public async Task CollectMetricResult(IMetricResult metricResult)
         {
-            var metricsResult = _metrics.Select(x => x.GetResult());
-            return metricsResult;
+            _metricsResults.Add(metricResult);
+        }
+
+        public async Task<IEnumerable<IMetricResult>> ExtractMetricResult()
+        {
+            return _metricsResults.OrderBy(x => x.StartTime); 
         }
     }
 }
