@@ -13,5 +13,6 @@ namespace FlashTuna.Core.Common.Metric.Interfaces
         DateTime StartTime { get; }
         DateTime EndTime { get; }
         long Milliseconds { get; }
+        string ToMetricString();
     }
 }

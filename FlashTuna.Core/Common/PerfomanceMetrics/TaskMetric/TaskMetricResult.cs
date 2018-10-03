@@ -1,4 +1,6 @@
-﻿using FlashTuna.Core.Common.Metric.Interfaces;
+﻿using FlashTuna.Core.Attributes.Common;
+using FlashTuna.Core.Common.Metric;
+using FlashTuna.Core.Common.Metric.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +8,7 @@ using System.Text;
 namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
 {
 
-    public class TaskMetricResult : IMetricResult
+    public class TaskMetricResult : BaseMetricResult
     {
         public string Session { get; set; }
         public int ParallelTaskCount { get; set; }
@@ -14,20 +16,17 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
         DateTime _startTime, _endTime;
         long _milliseconds;
 
-        public TaskMetricResult(long metricId,string session,int taskCount,DateTime startTime, DateTime endTime, long milliseconds)
+        public TaskMetricResult(long metricId,string session,int taskCount,MetricKey identifier, DateTime startTime, DateTime endTime, long milliseconds):
+            base(identifier, startTime, endTime, milliseconds)
         {
-            MetricId = metricId;
             Session = session;
             ParallelTaskCount = taskCount;
-            _startTime = startTime;
-            _endTime = endTime;
-            _milliseconds = milliseconds;
         }
 
-        public long MetricResultId { get; set; }
-        public long MetricId { get; set; }
-        public DateTime StartTime { get { return _startTime; } }
-        public DateTime EndTime { get { return _endTime; } }
-        public long Milliseconds { get { return _milliseconds; } }
+        public override string ToMetricString()
+        {
+            return base.ToMetricString() + $"\n {Session} : {ParallelTaskCount}";
+        }
+
     }
 }

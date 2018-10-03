@@ -31,6 +31,7 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
                 return new TaskMetricResult(MetricId,
                                             Session,
                                             ParallelTaskCount,
+                                            Identidier,
                                             _startTime,
                                             _endTime,
                                             _stopwatch.ElapsedMilliseconds);

@@ -1,4 +1,5 @@
-﻿using FlashTuna.Core.Common.Metric.Interfaces;
+﻿using FlashTuna.Core.Attributes.Common;
+using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics;
 using FlashTuna.Core.Modules.Tasks;
 using FlashTuna.Core.TimeLine;
@@ -44,6 +45,17 @@ namespace FlashTuna.Core.Common.Metric
         public long MetricId { get; set ; }
         public string ClassName { get; set ; }
 
+        protected MetricKey Identidier
+        {
+            get
+            {
+                return new MetricKey()
+                {
+                    ClassName = ClassName,
+                    MethodName = MethodName
+                };
+            }
+        }
         protected Stopwatch _stopwatch;
         protected DateTime _startTime;
         protected DateTime _endTime;
