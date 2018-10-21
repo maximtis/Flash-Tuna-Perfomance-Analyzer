@@ -16,8 +16,12 @@ namespace FlashTuna.Core.TimeLine
         private HashSet<IMetric> _metrics = new HashSet<IMetric>();
         private List<IMetricResult> _metricsResults = new List<IMetricResult>();
 
-        public TimeLine(IFlashTunaDbContext storageProvider){
+        public void SetStorageProvider(IFlashTunaDbContext storageProvider){
             db = storageProvider;
+        }
+
+        public TimeLine()
+        {
         }
 
         public async Task BoundMetric(IMetric metric)

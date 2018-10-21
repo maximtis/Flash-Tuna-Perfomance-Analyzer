@@ -16,7 +16,7 @@ namespace FlashTuna.Core.Common.Metric
     {
         private ITimeLine _timeLine;
         private Type _derivedClassName;
-        //private List<MethodInfo> _meteredMethods;
+       // private List<MethodInfo> _meteredMethods;
 
         public MeteredClass(Type derivedClass)
         {
