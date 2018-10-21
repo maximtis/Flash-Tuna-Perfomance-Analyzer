@@ -10,10 +10,7 @@ namespace FlashTuna.Core.Storage.DataBase
 {
     public class FlashTunaDbContext : DbContext
     {
-        FlashTunaDbContext() : base()
-        {
-
-        }
+        FlashTunaDbContext() : base(){}
 
         public DbSet<ExceptionMetric> ExceptionMetrics { get; set; }
         public DbSet<ExceptionMetric> OperationMetrics { get; set; }
@@ -21,9 +18,5 @@ namespace FlashTuna.Core.Storage.DataBase
         public DbSet<ExceptionMetricResult> ExceptionMetricResults { get; set; }
         public DbSet<OperationMetricResult> OperationMetricResults { get; set; }
         public DbSet<TaskMetricResult> TaskMetricResults { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-        }
     }
 }

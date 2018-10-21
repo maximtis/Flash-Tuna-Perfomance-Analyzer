@@ -23,7 +23,8 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
         {
             if (!isRunning)
             {
-                return new OperationMetricResult(Identidier, _startTime,
+                return new OperationMetricResult(Identidier, 
+                    _startTime,
                                              _endTime,
                                              _stopwatch.ElapsedMilliseconds);
             }

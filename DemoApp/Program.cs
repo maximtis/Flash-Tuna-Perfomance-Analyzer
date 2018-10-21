@@ -32,7 +32,7 @@ namespace DemoApp
 
     class ProductionClassB : MeteredClass
     {
-        public ProductionClassB() : base(typeof(ProductionClassA))
+        public ProductionClassB() : base(typeof(ProductionClassB))
         {
 
         }
@@ -79,11 +79,15 @@ namespace DemoApp
         static void Main(string[] args)
         {
 
+
+
+
             FlashTuna.Core.Configuration.FlashTuna.Initialize(
-                            new FlashTuna.Core.Configuration.FlashTuna.FlashTunaBuilder()
+                            FlashTuna.Core.Configuration.FlashTuna.CreateBuilder()
                                                             .SetStorage(null)
                                                             .SetModuleName("Test Module")
-                                                            .Build(typeof(Program)));
+                                                            .SetTargetAssembly(typeof(Program).Assembly)
+                                                            .Build());
 
             ProductionClassA classA = new ProductionClassA();
             classA.LongOperation();
@@ -92,13 +96,13 @@ namespace DemoApp
             classB.ShortOperation();
             classB.LongOperation();
 
-            print().RunSynchronously();
+            print();
 
         }
 
-        async static Task print()
+        static void print()
         {
-            var data = await FlashTuna.Core.Configuration.FlashTuna.PrintMetricsResult();
+            var data = FlashTuna.Core.Configuration.FlashTuna.PrintMetricsResult().Result;
             Console.WriteLine(data);
         }
     }
