@@ -8,7 +8,7 @@ namespace FlashTuna.Core.Attributes
     public class ExceptionsMetricAttribute : PerfomanceMetricAttribute
     {
         public ExceptionsMetricAttribute(string className,[CallerMemberName] string methodName = null, string tag = "ExceptionsMetric") :
-            base(className,Core.Common.PerfomanceMetrics.MetricTypes.Task, methodName, tag)
+            base(className,Core.Common.PerfomanceMetrics.MetricTypes.Exception, methodName, tag)
         {
         }
     }

@@ -48,7 +48,7 @@ namespace FlashTuna.Core.TimeLine
 
         public async Task<IEnumerable<IMetricResult>> ExtractMetricResult()
         {
-            return _metricsResults.OrderBy(x => x.StartTime); 
+            return _metricsResults?.OrderBy(x => x?.StartTime); 
         }
     }
 }

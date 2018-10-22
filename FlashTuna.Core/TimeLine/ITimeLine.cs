@@ -8,8 +8,7 @@ namespace FlashTuna.Core.TimeLine
 {
     public interface ITimeLine
     {
-        Task StartMetric(string className, string methodName);
-        Task StopMetric(string className, string methodName);
+        IMetricCall StartMetricAsync(string className, string methodName);
         Task BoundMetric(IMetric metric);
         Task CollectMetricResult(IMetricResult metric);
         Task<IEnumerable<IMetricResult>> ExtractMetricResult();

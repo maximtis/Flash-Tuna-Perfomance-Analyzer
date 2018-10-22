@@ -13,35 +13,23 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.ExceptionMetric
         public string ExceptionName { get; set; }
         public string ExceptioType { get; set; }
 
-        public ExceptionMetric(string className,
-                              ITimeLine timeLine, 
-                              string methodName = "Undefined Exception",
-                              string tag = "Operation",
-                              string moduleName = "Undefned") :
-                              base(className, MetricTypes.Exception, timeLine, methodName, tag, moduleName)
+        public ExceptionMetric(string exceptionName,
+                               string exceptionType,
+                               string className,
+                               ITimeLine timeLine, 
+                               string methodName = "Undefined Exception",
+                               string tag = "Operation",
+                               string moduleName = "Undefned") :
+                               base(className, MetricTypes.Exception, timeLine, methodName, tag, moduleName)
         {
+            ExceptionName = exceptionName;
+            ExceptioType = exceptionType;
         }
 
-        public override IMetricResult GetResult()
+        
+        public override IMetricCall Start()
         {
-
-            if (isRunning)
-            {
-                return new ExceptionMetricResult(ExceptionName,
-                                             ExceptioType,
-                                             Identidier,
-                                             _startTime,
-                                             _endTime,
-                                             _stopwatch.ElapsedMilliseconds);
-            }
-            return null;
-            
-        }
-
-
-        public override string ToMetricString()
-        {
-            return $"{_startTime.ToShortTimeString()} : {_endTime.ToShortTimeString()} ({_stopwatch.ElapsedMilliseconds})";
+            return new ExceptionMetricCall(ExceptionName, ExceptioType, GetIdentidier(), MetricType, BoundedTimeLine);
         }
     }
 }
