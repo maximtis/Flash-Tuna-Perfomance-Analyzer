@@ -36,7 +36,8 @@ namespace FlashTuna.Core.Configuration
         public static async Task<string> PrintMetricsResult()
         {
             string data = "";
-            foreach(var item in await CurrentTimeLine.ExtractMetricResult())
+            var completed = await CurrentTimeLine.ExtractMetricResult();
+            foreach (var item in completed)
             {
                 data += item.ToMetricString() + Environment.NewLine;
             }

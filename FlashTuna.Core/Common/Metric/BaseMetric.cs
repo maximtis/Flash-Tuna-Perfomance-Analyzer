@@ -23,67 +23,34 @@ namespace FlashTuna.Core.Common.Metric
         {
             BoundedTimeLine = timeLine;
             BoundedTimeLine.BoundMetric(this);
-            MethodName = methodName;
             Tag = tag;
+            MethodName = methodName;
             ClassName = className;
             ModuleName = moduleName;
             MetricType = metricType;
             SessionIdentifier = TaskSessionMetadata.CurrentSession.SessionIdentifier;
-            _stopwatch = new Stopwatch();
         }
 
-
+        protected MetricKey GetIdentidier()
+        {
+            return new MetricKey()
+            {
+                MetricCallId = new Random().Next(1000000, 9999999),
+                ClassName = ClassName,
+                MethodName = MethodName
+            };
+        }
         public TaskSessionIdentifier SessionIdentifier {get;set;}
-        public bool isRunning { get; set; }
         public MetricTypes MetricType { get; }
         public ITimeLine BoundedTimeLine { get; }
-        public string MethodName { get; set; }
 
         public string Tag { get; set; }
         public string ModuleName { get; set; }
         [Key]
         public long MetricId { get; set ; }
         public string ClassName { get; set ; }
+        public string MethodName { get; private set; }
 
-        protected MetricKey Identidier
-        {
-            get
-            {
-                return new MetricKey()
-                {
-                    ClassName = ClassName,
-                    MethodName = MethodName
-                };
-            }
-        }
-        protected Stopwatch _stopwatch;
-        protected DateTime _startTime;
-        protected DateTime _endTime;
-
-        public virtual void Stop()
-        {
-            if (isRunning)
-            {
-                isRunning = false;
-                _endTime = DateTime.Now;
-                _stopwatch.Stop();
-
-                //Collect Metric Result
-                BoundedTimeLine.CollectMetricResult(GetResult());
-            }
-        }
-
-        public abstract string ToMetricString();
-        public abstract IMetricResult GetResult();
-
-        public virtual void Start()
-        {
-            if (!isRunning)
-            {
-                isRunning = true;
-                _startTime = DateTime.Now;
-                _stopwatch.Start();
-            }
-        }
+        public abstract IMetricCall Start();
     }
 }

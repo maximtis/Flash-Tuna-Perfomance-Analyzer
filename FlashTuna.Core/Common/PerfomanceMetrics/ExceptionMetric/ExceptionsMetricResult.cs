@@ -12,12 +12,13 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric
 
         string _exceptionName, _exceptionType;
 
-        public ExceptionMetricResult(string exceptionName, string exceptioType, MetricKey identifier, DateTime startTime,DateTime endTime, long milliseconds):
-            base(identifier, startTime, endTime, milliseconds)
+        public ExceptionMetricResult(string exceptionName, string exceptioType,MetricKey metricIdentifier,
+                      MetricTypes metricType) : base(metricIdentifier, metricType)
         {
             _exceptionName = exceptionName;
             _exceptionType = exceptioType;
         }
+
 
         public string ExceptionName { get { return _exceptionName; } }
         public string ExceptioType { get { return _exceptionType; } }

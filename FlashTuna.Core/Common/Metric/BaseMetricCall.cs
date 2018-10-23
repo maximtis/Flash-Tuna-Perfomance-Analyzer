@@ -1,37 +1,43 @@
-﻿using FlashTuna.Core.Attributes;
-using FlashTuna.Core.Attributes.Common;
+﻿using FlashTuna.Core.Attributes.Common;
 using FlashTuna.Core.Common.Metric.Interfaces;
+using FlashTuna.Core.Common.PerfomanceMetrics;
 using FlashTuna.Core.TimeLine;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FlashTuna.Core.Common.Metric
 {
-    public abstract class MeteredClass
+    public abstract class BaseMetricCall : IMetricCall, IDisposable
     {
-        private ITimeLine _timeLine;
-        private Type _derivedClassName;
-       // private List<MethodInfo> _meteredMethods;
-
-        public MeteredClass(Type derivedClass)
+        public BaseMetricCall(MetricKey metricIdentifier,
+                              MetricTypes metricType,
+                              ITimeLine timeLine)
         {
-            _timeLine = FlashTuna.Core.Configuration.FlashTuna.CurrentTimeLine;
-            _derivedClassName = derivedClass;
-            //_meteredMethods = FlashTuna.Core.Configuration.FlashTuna.MeteredMethods.Where(x=>derivedClass.Name == x.DeclaringType.Name).ToList();
+            _boundedTimeLine = timeLine;
+            _metricType = metricType;
+            _metricIdentifier = metricIdentifier;
+            _timePoint = DateTime.Now;
+            _metricResultStatus = MetricResultStatus.Started;
+            //Collect Start Data
+            _boundedTimeLine.CollectMetricResult(GetResult());
         }
 
-        protected IMetricCall StartRecording([CallerMemberName] string methodName = null)
+        protected MetricResultStatus _metricResultStatus;
+        protected MetricKey _metricIdentifier;
+        protected ITimeLine _boundedTimeLine;
+        protected MetricTypes _metricType;
+
+        public virtual void Stop()
         {
-            return _timeLine.StartMetricAsync(_derivedClassName.Name, methodName);
+            _boundedTimeLine.CollectMetricResult(GetResult());
         }
+        protected abstract IMetricResult GetResult();
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
+
 
         protected virtual void Dispose(bool disposing)
         {
@@ -50,13 +56,13 @@ namespace FlashTuna.Core.Common.Metric
         }
 
         // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~MeteredClass() {
+        // ~MetricCallBase() {
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
         //   Dispose(false);
         // }
 
         // This code added to correctly implement the disposable pattern.
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
@@ -66,3 +72,4 @@ namespace FlashTuna.Core.Common.Metric
         #endregion
     }
 }
+

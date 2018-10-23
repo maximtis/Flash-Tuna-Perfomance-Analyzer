@@ -8,7 +8,7 @@ namespace FlashTuna.Core.Attributes
     public class OperationMetricAttribute : PerfomanceMetricAttribute
     {
         public OperationMetricAttribute(string className,[CallerMemberName] string methodName = null, string tag = "OperationMetric") :
-            base(className,Core.Common.PerfomanceMetrics.MetricTypes.Task, methodName, tag)
+            base(className,Core.Common.PerfomanceMetrics.MetricTypes.Operation, methodName, tag)
         {
         }
     }

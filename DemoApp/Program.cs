@@ -7,6 +7,7 @@ using FlashTuna.Core.TimeLine;
 using FlashTuna.Core.Common.Metric;
 using FlashTuna.Core.Attributes;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace DemoApp
 {
@@ -71,17 +72,8 @@ namespace DemoApp
 
     class Program
     {
-        
-        public Program()
-        {
-            var _perfomanceMethods = this.GetType().GetMethods().Where(x => x.GetCustomAttributes(typeof(TaskMetricAttribute), true).Any());
-        }
         static void Main(string[] args)
         {
-
-
-
-
             FlashTuna.Core.Configuration.FlashTuna.Initialize(
                             FlashTuna.Core.Configuration.FlashTuna.CreateBuilder()
                                                             .SetStorage(null)
@@ -90,11 +82,16 @@ namespace DemoApp
                                                             .Build());
 
             ProductionClassA classA = new ProductionClassA();
-            classA.LongOperation();
+            //classA.LongOperation();
 
             ProductionClassB classB = new ProductionClassB();
-            classB.ShortOperation();
-            classB.LongOperation();
+            List<Task> tasks = new List<Task>();
+            for (int i = 0;i < 10; i++)
+            {
+                tasks.Add(Task.Run(() => classB.ShortOperation()));
+            }
+            Task.WaitAll(tasks.ToArray());
+            //classB.LongOperation();
 
             print();
 
@@ -104,6 +101,7 @@ namespace DemoApp
         {
             var data = FlashTuna.Core.Configuration.FlashTuna.PrintMetricsResult().Result;
             Console.WriteLine(data);
+            Console.ReadKey();
         }
     }
 }
