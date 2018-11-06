@@ -16,9 +16,14 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.ExceptionMetric
 
         public ExceptionMetricCall(string exceptionName,
                                    string exceptionType ,
-                                   MetricKey metricIdentifier,
+                                   string className,
+                                   string methodName,
                                    MetricTypes metricType,
-                                   ITimeLine timeLine):base(metricIdentifier,MetricTypes.Exception,timeLine)
+                                   ITimeLine timeLine):
+            base(className,
+                methodName,
+                MetricTypes.Exception,
+                timeLine)
         {
             ExceptionName = exceptionName;
             ExceptioType = exceptionType;

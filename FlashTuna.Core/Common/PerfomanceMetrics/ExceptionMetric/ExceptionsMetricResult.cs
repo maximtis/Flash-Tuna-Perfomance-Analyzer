@@ -14,9 +14,12 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric
 
         public ExceptionMetricResult(string exceptionName, 
                                      string exceptioType,
-                                     MetricKey metricIdentifier,
+                                     string className,
+                                     string methodName,
                                      MetricTypes metricType) :
-                                     base(metricIdentifier, metricType)
+            base(className,
+                 methodName,
+                 metricType)
         {
             _exceptionName = exceptionName;
             _exceptionType = exceptioType;

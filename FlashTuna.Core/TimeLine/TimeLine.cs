@@ -1,9 +1,11 @@
-﻿using FlashTuna.Core.Common.Metric.Interfaces;
+﻿using FlashTuna.Core.Common.Metric;
+using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics;
 using FlashTuna.Core.Common.PerfomanceMetrics.ExceptionMetric;
 using FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric;
 using FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric;
 using FlashTuna.Core.Storage.DataBase;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,8 @@ namespace FlashTuna.Core.TimeLine
         {
         }
 
+        // TODO:
+        // - Check if metric exists, if no add to DataBase
         public async Task BoundMetric(IMetric metric)
         {
             switch (metric.MetricType)
@@ -54,10 +58,17 @@ namespace FlashTuna.Core.TimeLine
             return _metricsResults?.OrderBy(x => x?.TimePoint); 
         }
 
-        public IMetricCall StartMetricAsync(string className, string methodName)
+        // TODO:
+        // need to handle multiple metrics on demand, update their info in the DataBase in real time.
+        // Sync code and database at the start.
+        public async Task<IMetricCall> StartMetricAsync(string className, string methodName)
         {
-            var targetMetric = _metrics.SingleOrDefault(x => x.ClassName == className && x. == methodName);
-            targetMetric?.Start();
+            List<BaseMetric> foundMetrics = new List<BaseMetric>();
+            foundMetrics.Add(await db.OperationMetrics.SingleOrDefaultAsync(x => x.ClassName == className && x.MethodName == methodName));
+            foundMetrics.Add(await db.TaskMetrics.SingleOrDefaultAsync(x => x.ClassName == className && x.MethodName == methodName));
+            foundMetrics.Add(await db.ExceptionMetrics.SingleOrDefaultAsync(x => x.ClassName == className && x.MethodName == methodName));
+
+            foundMetrics.ForEach(x=>x.sta)
         }
 
         private GetMetricTable()

@@ -11,10 +11,14 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
 {
     public class OperationMetricCall : BaseMetricCall
     {
-        public OperationMetricCall(MetricKey metricIdentifier,
-                              MetricTypes metricType,
-                              ITimeLine timeLine) : 
-                              base(metricIdentifier, MetricTypes.Operation, timeLine)
+        public OperationMetricCall(string className,
+                                   string methodName,
+                                   MetricTypes metricType,
+                                   ITimeLine timeLine) : 
+            base(className,
+                 methodName,
+                 MetricTypes.Operation,
+                 timeLine)
         {
         }
 

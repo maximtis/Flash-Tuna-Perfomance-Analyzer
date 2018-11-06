@@ -17,10 +17,14 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
 
         public TaskMetricCall(string session,
                               int parallelTaskCount,
-                              MetricKey metricIdentifier,
+                              string className,
+                              string methodName,
                               MetricTypes metricType,
                               ITimeLine timeLine) :
-                              base(metricIdentifier, MetricTypes.Operation, timeLine)
+            base(className,
+                 methodName, 
+                 MetricTypes.Operation, 
+                 timeLine)
         {
         }
 
@@ -36,6 +40,7 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
 
         public override void Stop()
         {
+            TaskSessionMetadata.CurrentSession.ParallelTaskCount--;
             base.Stop();
         }
     }

@@ -11,11 +11,11 @@ namespace FlashTuna.Core.Common.Metric
     public abstract class BaseMetricResult: IMetricResult
     {
 
-        public BaseMetricResult(MetricKey metricIdentifier,
-                      MetricTypes metricType)
+        public BaseMetricResult(string className,
+                                string methodName,
+                                MetricTypes metricType)
         {
             MetricType = metricType;
-            _metricIdentifier = metricIdentifier;
             _timePoint = DateTime.Now;
             _metricResultStatus = MetricResultStatus.Started;
 
@@ -30,7 +30,6 @@ namespace FlashTuna.Core.Common.Metric
         private DateTime? _startTimePoint;
         private MetricResultStatus _metricResultStatus;
         private DateTime _timePoint;
-        private MetricKey _metricIdentifier;
         private MetricTypes _metricType;
         private double? _milliseconds;
         [Key]
@@ -39,7 +38,6 @@ namespace FlashTuna.Core.Common.Metric
         public DateTime TimePoint { get { return _timePoint; } }
         public double? Milliseconds { get { return _milliseconds; } }
         public MetricResultStatus MetricResultStatus { get => _metricResultStatus; }
-        public MetricKey MetricIdentifier { get => _metricIdentifier; }
         public MetricTypes MetricType { get => _metricType; set => _metricType = value; }
         public DateTime? StartTimePoint { get => _startTimePoint; set => _startTimePoint = value; }
 
