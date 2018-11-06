@@ -1,4 +1,5 @@
-﻿using FlashTuna.Core.Common.Metric;
+﻿using FlashTuna.Core.Attributes.Common;
+using FlashTuna.Core.Common.Metric;
 using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Modules.Tasks;
 using FlashTuna.Core.TimeLine;
@@ -9,51 +10,33 @@ using System.Text;
 namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
 {
 
-    public class TaskMetric : BaseMetric 
+    public class TaskMetricCall : BaseMetricCall
     {
-        public string Session { get { return SessionIdentifier.ToSessionString(); } }
+        public string Session { get { return TaskSessionMetadata.CurrentSession.SessionIdentifier.ToSessionString(); } }
         public int ParallelTaskCount { get { return TaskSessionMetadata.CurrentSession.ParallelTaskCount; } }
 
-        public TaskMetric(string className,
-                              ITimeLine timeLine,
-                              string methodName = "Undefined Task",
-                              string tag = "Task",
-                              string moduleName = "Undefned") :
-                              base(className,MetricTypes.Task, timeLine, methodName, tag, moduleName)
+        public TaskMetricCall(string session,
+                              int parallelTaskCount,
+                              MetricKey metricIdentifier,
+                              MetricTypes metricType,
+                              ITimeLine timeLine) :
+                              base(metricIdentifier, MetricTypes.Operation, timeLine)
         {
+        }
+
+        protected override IMetricResult GetResult()
+        {
+            return new TaskMetricResult(Session, 
+                                        ParallelTaskCount,
+                                        _metricIdentifier,
+                                        _metricType);
+
 
         }
 
-        public override IMetricResult GetResult()
-        {
-            if (!isRunning)
-            {
-                return new TaskMetricResult(MetricId,
-                                            Session,
-                                            ParallelTaskCount,
-                                            Identidier,
-                                            _startTime,
-                                            _endTime,
-                                            _stopwatch.ElapsedMilliseconds);
-            }
-            return null;
-            
-        }
-        public override void Start()
-        {
-            base.Start();
-            TaskSessionMetadata.CurrentSession.ParallelTaskCount++;
-        }
         public override void Stop()
         {
             base.Stop();
-            TaskSessionMetadata.CurrentSession.ParallelTaskCount--;
-        }
-
-        public override string ToMetricString()
-        {
-            return $"{_startTime.ToShortTimeString()} : {_endTime.ToShortTimeString()} ({_stopwatch.ElapsedMilliseconds})";
-
         }
     }
 }

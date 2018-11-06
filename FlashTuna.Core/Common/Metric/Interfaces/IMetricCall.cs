@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FlashTuna.Core.Common.Metric.Interfaces
 {
-    public interface IMetricCall
+    public interface IMetricCall:IDisposable
     {
         void Stop();
     }

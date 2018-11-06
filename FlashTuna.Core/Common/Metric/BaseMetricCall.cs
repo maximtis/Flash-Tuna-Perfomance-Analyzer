@@ -26,6 +26,7 @@ namespace FlashTuna.Core.Common.Metric
 
         protected MetricResultStatus _metricResultStatus;
         protected MetricKey _metricIdentifier;
+        protected DateTime _timePoint;
         protected ITimeLine _boundedTimeLine;
         protected MetricTypes _metricType;
 

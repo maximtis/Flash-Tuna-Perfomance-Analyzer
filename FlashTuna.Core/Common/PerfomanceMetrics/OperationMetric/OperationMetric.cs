@@ -19,22 +19,9 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
         {
         }
 
-        public override IMetricResult GetResult()
+        public override IMetricCall Start()
         {
-            if (!isRunning)
-            {
-                return new OperationMetricResult(Identidier, 
-                    _startTime,
-                                             _endTime,
-                                             _stopwatch.ElapsedMilliseconds);
-            }
-            return null;
-            
-        }
-
-        public override string ToMetricString()
-        {
-            return $"{_startTime.ToShortTimeString()} : {_endTime.ToShortTimeString()} ({_stopwatch.ElapsedMilliseconds})";
+            return new OperationMetricCall(GetIdentidier(), MetricType, BoundedTimeLine);
         }
     }
 }

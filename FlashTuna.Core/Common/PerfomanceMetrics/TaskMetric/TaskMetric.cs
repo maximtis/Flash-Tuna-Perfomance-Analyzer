@@ -24,21 +24,11 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
 
         }
 
-        public override IMetricResult GetResult()
+        public override IMetricCall Start()
         {
-            if (!isRunning)
-            {
-                return new TaskMetricResult(MetricId,
-                                            Session,
-                                            ParallelTaskCount,
-                                            Identidier,
-                                            _startTime,
-                                            _endTime,
-                                            _stopwatch.ElapsedMilliseconds);
-            }
-            return null;
-            
+            return new TaskMetricCall(GetIdentidier(), MetricType, BoundedTimeLine);
         }
+
         public override void Start()
         {
             base.Start();

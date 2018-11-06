@@ -27,13 +27,12 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.ExceptionMetric
         protected override IMetricResult GetResult()
         {
                 return new ExceptionMetricResult(ExceptionName,
-                                             ExceptioType,
-                                             _metricIdentifier,
-                                             _metricType);
+                                                 ExceptioType,
+                                                 _metricIdentifier,
+                                                 _metricType);
         }
         public override void Stop()
         {
-
             base.Stop();
         }
     }
