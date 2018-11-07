@@ -15,7 +15,8 @@ namespace FlashTuna.Core.Common.Metric.Interfaces
         DateTime TimePoint { get; }
         double? Milliseconds { get; }
         MetricTypes MetricType { get; }
-        MetricKey MetricIdentifier { get; }
+        string ClassName { get; }
+        string MethodName { get; }
         string ToMetricString();
     }
 }

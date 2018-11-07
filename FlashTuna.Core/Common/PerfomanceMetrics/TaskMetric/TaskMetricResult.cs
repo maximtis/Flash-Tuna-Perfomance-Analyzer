@@ -13,20 +13,22 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
         public string Session { get; set; }
         public int ParallelTaskCount { get; set; }
 
-        DateTime _startTime, _endTime;
-        long _milliseconds;
-
-        public TaskMetricResult(long metricId,string session,int taskCount,MetricKey identifier, DateTime startTime, DateTime endTime, long milliseconds):
-            base(identifier, startTime, endTime, milliseconds)
+        public TaskMetricResult(string session,
+                                int parralelTaskCount,
+                                string className,
+                                string methodName,
+                                MetricTypes metricType) :
+            base(className,
+                 methodName,
+                 metricType)
         {
             Session = session;
-            ParallelTaskCount = taskCount;
+            ParallelTaskCount = parralelTaskCount;
         }
-
+       
         public override string ToMetricString()
         {
             return base.ToMetricString() + $"\n {Session} : {ParallelTaskCount}";
         }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using FlashTuna.Core.Common.Metric;
+﻿using FlashTuna.Core.Attributes.Common;
+using FlashTuna.Core.Common.Metric;
 using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric;
 using FlashTuna.Core.TimeLine;
@@ -10,31 +11,26 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
 {
     public class OperationMetricCall : BaseMetricCall
     {
-        public OperationMetric(string className,
-                              ITimeLine timeLine,
-                              string methodName = "Undefined Operation", 
-                              string tag = "Operation",
-                              string moduleName = "Undefned") : 
-                              base(className,MetricTypes.Operation, timeLine, methodName, tag, moduleName)
+        public OperationMetricCall(string className,
+                                   string methodName,
+                                   MetricTypes metricType,
+                                   ITimeLine timeLine) : 
+            base(className,
+                 methodName,
+                 MetricTypes.Operation,
+                 timeLine)
         {
         }
 
-        public override IMetricResult GetResult()
+        protected override IMetricResult GetResult()
         {
-            if (!isRunning)
-            {
-                return new OperationMetricResult(Identidier, 
-                    _startTime,
-                                             _endTime,
-                                             _stopwatch.ElapsedMilliseconds);
-            }
-            return null;
-            
+            return new OperationMetricResult(_metricIdentifier,
+                                             _metricType);
         }
 
-        public override string ToMetricString()
+        public override void Stop()
         {
-            return $"{_startTime.ToShortTimeString()} : {_endTime.ToShortTimeString()} ({_stopwatch.ElapsedMilliseconds})";
+            base.Stop();
         }
     }
 }

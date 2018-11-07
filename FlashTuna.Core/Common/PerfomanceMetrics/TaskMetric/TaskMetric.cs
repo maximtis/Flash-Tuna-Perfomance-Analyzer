@@ -8,7 +8,6 @@ using System.Text;
 
 namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
 {
-
     public class TaskMetric : BaseMetric 
     {
         public string Session { get { return SessionIdentifier.ToSessionString(); } }
@@ -24,36 +23,11 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric
 
         }
 
-        public override IMetricResult GetResult()
+        public override IMetricCall Start()
         {
-            if (!isRunning)
-            {
-                return new TaskMetricResult(MetricId,
-                                            Session,
-                                            ParallelTaskCount,
-                                            Identidier,
-                                            _startTime,
-                                            _endTime,
-                                            _stopwatch.ElapsedMilliseconds);
-            }
-            return null;
-            
-        }
-        public override void Start()
-        {
-            base.Start();
             TaskSessionMetadata.CurrentSession.ParallelTaskCount++;
-        }
-        public override void Stop()
-        {
-            base.Stop();
-            TaskSessionMetadata.CurrentSession.ParallelTaskCount--;
+            return new TaskMetricCall(Session, ParallelTaskCount, GetIdentidier(), MetricType, BoundedTimeLine);
         }
 
-        public override string ToMetricString()
-        {
-            return $"{_startTime.ToShortTimeString()} : {_endTime.ToShortTimeString()} ({_stopwatch.ElapsedMilliseconds})";
-
-        }
     }
 }

@@ -9,13 +9,19 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric
 {
     public class OperationMetricResult : BaseMetricResult
     {
-        DateTime _startTime, _endTime;
-        long _milliseconds;
-
-        public OperationMetricResult(MetricKey identifier,DateTime startTime,DateTime endTime, long milliseconds):
-            base(identifier,  startTime,  endTime,  milliseconds)
+        public OperationMetricResult(string className,
+                                     string methodName,
+                                     MetricTypes metricType) :
+            base(className,
+                 methodName,
+                 metricType)
         {
 
+        }
+
+        public override string ToMetricString()
+        {
+            return base.ToMetricString();
         }
     }
 }

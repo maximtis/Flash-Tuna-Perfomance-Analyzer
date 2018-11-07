@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlashTuna.Core.Common.PerfomanceMetrics;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -12,6 +13,7 @@ namespace FlashTuna.Core.Common.Metric.Interfaces
         string ClassName { get; set; }
         string Tag { get; set; }
         string ModuleName { get; set; }
+        MetricTypes MetricType { get; set; }
         IMetricCall Start();
     }
 }

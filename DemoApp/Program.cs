@@ -12,24 +12,41 @@ using System.Collections.Generic;
 namespace DemoApp
 {
 
-    class ProductionClassA : MeteredClass
+    public class DataBaseRepository : MeteredClass
     {
-        public ProductionClassA() : base(typeof(ProductionClassA))
-        {
+        public DBContext db;
 
-        }
-        [OperationMetric(nameof(ProductionClassA))]
-        public void LongOperation()
+        public DataBaseRepository() : base(typeof(DataBaseRepository))
         {
-            int i = 10;
-            while (i > 0)
+            db = new DBContext();
+        }
+
+        [TaskMetric(nameof(DataBaseRepository))]
+        [OperationMetric(nameof(DataBaseRepository))]
+        public List<User> GetUsersAgeGreterThan(int targetAge)
+        {
+            using (StartRecording())
             {
-                Console.WriteLine("Do Iteration!");
-                Thread.Sleep(1000);
-                i--;
+                var users = db.Users.Where(user => user.Age > targetAge).ToList();
+                return users;
+            }
+        }
+
+        [TaskMetric(nameof(DataBaseRepository))]
+        [OperationMetric(nameof(DataBaseRepository))]
+        [ExceptionsMetric(nameof(DataBaseRepository))]
+        public User GetUserByName(string name)
+        {
+            using (StartRecording())
+            {
+                var targetUser = db.Users.Single(user => user.Name == name);
+                return targetUser;
             }
         }
     }
+
+
+
 
     class ProductionClassB : MeteredClass
     {
@@ -76,10 +93,10 @@ namespace DemoApp
         {
             FlashTuna.Core.Configuration.FlashTuna.Initialize(
                             FlashTuna.Core.Configuration.FlashTuna.CreateBuilder()
-                                                            .SetStorage(null)
-                                                            .SetModuleName("Test Module")
-                                                            .SetTargetAssembly(typeof(Program).Assembly)
-                                                            .Build());
+                                                .SetStorage(null)
+                                                .SetModuleName("Test Module")
+                                                .SetTargetAssembly(typeof(Program).Assembly)
+                                                .Build());
 
             ProductionClassA classA = new ProductionClassA();
             //classA.LongOperation();

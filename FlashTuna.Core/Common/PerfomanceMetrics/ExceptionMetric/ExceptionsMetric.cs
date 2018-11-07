@@ -11,7 +11,7 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.ExceptionMetric
     public class ExceptionMetric : BaseMetric
     {
         public string ExceptionName { get; set; }
-        public string ExceptioType { get; set; }
+        public string ExceptionType { get; set; }
 
         public ExceptionMetric(string exceptionName,
                                string exceptionType,
@@ -23,13 +23,13 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.ExceptionMetric
                                base(className, MetricTypes.Exception, timeLine, methodName, tag, moduleName)
         {
             ExceptionName = exceptionName;
-            ExceptioType = exceptionType;
+            ExceptionType = exceptionType;
         }
 
         
         public override IMetricCall Start()
         {
-            return new ExceptionMetricCall(ExceptionName, ExceptioType, GetIdentidier(), MetricType, BoundedTimeLine);
+            return new ExceptionMetricCall(ExceptionName, ExceptionType, GetIdentidier(), MetricType, BoundedTimeLine);
         }
     }
 }
