@@ -1,8 +1,4 @@
 ﻿using FlashTuna.Core.Common.Metric.Interfaces;
-using FlashTuna.Core.Common.PerfomanceMetrics;
-using FlashTuna.Core.Common.PerfomanceMetrics.ExceptionMetric;
-using FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric;
-using FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric;
 using FlashTuna.Core.TimeLine;
 using System;
 using System.Collections.Generic;
@@ -12,8 +8,7 @@ namespace FlashTuna.Core.Common.Metric.MetricsFactory
 {
     public class MetricsFactory
     {
-        public static BaseMetric CreateMetric(string className,
-                                              MetricTypes metricType,
+        public static PerfomanceMetric CreateMetric(string className,
                                               string methodName,
                                               string tag)
         {

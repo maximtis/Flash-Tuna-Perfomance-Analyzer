@@ -63,7 +63,7 @@ namespace FlashTuna.Core.TimeLine
         // Sync code and database at the start.
         public async Task<IMetricCall> StartMetricAsync(string className, string methodName)
         {
-            List<BaseMetric> foundMetrics = new List<BaseMetric>();
+            List<PerfomanceMetric> foundMetrics = new List<PerfomanceMetric>();
             foundMetrics.Add(await db.OperationMetrics.SingleOrDefaultAsync(x => x.ClassName == className && x.MethodName == methodName));
             foundMetrics.Add(await db.TaskMetrics.SingleOrDefaultAsync(x => x.ClassName == className && x.MethodName == methodName));
             foundMetrics.Add(await db.ExceptionMetrics.SingleOrDefaultAsync(x => x.ClassName == className && x.MethodName == methodName));

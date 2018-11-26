@@ -13,19 +13,17 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
     {
         public OperationMetricCall(string className,
                                    string methodName,
-                                   MetricTypes metricType,
                                    ITimeLine timeLine) : 
             base(className,
                  methodName,
-                 MetricTypes.Operation,
                  timeLine)
         {
         }
 
         protected override IMetricResult GetResult()
         {
-            return new OperationMetricResult(_metricIdentifier,
-                                             _metricType);
+            return new OperationMetricResult(_className,
+                                             _methodName);
         }
 
         public override void Stop()

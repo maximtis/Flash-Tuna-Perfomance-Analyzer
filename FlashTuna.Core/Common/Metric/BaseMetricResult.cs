@@ -12,38 +12,36 @@ namespace FlashTuna.Core.Common.Metric
     {
 
         public BaseMetricResult(string className,
-                                string methodName,
-                                MetricTypes metricType)
+                                string methodName)
         {
-            MetricType = metricType;
-            _timePoint = DateTime.Now;
-            _metricResultStatus = MetricResultStatus.Started;
+            TimePoint = DateTime.Now;
+            MetricResultStatus = MetricResultStatus.Started;
 
             if (StartTimePoint.HasValue)
             {
-                TimeSpan span = _timePoint.Subtract(StartTimePoint.Value);
-                _milliseconds = span.TotalMilliseconds;
+                TimeSpan span = TimePoint.Subtract(StartTimePoint.Value);
+                Milliseconds = span.TotalMilliseconds;
             }
             //Collect Start Data
         }
-
-        private DateTime? _startTimePoint;
-        private MetricResultStatus _metricResultStatus;
-        private DateTime _timePoint;
-        private MetricTypes _metricType;
-        private double? _milliseconds;
+        public string Tag { get; set; }
+        public string ModuleName { get; set; }
         [Key]
-        public long MetricResultId { get; set; }
+        public long MetricId { get; set; }
+        public string ClassName { get; set; }
+        public string MethodName { get; set; }
 
-        public DateTime TimePoint { get { return _timePoint; } }
-        public double? Milliseconds { get { return _milliseconds; } }
-        public MetricResultStatus MetricResultStatus { get => _metricResultStatus; }
-        public MetricTypes MetricType { get => _metricType; set => _metricType = value; }
-        public DateTime? StartTimePoint { get => _startTimePoint; set => _startTimePoint = value; }
+        [Key]
+        public long Id { get; set; }
+
+        public DateTime TimePoint { get; set; }
+        public double? Milliseconds { get; set; }
+        public MetricResultStatus MetricResultStatus { get; set; }
+        public DateTime? StartTimePoint { get; set; }
 
         public virtual string ToMetricString()
         {
-            return $"Status:{_metricResultStatus.ToString()} - {MetricIdentifier.ClassName}:{MetricIdentifier.MethodName} \n {TimePoint.ToShortTimeString()} ({Milliseconds} ms - {(Milliseconds.HasValue? (Milliseconds / 1000):0)} s)";
+            return $"Status:{MetricResultStatus.ToString()} - {ClassName}:{MethodName} \n {TimePoint.ToShortTimeString()} ({Milliseconds} ms - {(Milliseconds.HasValue? (Milliseconds / 1000):0)} s)";
         }
     }
 }

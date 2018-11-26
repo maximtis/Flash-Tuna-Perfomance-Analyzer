@@ -1,5 +1,4 @@
 ﻿using FlashTuna.Core.Attributes.Common;
-using FlashTuna.Core.Common.PerfomanceMetrics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,14 +8,13 @@ namespace FlashTuna.Core.Common.Metric.Interfaces
 {
     public interface IMetricResult
     {
-        [Key]
-        long MetricResultId { get; set; }
         MetricResultStatus MetricResultStatus { get; }
-        DateTime TimePoint { get; }
-        double? Milliseconds { get; }
-        MetricTypes MetricType { get; }
-        string ClassName { get; }
-        string MethodName { get; }
+        DateTime TimePoint { get; set; }
+        double? Milliseconds { get; set; }
+        string ClassName { get; set; }
+        string MethodName { get; set; }
+        string Tag { get; set; }
+        string ModuleName { get; set; }
         string ToMetricString();
     }
 }
