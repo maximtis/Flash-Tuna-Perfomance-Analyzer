@@ -11,8 +11,10 @@ namespace FlashTuna.Core.Common.Metric
     public abstract class BaseMetricResult: IMetricResult
     {
 
-        public BaseMetricResult(string className,
-                                string methodName)
+        public BaseMetricResult(string moduleName,
+                                string className,
+                                string methodName,
+                                string tag)
         {
             TimePoint = DateTime.Now;
             MetricResultStatus = MetricResultStatus.Started;

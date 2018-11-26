@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 
 namespace FlashTuna.Core.Common.Metric
 {
-    public abstract class PerfomanceMetric : IMetric
+    public abstract class BaseMetric : IMetric
     {
-        public PerfomanceMetric(string className,
+        public BaseMetric(string className,
                           ITimeLine timeLine,
                           string methodName = "Undefined",
                           string tag = "",

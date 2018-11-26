@@ -23,9 +23,9 @@ namespace FlashTuna.Core.Common.Metric
             _derivedClassName = derivedClass;
         }
 
-        protected IMetricCall StartRecording([CallerMemberName] string methodName = null)
+        protected async Task<IMetricCall> StartRecording([CallerMemberName] string methodName = null)
         {
-            return _timeLine.StartMetricAsync(_derivedClassName.Name, methodName);
+            return await _timeLine.StartMetricAsync(_derivedClassName.Name, methodName);
         }
 
         #region IDisposable Support

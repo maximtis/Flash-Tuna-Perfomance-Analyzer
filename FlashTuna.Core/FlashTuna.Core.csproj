@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Modules\Errors\" />
-    <Folder Include="Modules\NewFolder\" />
     <Folder Include="Modules\Usage\" />
     <Folder Include="Modules\Speed\" />
     <Folder Include="Modules\Perfomance\" />
