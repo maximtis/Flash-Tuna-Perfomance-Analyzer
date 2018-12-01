@@ -13,7 +13,6 @@ namespace FlashTuna.Core.Configuration
 {
     public static class FlashTuna
     {
-
         static FlashTunaBuilder _builder;
         static ITimeLine _timeLine;
         private static IEnumerable<MethodInfo> _meteredMethods;

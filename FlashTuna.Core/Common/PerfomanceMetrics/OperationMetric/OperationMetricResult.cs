@@ -9,12 +9,14 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric
 {
     public class OperationMetricResult : BaseMetricResult
     {
-        public OperationMetricResult(string className,
+        public OperationMetricResult(string moduleName,
+                                     string className,
                                      string methodName,
-                                     MetricTypes metricType) :
-            base(className,
+                                     string tag) :
+            base(moduleName,
+                 className,
                  methodName,
-                 metricType)
+                 tag)
         {
 
         }

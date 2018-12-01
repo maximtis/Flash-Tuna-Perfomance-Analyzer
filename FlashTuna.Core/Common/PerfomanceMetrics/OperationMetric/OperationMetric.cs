@@ -5,6 +5,7 @@ using FlashTuna.Core.TimeLine;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
 {
@@ -15,13 +16,13 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
                               string methodName = "Undefined Operation", 
                               string tag = "Operation",
                               string moduleName = "Undefned") : 
-                              base(className,MetricTypes.Operation, timeLine, methodName, tag, moduleName)
+                              base(className, timeLine, methodName, tag, moduleName)
         {
         }
 
-        public override IMetricCall Start()
+        public async override Task<IMetricCall> StartAsync()
         {
-            return new OperationMetricCall(GetIdentidier(), MetricType, BoundedTimeLine);
+            return new OperationMetricCall(ModuleName,ClassName,MethodName,Tag, BoundedTimeLine);
         }
     }
 }

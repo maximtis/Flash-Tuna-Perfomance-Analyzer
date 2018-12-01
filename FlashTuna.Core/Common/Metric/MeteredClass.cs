@@ -16,18 +16,16 @@ namespace FlashTuna.Core.Common.Metric
     {
         private ITimeLine _timeLine;
         private Type _derivedClassName;
-       // private List<MethodInfo> _meteredMethods;
 
         public MeteredClass(Type derivedClass)
         {
             _timeLine = FlashTuna.Core.Configuration.FlashTuna.CurrentTimeLine;
             _derivedClassName = derivedClass;
-            //_meteredMethods = FlashTuna.Core.Configuration.FlashTuna.MeteredMethods.Where(x=>derivedClass.Name == x.DeclaringType.Name).ToList();
         }
 
-        protected IMetricCall StartRecording([CallerMemberName] string methodName = null)
+        protected async Task<IMetricCall> StartRecording([CallerMemberName] string methodName = null)
         {
-            return _timeLine.StartMetricAsync(_derivedClassName.Name, methodName);
+            return await _timeLine.StartMetricAsync(_derivedClassName.Name, methodName);
         }
 
         #region IDisposable Support

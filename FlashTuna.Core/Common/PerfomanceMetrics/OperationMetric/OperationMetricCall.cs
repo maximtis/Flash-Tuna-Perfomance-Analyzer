@@ -10,22 +10,26 @@ using System.Text;
 namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
 {
     public class OperationMetricCall : BaseMetricCall
-    {
-        public OperationMetricCall(string className,
+    {                    
+        public OperationMetricCall(string moduleName, 
+                                   string className,
                                    string methodName,
-                                   MetricTypes metricType,
-                                   ITimeLine timeLine) : 
-            base(className,
-                 methodName,
-                 MetricTypes.Operation,
+                                   string tag,
+                                   ITimeLine timeLine): 
+            base(moduleName,
+                 className,
+                 methodName, 
+                 tag,
                  timeLine)
         {
         }
 
         protected override IMetricResult GetResult()
         {
-            return new OperationMetricResult(_metricIdentifier,
-                                             _metricType);
+            return new OperationMetricResult(_moduleName,
+                                             _className,
+                                             _methodName,
+                                             _tag);
         }
 
         public override void Stop()

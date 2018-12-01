@@ -8,107 +8,32 @@ using FlashTuna.Core.Common.Metric;
 using FlashTuna.Core.Attributes;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using FlashTuna.Core.Storage.DataBase;
 
 namespace DemoApp
 {
-
-    public class DataBaseRepository : MeteredClass
+    public class Program
     {
-        public DBContext db;
-
-        public DataBaseRepository() : base(typeof(DataBaseRepository))
-        {
-            db = new DBContext();
-        }
-
-        [TaskMetric(nameof(DataBaseRepository))]
-        [OperationMetric(nameof(DataBaseRepository))]
-        public List<User> GetUsersAgeGreterThan(int targetAge)
-        {
-            using (StartRecording())
-            {
-                var users = db.Users.Where(user => user.Age > targetAge).ToList();
-                return users;
-            }
-        }
-
-        [TaskMetric(nameof(DataBaseRepository))]
-        [OperationMetric(nameof(DataBaseRepository))]
-        [ExceptionsMetric(nameof(DataBaseRepository))]
-        public User GetUserByName(string name)
-        {
-            using (StartRecording())
-            {
-                var targetUser = db.Users.Single(user => user.Name == name);
-                return targetUser;
-            }
-        }
-    }
-
-
-
-
-    class ProductionClassB : MeteredClass
-    {
-        public ProductionClassB() : base(typeof(ProductionClassB))
-        {
-
-        }
-
-        [OperationMetric(nameof(ProductionClassB))]
-        public void LongOperation()
-        {
-            StartRecording();
-            int i = 10;
-            while (i > 0)
-            {
-                Console.WriteLine("Do Iteration!");
-                Thread.Sleep(1000);
-                i--;
-            }
-            StopRecording();
-        }
-
-        [OperationMetric(nameof(ProductionClassB))]
-        public void ShortOperation()
-        {
-            int i = 10;
-            StartRecording();
-            while (i > 0)
-            {
-                Console.WriteLine("Do Iteration!");
-                Thread.Sleep(100);
-                i--;
-            }
-
-            StopRecording();
-        }
-
-    }
-
-
-    class Program
-    {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             FlashTuna.Core.Configuration.FlashTuna.Initialize(
                             FlashTuna.Core.Configuration.FlashTuna.CreateBuilder()
-                                                .SetStorage(null)
+                                                .SetStorage(new FlashTunaDbContext())
                                                 .SetModuleName("Test Module")
                                                 .SetTargetAssembly(typeof(Program).Assembly)
                                                 .Build());
 
             ProductionClassA classA = new ProductionClassA();
-            //classA.LongOperation();
+            classA.LongOperation().Wait();
 
             ProductionClassB classB = new ProductionClassB();
             List<Task> tasks = new List<Task>();
             for (int i = 0;i < 10; i++)
             {
-                tasks.Add(Task.Run(() => classB.ShortOperation()));
+                tasks.Add(Task.Run(async () => await classB.ShortOperation()));
             }
             Task.WaitAll(tasks.ToArray());
-            //classB.LongOperation();
+            classB.ShortOperation().Wait();
 
             print();
 
