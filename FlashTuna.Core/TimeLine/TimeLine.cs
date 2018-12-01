@@ -1,10 +1,8 @@
 ﻿using FlashTuna.Core.Common.Metric;
 using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics;
-using FlashTuna.Core.Common.PerfomanceMetrics.ExceptionMetric;
 using FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric;
 using FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric;
-using FlashTuna.Core.Common.PerfomanceMetrics.TaskMetric;
 using FlashTuna.Core.Storage.DataBase;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace FlashTuna.Core.TimeLine
 { 
-
     internal sealed class TimeLine : ITimeLine
     {
         private FlashTunaDbContext db = null;
@@ -32,8 +29,8 @@ namespace FlashTuna.Core.TimeLine
 
         public async Task BoundMetric(IMetric metric)
         {
-            await db.OperationMetrics.AddAsync(metric as OperationMetric);
-            await db.SaveChangesAsync();
+            _metrics.Add(metric as OperationMetric);
+            await Task.FromResult(0);
         }
 
         public async Task CollectMetricResult(IMetricResult metricResult)
@@ -49,7 +46,7 @@ namespace FlashTuna.Core.TimeLine
 
         public async Task<IMetricCall> StartMetricAsync(string className, string methodName)
         {
-            var targetMetric = await db.OperationMetrics.SingleOrDefaultAsync(x => x.ClassName == className && x.MethodName == methodName);
+            var targetMetric = _metrics.SingleOrDefault(x => x.ClassName == className && x.MethodName == methodName);
             return await targetMetric.StartAsync();
         }
     }

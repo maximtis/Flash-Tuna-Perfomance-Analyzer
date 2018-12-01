@@ -18,7 +18,10 @@ namespace FlashTuna.Core.Common.Metric
         {
             TimePoint = DateTime.Now;
             MetricResultStatus = MetricResultStatus.Started;
-
+            ModuleName = moduleName;
+            ClassName = className;
+            MethodName = methodName;
+            Tag = tag;
             if (StartTimePoint.HasValue)
             {
                 TimeSpan span = TimePoint.Subtract(StartTimePoint.Value);
@@ -28,8 +31,6 @@ namespace FlashTuna.Core.Common.Metric
         }
         public string Tag { get; set; }
         public string ModuleName { get; set; }
-        [Key]
-        public long MetricId { get; set; }
         public string ClassName { get; set; }
         public string MethodName { get; set; }
 

@@ -22,7 +22,7 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
 
         public async override Task<IMetricCall> StartAsync()
         {
-            return new OperationMetricCall(ClassName,MethodName, BoundedTimeLine);
+            return new OperationMetricCall(ModuleName,ClassName,MethodName,Tag, BoundedTimeLine);
         }
     }
 }

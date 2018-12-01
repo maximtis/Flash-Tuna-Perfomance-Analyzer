@@ -8,31 +8,32 @@ using FlashTuna.Core.Common.Metric;
 using FlashTuna.Core.Attributes;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using FlashTuna.Core.Storage.DataBase;
 
 namespace DemoApp
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             FlashTuna.Core.Configuration.FlashTuna.Initialize(
                             FlashTuna.Core.Configuration.FlashTuna.CreateBuilder()
-                                                .SetStorage(null)
+                                                .SetStorage(new FlashTunaDbContext())
                                                 .SetModuleName("Test Module")
                                                 .SetTargetAssembly(typeof(Program).Assembly)
                                                 .Build());
 
             ProductionClassA classA = new ProductionClassA();
-            //classA.LongOperation();
+            classA.LongOperation().Wait();
 
             ProductionClassB classB = new ProductionClassB();
             List<Task> tasks = new List<Task>();
             for (int i = 0;i < 10; i++)
             {
-                tasks.Add(Task.Run(() => classB.ShortOperation()));
+                tasks.Add(Task.Run(async () => await classB.ShortOperation()));
             }
             Task.WaitAll(tasks.ToArray());
-            //classB.LongOperation();
+            classB.ShortOperation().Wait();
 
             print();
 

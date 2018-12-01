@@ -10,8 +10,10 @@ namespace FlashTuna.Core.Common.Metric
 {
     public abstract class BaseMetricCall : IMetricCall, IDisposable
     {
-        public BaseMetricCall(string className,
+        public BaseMetricCall(string moduleName,
+                              string className,
                               string methodName,
+                              string tag,
                               ITimeLine timeLine)
         {
             _boundedTimeLine = timeLine;
@@ -19,15 +21,18 @@ namespace FlashTuna.Core.Common.Metric
             _methodName = methodName;
             _timePoint = DateTime.Now;
             _metricResultStatus = MetricResultStatus.Started;
+
             //Collect Start Data
             _boundedTimeLine.CollectMetricResult(GetResult());
         }
 
         protected MetricResultStatus _metricResultStatus;
+        protected ITimeLine _boundedTimeLine;
+        protected DateTime _timePoint;
+        protected string _moduleName;
         protected string _className;
         protected string _methodName;
-        protected DateTime _timePoint;
-        protected ITimeLine _boundedTimeLine;
+        protected string _tag;
 
         public virtual void Stop()
         {

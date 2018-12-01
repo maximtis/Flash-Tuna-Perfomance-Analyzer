@@ -39,7 +39,7 @@ namespace FlashTuna.Core.Common.Metric
         public string Tag { get; set; }
         public string ModuleName { get; set; }
         [Key]
-        public long MetricId { get; set ; }
+        public long Id { get; set ; }
         public string ClassName { get; set ; }
         public string MethodName { get; set; }
 
