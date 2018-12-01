@@ -8,13 +8,14 @@ Completed:
 * Opertion Metric
 * Exception Metric
 * Task Parralel Metric
+* SQLite storage provider (Entity Framework Core)
 
 In progress:
 * Resource Usage Metric
 
 Not Completed:
 * Reporting Service
-* SQLite storage provider (Entity Framework Core)
+
 * .NET Core API
 * Angular 6 Front-End Monitoring Panel
 
