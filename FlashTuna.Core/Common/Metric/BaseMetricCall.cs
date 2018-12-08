@@ -21,9 +21,9 @@ namespace FlashTuna.Core.Common.Metric
             _methodName = methodName;
             _timePoint = DateTime.Now;
             _metricResultStatus = MetricResultStatus.Started;
-
+            _callId = Guid.NewGuid();
             //Collect Start Data
-            _boundedTimeLine.CollectMetricResult(GetResult());
+            _boundedTimeLine.CollectMetricResult(GetResult(MetricResultStatus.Started,_callId));
         }
 
         protected MetricResultStatus _metricResultStatus;
@@ -33,12 +33,13 @@ namespace FlashTuna.Core.Common.Metric
         protected string _className;
         protected string _methodName;
         protected string _tag;
+        protected Guid _callId;
 
         public virtual void Stop()
         {
-            _boundedTimeLine.CollectMetricResult(GetResult());
+            _boundedTimeLine.CollectMetricResult(GetResult(MetricResultStatus.Stopped, _callId));
         }
-        protected abstract IMetricResult GetResult();
+        protected abstract IMetricResult GetResult(MetricResultStatus status,Guid callId);
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -46,16 +47,14 @@ namespace FlashTuna.Core.Common.Metric
 
         protected virtual void Dispose(bool disposing)
         {
+            
             if (!disposedValue)
             {
                 if (disposing)
                 {
                     // TODO: dispose managed state (managed objects).
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
+                Stop();
                 disposedValue = true;
             }
         }

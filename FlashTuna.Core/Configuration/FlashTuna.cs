@@ -1,5 +1,6 @@
 ﻿using FlashTuna.Core.Attributes;
 using FlashTuna.Core.Attributes.Common;
+using FlashTuna.Core.Storage;
 using FlashTuna.Core.Storage.DataBase;
 using FlashTuna.Core.TimeLine;
 using System;
@@ -11,9 +12,10 @@ using System.Threading.Tasks;
 
 namespace FlashTuna.Core.Configuration
 {
-    public static class FlashTuna
+    public static class FlashTunaAnalyzer
     {
         static FlashTunaBuilder _builder;
+        static MetricsResultRepository _metricsResultRepository;
         static ITimeLine _timeLine;
         private static IEnumerable<MethodInfo> _meteredMethods;
         public static FlashTunaBuilder CreateBuilder()
@@ -23,6 +25,7 @@ namespace FlashTuna.Core.Configuration
         public static void Initialize()
         {
             _timeLine = new TimeLine.TimeLine();
+            _metricsResultRepository = new MetricsResultRepository();
         }
 
         public static void Initialize(FlashTunaBuilder builder)
@@ -35,13 +38,21 @@ namespace FlashTuna.Core.Configuration
         public static async Task<string> PrintMetricsResult()
         {
             string data = "";
-            var completed = await CurrentTimeLine.ExtractMetricResult();
-            foreach (var item in completed)
-            {
-                data += item.ToMetricString() + Environment.NewLine;
-            }
-            return data;
+            //var completed = await CurrentTimeLine.ExtractMetricResult();
+            //foreach (var item in completed)
+            //{
+            //    data += item.ToMetricString() + Environment.NewLine;
+            //}
+            return await Task.FromResult(data);
         }
+        public static MetricsResultRepository Results
+        {
+            get
+            {
+                return _metricsResultRepository;
+            }
+        }
+
         private static void InitializeMetrics()
         {
             Assembly clientAssembly = _builder.TargetAssembly;
@@ -79,11 +90,11 @@ namespace FlashTuna.Core.Configuration
 
             private Assembly _targetAssembly;
 
-            public FlashTunaBuilder SetStorage(IFlashTunaDbContext storageProvider)
+            public FlashTunaBuilder SetStorage()
             {
                 if (_dbConxtext != null)
                     throw new InvalidOperationException("Set Storage can be called only one time, and cannot be changed dynamically!");
-                _dbConxtext = _dbConxtext??storageProvider;
+                _dbConxtext = _dbConxtext?? new FlashTunaDbContext();
                 return this;
             }
             public FlashTunaBuilder SetModuleName(string moduleName)

@@ -24,12 +24,14 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric
         {
         }
 
-        protected override IMetricResult GetResult()
+        protected override IMetricResult GetResult(MetricResultStatus status, Guid callId)
         {
             return new OperationMetricResult(_moduleName,
                                              _className,
                                              _methodName,
-                                             _tag);
+                                             _tag,
+                                             callId,
+                                             status);
         }
 
         public override void Stop()

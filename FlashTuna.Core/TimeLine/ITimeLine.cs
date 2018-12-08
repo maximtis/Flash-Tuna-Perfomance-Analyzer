@@ -2,6 +2,7 @@
 using FlashTuna.Core.Common.PerfomanceMetrics;
 using FlashTuna.Core.Storage.DataBase;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FlashTuna.Core.TimeLine
@@ -11,7 +12,6 @@ namespace FlashTuna.Core.TimeLine
         Task<IMetricCall> StartMetricAsync(string className, string methodName);
         Task BoundMetric(IMetric metric);
         Task CollectMetricResult(IMetricResult metric);
-        Task<IEnumerable<IMetricResult>> ExtractMetricResult();
         void SetStorageProvider(IFlashTunaDbContext dbContext);
     }
 }

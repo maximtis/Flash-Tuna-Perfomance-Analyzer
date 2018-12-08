@@ -15,10 +15,10 @@ namespace FlashTuna.Core.Common.Metric.MetricsFactory
         {
 
                     return new OperationMetric(className, 
-                                               FlashTuna.Core.Configuration.FlashTuna.CurrentTimeLine,
+                                               FlashTuna.Core.Configuration.FlashTunaAnalyzer.CurrentTimeLine,
                                                methodName,
                                                tag,
-                                               FlashTuna.Core.Configuration.FlashTuna.ModuleName);
+                                               FlashTuna.Core.Configuration.FlashTunaAnalyzer.ModuleName);
                
         }
     }

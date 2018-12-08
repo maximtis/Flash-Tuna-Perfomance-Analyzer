@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FlashTuna.Core.Storage.DataBase;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -53,6 +54,13 @@ namespace FlashTunaPerfomanceAnalyzer
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+
+            FlashTuna.Core.Configuration.FlashTunaAnalyzer.Initialize(
+                            FlashTuna.Core.Configuration.FlashTunaAnalyzer.CreateBuilder()
+                                                .SetStorage()
+                                                .SetModuleName("Test Module")
+                                                .SetTargetAssembly(typeof(Program).Assembly)
+                                                .Build());
         }
     }
 }

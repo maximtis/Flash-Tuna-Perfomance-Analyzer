@@ -19,7 +19,7 @@ namespace FlashTuna.Core.Common.Metric
 
         public MeteredClass(Type derivedClass)
         {
-            _timeLine = FlashTuna.Core.Configuration.FlashTuna.CurrentTimeLine;
+            _timeLine = FlashTuna.Core.Configuration.FlashTunaAnalyzer.CurrentTimeLine;
             _derivedClassName = derivedClass;
         }
 

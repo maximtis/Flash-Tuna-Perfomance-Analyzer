@@ -14,19 +14,16 @@ namespace FlashTuna.Core.Common.Metric
         public BaseMetricResult(string moduleName,
                                 string className,
                                 string methodName,
-                                string tag)
+                                string tag,
+                                Guid callId,
+                                MetricResultStatus status)
         {
             TimePoint = DateTime.Now;
-            MetricResultStatus = MetricResultStatus.Started;
+            MetricResultStatus = status;
             ModuleName = moduleName;
             ClassName = className;
             MethodName = methodName;
             Tag = tag;
-            if (StartTimePoint.HasValue)
-            {
-                TimeSpan span = TimePoint.Subtract(StartTimePoint.Value);
-                Milliseconds = span.TotalMilliseconds;
-            }
             //Collect Start Data
         }
         public string Tag { get; set; }
@@ -36,11 +33,10 @@ namespace FlashTuna.Core.Common.Metric
 
         [Key]
         public long Id { get; set; }
-
+        public long CallId { get; set; }
         public DateTime TimePoint { get; set; }
         public double? Milliseconds { get; set; }
         public MetricResultStatus MetricResultStatus { get; set; }
-        public DateTime? StartTimePoint { get; set; }
 
         public virtual string ToMetricString()
         {

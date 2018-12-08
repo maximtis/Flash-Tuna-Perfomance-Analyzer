@@ -20,7 +20,7 @@ namespace FlashTuna.Core.TimeLine
         private List<IMetricResult> _metricsResults = new List<IMetricResult>();
 
         public void SetStorageProvider(IFlashTunaDbContext storageProvider){
-            db = storageProvider as FlashTunaDbContext;
+             //db = storageProvider as FlashTunaDbContext;
         }
 
         public TimeLine()
@@ -35,13 +35,12 @@ namespace FlashTuna.Core.TimeLine
 
         public async Task CollectMetricResult(IMetricResult metricResult)
         {
-            await db.OperationMetricResults.AddAsync(metricResult as OperationMetricResult);
-            await db.SaveChangesAsync();
-        }
-
-        public async Task<IEnumerable<IMetricResult>> ExtractMetricResult()
-        {
-            return await db.OperationMetricResults?.OrderBy(x => x.TimePoint).ToListAsync(); 
+            using(FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                await db.OperationMetricResults.AddAsync(metricResult as OperationMetricResult);
+                await db.SaveChangesAsync();
+            }
+            
         }
 
         public async Task<IMetricCall> StartMetricAsync(string className, string methodName)

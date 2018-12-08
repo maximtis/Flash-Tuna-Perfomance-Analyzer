@@ -10,7 +10,6 @@ namespace FlashTuna.Core.Common.Metric.Interfaces
     {
         MetricResultStatus MetricResultStatus { get; }
         DateTime TimePoint { get; set; }
-        double? Milliseconds { get; set; }
         string ClassName { get; set; }
         string MethodName { get; set; }
         string Tag { get; set; }

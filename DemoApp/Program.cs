@@ -16,9 +16,9 @@ namespace DemoApp
     {
         public static void Main(string[] args)
         {
-            FlashTuna.Core.Configuration.FlashTuna.Initialize(
-                            FlashTuna.Core.Configuration.FlashTuna.CreateBuilder()
-                                                .SetStorage(new FlashTunaDbContext())
+            FlashTuna.Core.Configuration.FlashTunaAnalyzer.Initialize(
+                            FlashTuna.Core.Configuration.FlashTunaAnalyzer.CreateBuilder()
+                                                .SetStorage()
                                                 .SetModuleName("Test Module")
                                                 .SetTargetAssembly(typeof(Program).Assembly)
                                                 .Build());
@@ -41,7 +41,7 @@ namespace DemoApp
 
         static void print()
         {
-            var data = FlashTuna.Core.Configuration.FlashTuna.PrintMetricsResult().Result;
+            var data = FlashTuna.Core.Configuration.FlashTunaAnalyzer.PrintMetricsResult().Result;
             Console.WriteLine(data);
             Console.ReadKey();
         }
