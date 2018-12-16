@@ -61,7 +61,9 @@
   },
   "dependencies": {
     "@types/chart.js": "^2.7.40",
+    "@types/underscore": "^1.8.9",
     "chart.js": "^2.7.3",
-    "ng2-charts": "^1.6.0"
+    "ng2-charts": "^1.6.0",
+    "underscore": "^1.9.1"
   }
 }

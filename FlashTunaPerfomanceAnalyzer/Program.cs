@@ -20,6 +20,7 @@ namespace FlashTunaPerfomanceAnalyzer
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://192.168.31.94:5000")
                 .Build();
     }
 }

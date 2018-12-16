@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace FlashTunaPerfomanceAnalyzer.Classes.Models
 {
-    public class MetricsResultsViewModel
+    public class MetricsResultsRequest
     {
         [Required]
         public DateTime PeriodFrom { get; set; }
-        public DateTime? PeriodTo { get; set; }
+        public DateTime PeriodTo { get; set; }
+        public string MethodName { get; set; }
     }
 }
