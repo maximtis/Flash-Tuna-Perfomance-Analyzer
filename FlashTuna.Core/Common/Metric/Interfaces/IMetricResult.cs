@@ -8,12 +8,13 @@ namespace FlashTuna.Core.Common.Metric.Interfaces
 {
     public interface IMetricResult
     {
-        MetricResultStatus MetricResultStatus { get; }
+        int MetricResultStatus { get; }
         DateTime TimePoint { get; set; }
         string ClassName { get; set; }
         string MethodName { get; set; }
         string Tag { get; set; }
         string ModuleName { get; set; }
         string ToMetricString();
+        Guid CallId { get; set; }
     }
 }

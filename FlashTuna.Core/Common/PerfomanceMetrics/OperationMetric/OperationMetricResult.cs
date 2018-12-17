@@ -7,32 +7,26 @@ using System.Text;
 
 namespace FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric
 {
-    public class MetricResultViewModel
-    {
-        public string Tag { get; set; }
-        public string ModuleName { get; set; }
-        public string ClassName { get; set; }
-        public string MethodName { get; set; }
-        public long Milliseconds { get; set; }
-        public DateTime StartPoint { get; set; }
-        public DateTime EndPoint { get; set; }
-        public long Id { get; set; }
-    } 
 
     public class OperationMetricResult : BaseMetricResult
     {
-        public OperationMetricResult(string moduleName,
+        public OperationMetricResult() : base()
+        {
+            
+        }
+        public OperationMetricResult(int status,
+                                     string moduleName,
                                      string className,
                                      string methodName,
                                      string tag,
-                                     Guid callId,
-                                     MetricResultStatus status) :
-            base(moduleName,
+                                     Guid callId
+                                     ) :
+            base(status,
+                 moduleName,
                  className,
                  methodName,
                  tag,
-                 callId,
-                 status)
+                 callId)
         {
 
         }

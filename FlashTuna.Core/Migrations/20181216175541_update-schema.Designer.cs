@@ -9,19 +9,21 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlashTuna.Core.Migrations
 {
     [DbContext(typeof(FlashTunaDbContext))]
-    [Migration("20181201085534_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20181216175541_update-schema")]
+    partial class updateschema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
             modelBuilder.Entity("FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric.OperationMetricResult", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("CallId");
 
                     b.Property<string>("ClassName");
 
@@ -32,8 +34,6 @@ namespace FlashTuna.Core.Migrations
                     b.Property<double?>("Milliseconds");
 
                     b.Property<string>("ModuleName");
-
-                    b.Property<DateTime?>("StartTimePoint");
 
                     b.Property<string>("Tag");
 

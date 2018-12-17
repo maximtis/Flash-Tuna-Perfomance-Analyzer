@@ -2,25 +2,34 @@ import { Component } from '@angular/core';
 import { Chart } from 'chart.js';
 import { MetricsResultService } from '../../services/metrics-result.service';
 import * as _ from 'underscore';
-import { MetricsResultModel } from '../../models/metrics-result.model';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 
 @Component({
     selector: 'home',
     templateUrl: './home.component.html'
 })
 export class HomeComponent {
+    startDate = new Date(1990, 0, 1);
+
+
+
     metricsList: string[];
     fromDate: any;
     toDate: any;
     selectedMetricsDates: Date[];
     selectedMetricsTimes: number[];
-    constructor(public metricsService: MetricsResultService) {
+    constructor(public metricsService: MetricsResultService, private fb: FormBuilder) {
         this.selectedMetricsDates = [];
         this.selectedMetricsTimes = [];
         this.metricsList = [];
         this.fromDate = Date();
         this.toDate = Date();
     }
+    profileForm = this.fb.group({
+        fromDate: [''],
+        toDate: [''],
+        methodName: ['']
+    });
     public async updateMetricsList() {
         debugger;
         try {

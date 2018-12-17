@@ -28,6 +28,5 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
                                                  .GetMetricsByPeriod(model.PeriodFrom, model.PeriodTo);
             return results;
         }
-
     }
 }

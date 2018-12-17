@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div style="display: block;">
             <canvas baseChart width="400" height="400"
                     [datasets]="lineChartData"
@@ -12,9 +12,33 @@
                     (chartClick)="chartClicked($event)"></canvas>
         </div>
     </div>
+</div>
+<div class="row">
+    <div class="clo-md-6">
+        <form (ngSubmit)="onSubmit()">
+
+            <!--<mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="fromDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="toDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Favorite food" value="Sushi" formControlName="methodName">
+            </mat-form-field>-->
+
+            <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+        </form>
+    </div>
     <div class="col-md-6" style="margin-bottom: 10px">
         <ul *ngFor="let metric of metricsList">
-            <li (click)="updateMetricsResult(metric)" >{{metric}}</li>
+            <li (click)="updateMetricsResult(metric)">{{metric}}</li>
         </ul>
     </div>
     <button (click)="updateMetricsList()"></button>

@@ -10,13 +10,16 @@ namespace FlashTuna.Core.Common.Metric
 {
     public abstract class BaseMetricResult: IMetricResult
     {
+        public BaseMetricResult()
+        {
 
-        public BaseMetricResult(string moduleName,
+        }
+        public BaseMetricResult(int status,
+                                string moduleName,
                                 string className,
                                 string methodName,
                                 string tag,
-                                Guid callId,
-                                MetricResultStatus status)
+                                Guid callId)
         {
             TimePoint = DateTime.Now;
             MetricResultStatus = status;
@@ -24,6 +27,7 @@ namespace FlashTuna.Core.Common.Metric
             ClassName = className;
             MethodName = methodName;
             Tag = tag;
+            CallId = callId;
             //Collect Start Data
         }
         public string Tag { get; set; }
@@ -33,10 +37,10 @@ namespace FlashTuna.Core.Common.Metric
 
         [Key]
         public long Id { get; set; }
-        public long CallId { get; set; }
+        public Guid CallId { get; set; }
         public DateTime TimePoint { get; set; }
         public double? Milliseconds { get; set; }
-        public MetricResultStatus MetricResultStatus { get; set; }
+        public int MetricResultStatus { get; set; }
 
         public virtual string ToMetricString()
         {

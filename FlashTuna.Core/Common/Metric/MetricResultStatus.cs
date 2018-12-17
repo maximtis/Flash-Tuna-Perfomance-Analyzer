@@ -6,7 +6,7 @@ namespace FlashTuna.Core.Common.Metric
 {
     public enum MetricResultStatus
     {
-        Started,
-        Stopped
+        Started=1,
+        Stopped=2
     }
 }

@@ -20,13 +20,13 @@ namespace FlashTuna.Core.Common.Metric
             _className = className;
             _methodName = methodName;
             _timePoint = DateTime.Now;
-            _metricResultStatus = MetricResultStatus.Started;
+            _metricResultStatus = (int)MetricResultStatus.Started;
             _callId = Guid.NewGuid();
             //Collect Start Data
-            _boundedTimeLine.CollectMetricResult(GetResult(MetricResultStatus.Started,_callId));
+            _boundedTimeLine.CollectMetricResult(GetResult((int)MetricResultStatus.Started,_callId));
         }
 
-        protected MetricResultStatus _metricResultStatus;
+        protected int _metricResultStatus;
         protected ITimeLine _boundedTimeLine;
         protected DateTime _timePoint;
         protected string _moduleName;
@@ -37,9 +37,9 @@ namespace FlashTuna.Core.Common.Metric
 
         public virtual void Stop()
         {
-            _boundedTimeLine.CollectMetricResult(GetResult(MetricResultStatus.Stopped, _callId));
+            _boundedTimeLine.CollectMetricResult(GetResult((int)MetricResultStatus.Stopped, _callId));
         }
-        protected abstract IMetricResult GetResult(MetricResultStatus status,Guid callId);
+        protected abstract IMetricResult GetResult(int status,Guid callId);
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
