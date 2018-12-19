@@ -1,5 +1,31 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-10">
+        <h3>Welcome to Flash Tuan Perfomance Analyzer <span class="badge badge-secondary">Start</span></h3>
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Well done!</h4>
+            <p>Connected successful. Getting you perfomance metrics information. Please wait... </p>
+        </div>
+        <div class="alert alert-warning" role="alert">
+            Please enter metrics data period to see available methods to see.
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10">
+        <div class="list-group">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Filter" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Apply</button>
+            </form>
+            </div>
+            <div class="list-group">
+                <a href="#" *ngFor="let metric of metricsList" class="list-group-item list-group-item-action">{{metric}}</a>
+
+            </div>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-md-12" *ngIf="metricsList.length>0">
         <div style="display: block;">
             <canvas baseChart width="400" height="400"
                     [datasets]="lineChartData"
@@ -14,26 +40,24 @@
     </div>
 </div>
 <div class="row">
-    <div class="clo-md-6">
-        <form (ngSubmit)="onSubmit()">
+    <div class="col-md-6">
+        <form (ngSubmit)="updateMetricsList()" [formGroup]="dataRequestForm">
 
-            <!--<mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="fromDate">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="toDate">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field class="example-full-width">
-                <input matInput placeholder="Favorite food" value="Sushi" formControlName="methodName">
-            </mat-form-field>-->
-
-            <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+            <div class="form-group">
+                <label for="PeriodFrom">Period Start</label>
+                <input class="form-control" type="date" id="fromDate" formControlName="PeriodFrom" />
+            </div>
+            <div class="form-group">
+                <label for="PeriodTo">Period End</label>
+                <input class="form-control" type="date" id="PeriodTo" formControlName="PeriodTo" />
+            </div>
+            <div class="form-group">
+                <label for="MethodName">Method Name</label>
+                <input class="form-control" type="text" id="MethodName" formControlName="MethodName" />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary mb-2" type="submit" [disabled]="!dataRequestForm.valid">Submit</button>
+            </div>
         </form>
     </div>
     <div class="col-md-6" style="margin-bottom: 10px">
@@ -41,5 +65,4 @@
             <li (click)="updateMetricsResult(metric)">{{metric}}</li>
         </ul>
     </div>
-    <button (click)="updateMetricsList()"></button>
 </div>

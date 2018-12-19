@@ -19,18 +19,13 @@ export class MetricsResultService{
             MethodName: methodName
         };
         debugger;
-        return this._http.get(this._baseUrl + 'api/MetricResults/GetMetricsResults', model)
+        return this._http.post(this._baseUrl + 'api/MetricResults/GetMetricsResults', model)
                          .map((response) => response.json())
                          .toPromise<MetricsResultModel[]>();
     }
 
-    async getMetricsByPeriod(from: Date, to: Date): Promise<string[]> {
-        let model: any = {
-            PeriodFrom: from,
-            PeriodTo: to
-        };
-
-        return this._http.get(this._baseUrl + 'api/MetricResults/GetMetrics', model)
+    async getMetricsByPeriod(form: any): Promise<string[]> {
+        return this._http.post(this._baseUrl + 'api/MetricResults/GetMetrics', form)
                          .map((response) => response.json())
                          .toPromise<string[]>();
     }

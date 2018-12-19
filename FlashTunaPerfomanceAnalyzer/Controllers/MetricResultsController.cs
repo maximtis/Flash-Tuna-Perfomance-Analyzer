@@ -13,16 +13,16 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
     [Route("api/[controller]")]
     public class MetricResultsController : Controller
     {
-        [HttpGet("[action]")]
-        public async Task<List<MetricResultViewModel>> GetMetricsResults(MetricsResultsRequest model)
+        [HttpPost("[action]")]
+        public async Task<List<MetricResultViewModel>> GetMetricsResults([FromBody] MetricsResultsRequest model)
         {
             var results = await FlashTunaAnalyzer.Results
                                                  .GetResultsByPeriod(model.PeriodFrom, model.PeriodTo, model.MethodName);
             return results;
         }
 
-        [HttpGet("[action]")]
-        public async Task<List<string>> GetMetrics(MetricsResultsRequest model)
+        [HttpPost("[action]")]
+        public async Task<List<string>> GetMetrics([FromBody] MetricsResultsRequest model)
         {
             var results = await FlashTunaAnalyzer.Results
                                                  .GetMetricsByPeriod(model.PeriodFrom, model.PeriodTo);

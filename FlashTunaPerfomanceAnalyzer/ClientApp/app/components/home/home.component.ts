@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Chart } from 'chart.js';
 import { MetricsResultService } from '../../services/metrics-result.service';
 import * as _ from 'underscore';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
     selector: 'home',
@@ -25,15 +25,15 @@ export class HomeComponent {
         this.fromDate = Date();
         this.toDate = Date();
     }
-    profileForm = this.fb.group({
-        fromDate: [''],
-        toDate: [''],
-        methodName: ['']
+    dataRequestForm = this.fb.group({
+        PeriodFrom: ['2018-10-19', [Validators.required]],
+        PeriodTo: ['2018-12-19', [Validators.required]],
+        MethodName: ['ShortOperation', [Validators.required]]
     });
     public async updateMetricsList() {
         debugger;
         try {
-            this.metricsList = await this.metricsService.getMetricsByPeriod(this.fromDate, this.toDate);
+            this.metricsList = await this.metricsService.getMetricsByPeriod(this.dataRequestForm.value);
         }
         catch (e) {
             console.log('there was an error');
