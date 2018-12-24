@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashTunaPerfomanceAnalyzer", "FlashTunaPerfomanceAnalyzer\FlashTunaPerfomanceAnalyzer.csproj", "{D745973D-0FB6-467B-A4BB-3D0B26CAFDDA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashTuna.Core", "FlashTuna.Core\FlashTuna.Core.csproj", "{3191A1A2-CC31-4877-8931-0D4FCBD0A963}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp", "DemoApp\DemoApp.csproj", "{C3AB25DC-2A0C-4574-888A-88BEA92636D0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashTuna.Service", "FlashTuna.Services\FlashTuna.Service.csproj", "{0AE43573-29EA-4E00-8C5A-BD86903FD12C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashTunaPerfomanceAnalyzer", "FlashTunaPerfomanceAnalyzer\FlashTunaPerfomanceAnalyzer.csproj", "{1A5F9195-79EC-4304-B6DD-4C3940B23173}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D745973D-0FB6-467B-A4BB-3D0B26CAFDDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D745973D-0FB6-467B-A4BB-3D0B26CAFDDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D745973D-0FB6-467B-A4BB-3D0B26CAFDDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D745973D-0FB6-467B-A4BB-3D0B26CAFDDA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3191A1A2-CC31-4877-8931-0D4FCBD0A963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3191A1A2-CC31-4877-8931-0D4FCBD0A963}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3191A1A2-CC31-4877-8931-0D4FCBD0A963}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{0AE43573-29EA-4E00-8C5A-BD86903FD12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AE43573-29EA-4E00-8C5A-BD86903FD12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AE43573-29EA-4E00-8C5A-BD86903FD12C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A5F9195-79EC-4304-B6DD-4C3940B23173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A5F9195-79EC-4304-B6DD-4C3940B23173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A5F9195-79EC-4304-B6DD-4C3940B23173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A5F9195-79EC-4304-B6DD-4C3940B23173}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
