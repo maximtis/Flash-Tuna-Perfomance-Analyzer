@@ -36,15 +36,14 @@ namespace FlashTuna.Core.Storage
 
         public async Task<List<MetricResultViewModel>> GetResultsByPeriod(DateTime from, DateTime to, string methodName)
         {
-            from = new DateTime(2000, 1, 1);
-            to = new DateTime(2019, 1, 1);
             List<MetricResultViewModel> metricResultViewModels = new List<MetricResultViewModel>();
             using (FlashTunaDbContext db = new FlashTunaDbContext())
             {
                 var groupedMetricsResults = await db.OperationMetricResults
                                                     .Where(o =>
-                     (o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Started && o.TimePoint >= from) ||
-                     (o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Stopped && o.TimePoint <= to))
+                                                    o.MethodName == methodName &&
+                     ((o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Started && o.TimePoint >= from) ||
+                     (o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Stopped && o.TimePoint <= to)))
                                                     .GroupBy(x => x.CallId)
                                                     .ToListAsync();
 

@@ -25,5 +25,65 @@ namespace DemoApp
             }
             await Task.FromResult(0);
         }
+
+        [OperationMetric(nameof(ProductionClassB))]
+        public async Task LoginOperation()
+        {
+            using (await StartRecording())
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    var sleepTime = new Random(Environment.TickCount).Next(0, 500);
+                    Thread.Sleep(sleepTime);
+                    Console.WriteLine("LoginOperation");
+                }
+            }
+            await Task.FromResult(0);
+        }
+
+        [OperationMetric(nameof(ProductionClassB))]
+        public async Task TestOperation()
+        {
+            using (await StartRecording())
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    var sleepTime = new Random(Environment.TickCount).Next(0, 200);
+                    Thread.Sleep(sleepTime);
+                    Console.WriteLine("TestOperation");
+                }
+            }
+            await Task.FromResult(0);
+        }
+
+        [OperationMetric(nameof(ProductionClassB))]
+        public async Task RemoveUser()
+        {
+            using (await StartRecording())
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    var sleepTime = new Random(Environment.TickCount).Next(0, 300);
+                    Thread.Sleep(sleepTime);
+                    Console.WriteLine("RemoveUser");
+                }
+            }
+            await Task.FromResult(0);
+        }
+
+        [OperationMetric(nameof(ProductionClassB))]
+        public async Task PingTestMethod()
+        {
+            using (await StartRecording())
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    var sleepTime = new Random(Environment.TickCount).Next(0, 700);
+                    Thread.Sleep(sleepTime);
+                    Console.WriteLine("PingTestMethod");
+                }
+            }
+            await Task.FromResult(0);
+        }
     }
 }

@@ -31,6 +31,10 @@ namespace DemoApp
             for (int i = 0;i < 10; i++)
             {
                 tasks.Add(Task.Run(async () => await classB.ShortOperation()));
+                tasks.Add(Task.Run(async () => await classB.LoginOperation()));
+                tasks.Add(Task.Run(async () => await classB.PingTestMethod()));
+                tasks.Add(Task.Run(async () => await classB.RemoveUser()));
+                tasks.Add(Task.Run(async () => await classB.TestOperation()));
             }
             Task.WaitAll(tasks.ToArray());
             classB.ShortOperation().Wait();

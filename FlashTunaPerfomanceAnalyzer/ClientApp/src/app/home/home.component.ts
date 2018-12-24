@@ -9,25 +9,22 @@ import { MetricsResultService } from '../services/metrics-result.service';
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-  startDate = new Date(1990, 0, 1);
-
-
 
   metricsList: string[];
   fromDate: any;
   toDate: any;
-  selectedMetricsDates: Date[];
   selectedMetricsTimes: number[];
+  selectedMetricsDates: string[];
   constructor(public metricsService: MetricsResultService, private fb: FormBuilder) {
-    this.selectedMetricsDates = [];
-    this.selectedMetricsTimes = [];
+
+    this.selectedMetricsDates = ["2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24"];
     this.metricsList = [];
-    this.fromDate = Date();
-    this.toDate = Date();
+    this.fromDate = '2017-10-19';
+    this.toDate = '2018-12-30';
   }
   public dataRequestForm = this.fb.group({
-    PeriodFrom: ['2018-10-19', [Validators.required]],
-    PeriodTo: ['2018-12-19', [Validators.required]],
+    PeriodFrom: ['2017-10-19', [Validators.required]],
+    PeriodTo: ['2018-12-30', [Validators.required]],
     MethodName: ['ShortOperation', [Validators.required]]
   });
   public async updateMetricsList() {
@@ -40,17 +37,20 @@ export class HomeComponent {
     }
   }
   public async updateMetricsResult(methodName: string) {
-    debugger;
     let metricResults = await this.metricsService.getMetricResultsByPeriod(this.fromDate, this.toDate, methodName);
-    this.selectedMetricsDates = _.map(metricResults, function (metricModel) {
-      return metricModel.startPoint;
+    console.log(metricResults);
+    
+    var mapResult = _.map(metricResults, function (metricModel) {
+      return metricModel.startPoint.toString().substring(0, 10)
     });
-    debugger;
-    this.selectedMetricsTimes = _.map(metricResults, function (metricModel) {
+    console.log(mapResult);
+    this.selectedMetricsDates = mapResult;
 
+    this.selectedMetricsTimes = _.map(metricResults, function (metricModel) {
       return metricModel.milliseconds;
     });
 
+    debugger;
     this.lineChartData = [
       {
         data: this.selectedMetricsTimes,
@@ -61,10 +61,10 @@ export class HomeComponent {
 
   // lineChart
   public lineChartData: Array<any> = [
-    { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
+    { data: [], label: ' ' }
   ];
 
-  public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartLabels: Array<any> = [''];
   public lineChartOptions: any = {
     responsive: true
   };
