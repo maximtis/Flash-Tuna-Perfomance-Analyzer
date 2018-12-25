@@ -9,6 +9,7 @@ using FlashTuna.Core.Attributes;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using FlashTuna.Core.Storage.DataBase;
+using Microsoft.AspNetCore.SignalR;
 
 namespace DemoApp
 {

@@ -1,6 +1,8 @@
+using FlashTuna.Core.Modules.Runtime;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,7 @@ namespace FlashTunaPerfomanceAnalyzer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the Angular files will be served from this directory
@@ -27,6 +30,12 @@ namespace FlashTunaPerfomanceAnalyzer
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            FlashTuna.Core.Configuration.FlashTunaAnalyzer.Initialize(
+                           FlashTuna.Core.Configuration.FlashTunaAnalyzer.CreateBuilder()
+                                               .SetStorage()
+                                               .SetModuleName("Test Module")
+                                               .SetTargetAssembly(typeof(Program).Assembly)
+                                               .Build());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +60,10 @@ namespace FlashTunaPerfomanceAnalyzer
             //        spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
             //    }
             //});
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotifyHub>("/notify");
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -70,13 +83,7 @@ namespace FlashTunaPerfomanceAnalyzer
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-
-            FlashTuna.Core.Configuration.FlashTunaAnalyzer.Initialize(
-                            FlashTuna.Core.Configuration.FlashTunaAnalyzer.CreateBuilder()
-                                                .SetStorage()
-                                                .SetModuleName("Test Module")
-                                                .SetTargetAssembly(typeof(Program).Assembly)
-                                                .Build());
+           
         }
     }
 }
