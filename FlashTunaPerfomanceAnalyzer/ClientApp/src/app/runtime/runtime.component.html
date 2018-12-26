@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-12">
+    <div style="display: block;">
+      <canvas baseChart width="400" height="200"
+              [datasets]="lineChartData"
+              [labels]="selectedMetricsDates"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+    </div>
+    <span class="btn btn-primary" (click)="loadData()">Load Data</span>
+  </div>
+</div>

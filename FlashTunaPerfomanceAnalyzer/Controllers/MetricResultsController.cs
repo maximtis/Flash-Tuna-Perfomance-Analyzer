@@ -21,6 +21,14 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
         }
         private IHubContext<NotifyHub, RuntimeMetricsNotification> _hubContext;
 
+        [HttpGet("[action]")]
+        public async Task<List<List<MetricResultViewModel>>> GetMetricsResultsRuntime()
+        {
+            var results = await FlashTunaAnalyzer.Results
+                                                 .GetResultsRuntime();
+            return results;
+        }
+
         [HttpPost("[action]")]
         public async Task<List<MetricResultViewModel>> GetMetricsResults([FromBody] MetricsResultsRequest model)
         {

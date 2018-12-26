@@ -11,11 +11,15 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { MetricsResultService } from './services/metrics-result.service';
 import { ChartsModule } from 'ng2-charts';
 import { FilterPipe } from './pipes/filter.pipe';
+import { RuntimeComponent } from './runtime/runtime.component';
+import { PeriodComponent } from './period/period.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
+    RuntimeComponent,
+    PeriodComponent,
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
@@ -32,6 +36,8 @@ import { FilterPipe } from './pipes/filter.pipe';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'runtime', component: RuntimeComponent },
+      { path: 'period', component: PeriodComponent },
     ])
   ],
   providers: [MetricsResultService],

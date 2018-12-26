@@ -8,10 +8,10 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 import 'rxjs/add/operator/takeWhile';
 
 @Component({
-  selector: 'home',
-  templateUrl: './home.component.html'
+  selector: 'period',
+  templateUrl: './period.component.html'
 })
-export class HomeComponent implements OnInit {
+export class PeriodComponent implements OnInit {
 
   private _hubConnection: HubConnection;
   metricsList: string[];

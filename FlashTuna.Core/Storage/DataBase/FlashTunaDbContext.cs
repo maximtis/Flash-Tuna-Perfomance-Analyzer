@@ -14,7 +14,8 @@ namespace FlashTuna.Core.Storage.DataBase
         public DbSet<OperationMetricResult> OperationMetricResults { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=Metrics.db");
+            optionsBuilder.UseSqlServer("Server=.;Database=Metrics;Trusted_Connection=True;");
+            //optionsBuilder.UseSqlite("Data Source=Metrics.db");
         }
     }
 }

@@ -8,34 +8,33 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 import 'rxjs/add/operator/takeWhile';
 
 @Component({
-  selector: 'home',
-  templateUrl: './home.component.html'
+  selector: 'runtime',
+  templateUrl: './runtime.component.html'
 })
-export class HomeComponent implements OnInit {
+export class RuntimeComponent implements OnInit {
 
   private _hubConnection: HubConnection;
   metricsList: string[];
   fromDate: any;
   toDate: any;
-  selectedMetricsTimes: number[];
   public selectedMetricsDates: string[];
   baseUrlHost: string;
   private alive: boolean; // used to unsubscribe from the TimerObservable
   // when OnDestroy is called.
   private interval: number;
-  public selectedMethod: string;
   
 
   constructor(public metricsService: MetricsResultService, private fb: FormBuilder, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrlHost = baseUrl;
     this.selectedMetricsDates = [];//["2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24"];
     this.metricsList = [];
-    this.fromDate = '2017-10-19';
-    this.toDate = '2018-12-30';
     this.alive = true;
     this.interval = 1000;
   }
 
+  public async loadData() {
+    await this.updateMetricsResultAuto();
+  }
   ngOnInit(): void {
     //let hubUrl = this.baseUrlHost + '/notify';
     //this._hubConnection = new HubConnectionBuilder()
@@ -48,59 +47,52 @@ export class HomeComponent implements OnInit {
     //});
     this.selectedMetricsDates = []; //["2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24"];
 
+    /*TimerObservable.create(1000, this.interval)
+      .takeWhile(() => this.alive)
+      .subscribe(async () => {
+        await this.updateMetricsResultAuto();
+      });*/
   }
 
-  public dataRequestForm = this.fb.group({
-    PeriodFrom: ['2017-10-19', [Validators.required]],
-    PeriodTo: ['2018-12-30', [Validators.required]],
-    MethodName: ['ShortOperation', [Validators.required]]
-  });
-
-  public async updateMetricsList() {
-    try {
-      this.metricsList = await this.metricsService.getMetricsByPeriod(this.dataRequestForm.value);
-      this.selectedMethod = this.metricsList[2];
-          TimerObservable.create(1000, this.interval)
-          .takeWhile(() => this.alive)
-          .subscribe(async () => {
-            await this.updateMetricsResultAuto();
-          }); 
-    }
-    catch (e) {
-      console.log('there was an error');
-      console.log(e);
-    }
-  }
   public async updateMetricsResultAuto() {
-    await this.updateMetricsResult(this.selectedMethod);
+    await this.updateMetricsResult();
     console.log("updateExecuted.");
   }
-  public async updateMetricsResult(methodName: string) {
-    this.selectedMethod = methodName;
-    let metricResults = await this.metricsService.getMetricResultsByPeriod(this.fromDate, this.toDate, methodName);
+
+  public async updateMetricsResult() {
+    let metricResults = await this.metricsService.getMetricsRuntime();
     console.log(metricResults);
-    
-    var mapResult = _.map(metricResults, function (metricModel) {
-      return metricModel.startPoint.toString().substring(11, 19)
-    });
-    console.log(mapResult);
-    this.selectedMetricsDates.length = 0;
-
-    for (var i = 0; i < mapResult.length;i++) // for acts as a foreach  
+    var chartsData = [];
+    for (var mi = 0; mi < metricResults.length; mi++) // for acts as a foreach  
     {
-      this.selectedMetricsDates.push(mapResult[i]);
-    }  
 
-    this.selectedMetricsTimes = _.map(metricResults, function (metricModel) {
-      return metricModel.milliseconds;
-    });
+      var mapResult = _.map(metricResults[mi], function (metricModel) {
+        return metricModel.startPoint.toString().substring(11, 19)
+      });
+      console.log(mapResult);
 
-    this.lineChartData = [
-      {
-        data: this.selectedMetricsTimes,
-        label: metricResults[0].methodName
+      if (this.selectedMetricsDates.length < mapResult.length) {
+        this.selectedMetricsDates.length = 0;
+        for (var i = 0; i < mapResult.length; i++) // for acts as a foreach  
+        {
+          this.selectedMetricsDates.push(mapResult[i]);
+        }
       }
-    ];
+
+      var selectedMetricsTimes = _.map(metricResults[mi], function (metricModel) {
+        return metricModel.milliseconds;
+      });
+      chartsData.push(
+        {
+          data: selectedMetricsTimes,
+          label: metricResults[mi][0].methodName
+        });
+      
+
+      console.log(this.lineChartData);
+    }
+    this.lineChartData = chartsData;
+
   }
 
   // lineChart
@@ -140,17 +132,6 @@ export class HomeComponent implements OnInit {
   ];
   public lineChartLegend: boolean = true;
   public lineChartType: string = 'line';
-
-  public randomize(): void {
-    let _lineChartData: Array<any> = new Array(this.lineChartData.length);
-    for (let i = 0; i < this.lineChartData.length; i++) {
-      _lineChartData[i] = { data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label };
-      for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-        _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
-      }
-    }
-    this.lineChartData = _lineChartData;
-  }
 
   // events
   public chartClicked(e: any): void {

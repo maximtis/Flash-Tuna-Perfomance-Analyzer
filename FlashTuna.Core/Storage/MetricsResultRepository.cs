@@ -14,6 +14,26 @@ namespace FlashTuna.Core.Storage
 {
     public class MetricsResultRepository
     {
+        public async Task<List<string>> GetMetricsByPeriod(int days = 7)
+        {
+            var from = DateTime.Now.AddDays(-7);
+            var to = DateTime.Now;
+            List<string> metricResultViewModels = new List<string>();
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                var test = await db.OperationMetricResults.ToListAsync();
+                var result = await db.OperationMetricResults
+                                                    .Where(o =>
+                     (o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Started && o.TimePoint >= from) ||
+                     (o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Stopped && o.TimePoint <= to))
+                                                    .Select(x => x.MethodName)
+                                                    .Distinct()
+                                                    .ToListAsync();
+                metricResultViewModels = result;
+            }
+            return metricResultViewModels;
+        }
+
         public async Task<List<string>> GetMetricsByPeriod(DateTime from, DateTime to)
         {
             from = new DateTime(2000, 1, 1);
@@ -66,6 +86,44 @@ namespace FlashTuna.Core.Storage
                 }
             }
             return metricResultViewModels.OrderBy(x=>x.StartPoint).ToList();
+        }
+
+        public async Task<List<List<MetricResultViewModel>>> GetResultsRuntime()
+        {
+            List<List<MetricResultViewModel>> metricResultViewModelsAll = new List<List<MetricResultViewModel>>();
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                var globalGroupedMetricResults = await db.OperationMetricResults
+                                                    .GroupBy(x => x.MethodName)
+                                                    .ToListAsync();
+                foreach(var methodGroupedMetricResult in globalGroupedMetricResults)
+                {
+                    List<MetricResultViewModel> metricResultViewModels = new List<MetricResultViewModel>();
+                    foreach (var groupedMetricResult in methodGroupedMetricResult.GroupBy(x=>x.CallId))
+                    {
+                        var start = groupedMetricResult.OrderBy(x => x.MetricResultStatus).First();
+                        var end = groupedMetricResult.OrderBy(x => x.MetricResultStatus).Last();
+                        var metricResult = new MetricResultViewModel()
+                        {
+                            ClassName = start.ClassName,
+                            StartPoint = start.TimePoint,
+                            EndPoint = end.TimePoint,
+                            Id = start.CallId,
+                            MethodName = start.MethodName,
+                            Milliseconds = (end.TimePoint.TimeOfDay - start.TimePoint.TimeOfDay).Milliseconds,
+                            ModuleName = start.ModuleName,
+                            Tag = start.Tag
+                        };
+                        metricResultViewModels.Add(metricResult);
+                    }
+
+                    metricResultViewModelsAll.Add(
+                        metricResultViewModels.OrderBy(x => x.StartPoint).ToList()
+                        );
+                }
+                
+            }
+            return metricResultViewModelsAll;
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FlashTuna.Core.Migrations
 {
-    public partial class updateschema : Migration
+    public partial class databaseschema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,6 +13,7 @@ namespace FlashTuna.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                         .Annotation("Sqlite:Autoincrement", true),
                     Tag = table.Column<string>(nullable: true),
                     ModuleName = table.Column<string>(nullable: true),

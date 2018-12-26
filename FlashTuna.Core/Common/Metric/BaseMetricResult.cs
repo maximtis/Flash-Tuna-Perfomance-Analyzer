@@ -4,6 +4,7 @@ using FlashTuna.Core.Common.PerfomanceMetrics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace FlashTuna.Core.Common.Metric
@@ -35,7 +36,7 @@ namespace FlashTuna.Core.Common.Metric
         public string ClassName { get; set; }
         public string MethodName { get; set; }
 
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public Guid CallId { get; set; }
         public DateTime TimePoint { get; set; }
