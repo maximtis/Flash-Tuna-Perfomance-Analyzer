@@ -1,5 +1,12 @@
-<div class="row">
-  <div class="col-md-12">
+<div class="row justify-conten-center">
+  <div class="col-md-offset-5 col-md-2">
+    <span class="label label-info">Waiting for metrics result...</span>
+    <mat-spinner *ngIf="lineChartData[0].data.length==0"></mat-spinner>
+    <span class="btn btn-primary" (click)="loadData()">Load Data</span>
+  </div>
+    
+  
+  <div class="col-md-12" *ngIf="lineChartData[0].data.length>0">
     <div style="display: block;">
       <canvas baseChart width="400" height="200"
               [datasets]="lineChartData"
@@ -12,5 +19,14 @@
               (chartClick)="chartClicked($event)"></canvas>
     </div>
     <span class="btn btn-primary" (click)="loadData()">Load Data</span>
+  </div>
+  <div class="col-md-12">
+    <table>
+      <th *ngFor="let label of selectedMetricsDates">{{label}}</th>
+      <tr *ngFor="let d of lineChartData">
+        <span>{{d.label}}</span>
+        <td *ngFor="let label of selectedMetricsDates; let j=index">{{ d.data[j] }}</td>
+      </tr>
+    </table>
   </div>
 </div>

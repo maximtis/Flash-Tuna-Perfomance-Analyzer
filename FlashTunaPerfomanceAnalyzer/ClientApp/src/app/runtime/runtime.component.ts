@@ -1,17 +1,18 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Chart } from 'chart.js';
 import * as _ from 'underscore';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MetricsResultService } from '../services/metrics-result.service';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
-import { TimerObservable } from "rxjs/observable/TimerObservable";
-import 'rxjs/add/operator/takeWhile';
 
 @Component({
   selector: 'runtime',
   templateUrl: './runtime.component.html'
 })
-export class RuntimeComponent implements OnInit {
+export class RuntimeComponent implements AfterViewChecked, OnDestroy {
+    ngOnDestroy(): void {
+      clearInterval(this.interval);
+    }
 
   private _hubConnection: HubConnection;
   metricsList: string[];
@@ -21,51 +22,50 @@ export class RuntimeComponent implements OnInit {
   baseUrlHost: string;
   private alive: boolean; // used to unsubscribe from the TimerObservable
   // when OnDestroy is called.
-  private interval: number;
-  
-
+  private interval: any;
+  private isRunning: boolean;
+  private timerObservable: any;
   constructor(public metricsService: MetricsResultService, private fb: FormBuilder, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrlHost = baseUrl;
     this.selectedMetricsDates = [];//["2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24"];
     this.metricsList = [];
     this.alive = true;
-    this.interval = 1000;
+    this.interval = 5000;
+    this.isRunning = false;
   }
 
   public async loadData() {
     await this.updateMetricsResultAuto();
   }
-  ngOnInit(): void {
+  ngAfterViewChecked(): void {
     //let hubUrl = this.baseUrlHost + '/notify';
+    //debugger;
     //this._hubConnection = new HubConnectionBuilder()
     //  .withUrl(hubUrl)
     //  .configureLogging(LogLevel.Information)
     //  .build();
 
     //this._hubConnection.on('MetricsUpdatetdBroadcast', async (methodName: string) => {
-    //  await this.updateMetricsResult(methodName);
+    //  debugger;
+    //  await this.updateMetricsResultAuto();
     //});
-    this.selectedMetricsDates = []; //["2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24"];
+    //this.selectedMetricsDates = ["2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24"];
+    this.interval = setInterval(this.updateMetricsResultAuto, 10000);
 
-    /*TimerObservable.create(1000, this.interval)
-      .takeWhile(() => this.alive)
-      .subscribe(async () => {
-        await this.updateMetricsResultAuto();
-      });*/
   }
 
   public async updateMetricsResultAuto() {
+    this.isRunning = true;
     await this.updateMetricsResult();
     console.log("updateExecuted.");
+    this.isRunning = false;
   }
 
   public async updateMetricsResult() {
     let metricResults = await this.metricsService.getMetricsRuntime();
-    console.log(metricResults);
     var chartsData = [];
     for (var mi = 0; mi < metricResults.length; mi++) // for acts as a foreach  
     {
-
       var mapResult = _.map(metricResults[mi], function (metricModel) {
         return metricModel.startPoint.toString().substring(11, 19)
       });
@@ -87,9 +87,7 @@ export class RuntimeComponent implements OnInit {
           data: selectedMetricsTimes,
           label: metricResults[mi][0].methodName
         });
-      
-
-      console.log(this.lineChartData);
+     
     }
     this.lineChartData = chartsData;
 
@@ -97,6 +95,11 @@ export class RuntimeComponent implements OnInit {
 
   // lineChart
   public lineChartData: Array<any> = [
+    { data: [], label: ' ' },
+    { data: [], label: ' ' },
+    { data: [], label: ' ' },
+    { data: [], label: ' ' },
+    { data: [], label: ' ' },
     { data: [], label: ' ' }
   ];
 
