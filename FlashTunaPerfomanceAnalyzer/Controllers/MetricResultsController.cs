@@ -19,6 +19,7 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
         {   
             _hubContext = hubContext;
         }
+
         private IHubContext<NotifyHub, RuntimeMetricsNotification> _hubContext;
 
         [HttpGet("[action]")]
@@ -44,5 +45,13 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
                                                  .GetMetricsByPeriod(model.PeriodFrom, model.PeriodTo);
             return results;
         }
+
+        [HttpGet("[action]")]
+        public async Task GetRuntime()
+        {
+            await _hubContext.Clients.All.MetricsUpdatedBroadcast();
+        }
+
+
     }
 }

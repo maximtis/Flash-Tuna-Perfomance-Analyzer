@@ -25,6 +25,7 @@ export class RuntimeComponent implements AfterViewChecked, OnDestroy {
   private interval: any;
   private isRunning: boolean;
   private timerObservable: any;
+
   constructor(public metricsService: MetricsResultService, private fb: FormBuilder, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrlHost = baseUrl;
     this.selectedMetricsDates = [];//["2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24"];
@@ -32,25 +33,41 @@ export class RuntimeComponent implements AfterViewChecked, OnDestroy {
     this.alive = true;
     this.interval = 5000;
     this.isRunning = false;
+    let hubUrl = this.baseUrlHost + '/notify';
+
+    this._hubConnection = new HubConnectionBuilder()
+      .withUrl(hubUrl)
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    this._hubConnection.on('MetricsUpdatedBroadcast', async () => {
+      console.log('Ok Received');
+      debugger;
+      await this.updateMetricsResultAuto();
+    });
+    this.startConnection();
   }
 
+  private startConnection(): void {
+    this._hubConnection
+      .start()
+      .then(() => {
+        console.log('Hub connection started');
+      })
+      .catch(err => {
+        console.log('Error while establishing connection, retrying...');
+      });
+
+  }  
   public async loadData() {
-    await this.updateMetricsResultAuto();
+    await this.metricsService.getRuntime();
   }
-  ngAfterViewChecked(): void {
-    //let hubUrl = this.baseUrlHost + '/notify';
-    //debugger;
-    //this._hubConnection = new HubConnectionBuilder()
-    //  .withUrl(hubUrl)
-    //  .configureLogging(LogLevel.Information)
-    //  .build();
 
-    //this._hubConnection.on('MetricsUpdatetdBroadcast', async (methodName: string) => {
-    //  debugger;
-    //  await this.updateMetricsResultAuto();
-    //});
+  ngAfterViewChecked(): void
+  {
+    
     //this.selectedMetricsDates = ["2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24"];
-    this.interval = setInterval(this.updateMetricsResultAuto, 10000);
+    //this.interval = setInterval(this.updateMetricsResultAuto, 10000);
 
   }
 

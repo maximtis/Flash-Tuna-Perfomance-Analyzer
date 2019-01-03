@@ -25,10 +25,15 @@ export class MetricsResultService{
     async getMetricsByPeriod(form: any): Promise<string[]> {
       return this._http.post<string[]>(this._baseUrl + 'api/MetricResults/GetMetrics', form)
                          .toPromise<string[]>();
-  }
+    }
 
-  async getMetricsRuntime(): Promise<MetricsResultModel[][]> {
-    return this._http.get<MetricsResultModel[][]>(this._baseUrl + 'api/MetricResults/GetMetricsResultsRuntime')
-      .toPromise<MetricsResultModel[][]>();
-  }
+    async getMetricsRuntime(): Promise<MetricsResultModel[][]> {
+      return this._http.get<MetricsResultModel[][]>(this._baseUrl + 'api/MetricResults/GetMetricsResultsRuntime')
+        .toPromise<MetricsResultModel[][]>();
+    }
+
+    async getRuntime(): Promise<any> {
+        return this._http.get<any>(this._baseUrl + 'api/MetricResults/GetRuntime')
+          .toPromise<any>();
+    }
 }
