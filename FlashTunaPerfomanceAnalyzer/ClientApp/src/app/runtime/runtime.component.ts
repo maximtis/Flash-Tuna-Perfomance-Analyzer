@@ -30,9 +30,6 @@ export class RuntimeComponent implements AfterViewChecked, OnDestroy {
     this.baseUrlHost = baseUrl;
     this.selectedMetricsDates = [];//["2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24"];
     this.metricsList = [];
-    this.alive = true;
-    this.interval = 5000;
-    this.isRunning = false;
     let hubUrl = this.baseUrlHost + '/notify';
 
     this._hubConnection = new HubConnectionBuilder()

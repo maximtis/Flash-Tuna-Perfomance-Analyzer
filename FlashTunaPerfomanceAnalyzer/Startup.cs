@@ -1,4 +1,5 @@
 using FlashTuna.Core.Modules.Runtime;
+using FlashTunaPerfomanceAnalyzer.Classes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,8 @@ namespace FlashTunaPerfomanceAnalyzer
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddHostedService<NotificationServie>();
 
             FlashTuna.Core.Configuration.FlashTunaAnalyzer.Initialize(
                            FlashTuna.Core.Configuration.FlashTunaAnalyzer.CreateBuilder()

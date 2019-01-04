@@ -54,6 +54,22 @@ namespace FlashTuna.Core.Storage
             return metricResultViewModels;
         }
 
+        public async Task<List<string>> GetAvailableMetrics()
+        {
+            List<string> metricResultViewModels = new List<string>();
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                var test = await db.OperationMetricResults.ToListAsync();
+                var result = await db.OperationMetricResults
+                                                    .Select(x => x.MethodName)
+                                                    .Distinct()
+                                                    .ToListAsync();
+                metricResultViewModels = result;
+            }
+            return metricResultViewModels;
+        }
+
+
         public async Task<List<MetricResultViewModel>> GetResultsByPeriod(DateTime from, DateTime to, string methodName)
         {
             List<MetricResultViewModel> metricResultViewModels = new List<MetricResultViewModel>();

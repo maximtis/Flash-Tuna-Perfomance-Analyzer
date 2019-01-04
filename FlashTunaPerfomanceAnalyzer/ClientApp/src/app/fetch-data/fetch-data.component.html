@@ -1,24 +1,18 @@
-<h1>Weather forecast</h1>
+<div class="col-md-12">
+  <h3>Runtime Page Configuration <span class="badge badge-secondary"><span class="glyphicon glyphicon-align-left"></span></span></h3>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="alert alert-warning" role="alert">Pay attention! You can select maximum <strong>5</strong> methods to tarck into <strong>runtime</strong> page.</div>
+    <div class="list-group">
+      <div>
+        <input class="form-control" [(ngModel)]="searchText" type="search" placeholder="Filter" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Apply</button>
+      </div>
+    </div>
+    <div class="list-group">
+      <span href="#" cursor="hand" *ngFor="let metric of metricsList | filter : searchText" (click)="updateMetricsResult(metric)" class="list-group-item list-group-item-action">{{metric}}</span>
 
-<p>This component demonstrates fetching data from the server.</p>
-
-<p *ngIf="!forecasts"><em>Loading...</em></p>
-
-<table class='table' *ngIf="forecasts">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.dateFormatted }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
-    </tr>
-  </tbody>
-</table>
+    </div>
+  </div>
+</div>
