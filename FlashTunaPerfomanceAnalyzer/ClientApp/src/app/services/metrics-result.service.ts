@@ -36,7 +36,11 @@ export class MetricsResultService{
     async getMetricsRuntime(): Promise<MetricsResultModel[][]> {
       return this._http.get<MetricsResultModel[][]>(this._baseUrl + 'api/MetricResults/GetMetricsResultsRuntime')
         .toPromise<MetricsResultModel[][]>();
-    }
+  }
+  async getErrorsMetricsRuntime(): Promise<MetricsResultModel[]> {
+    return this._http.get<MetricsResultModel[]>(this._baseUrl + 'api/MetricResults/GetErrorsMetricsResultsRuntime')
+      .toPromise<MetricsResultModel[]>();
+  }
 
     async getRuntime(): Promise<any> {
         return this._http.get<any>(this._baseUrl + 'api/MetricResults/GetRuntime')

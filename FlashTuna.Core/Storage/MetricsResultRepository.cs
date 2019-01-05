@@ -145,5 +145,38 @@ namespace FlashTuna.Core.Storage
             }
             return metricResultViewModelsAll;
         }
+
+        public async Task<List<MetricResultViewModel>> GetErrorsResultsRuntime()
+        {
+            var from = DateTime.Now.AddDays(-1);
+            var to = DateTime.Now;
+            List<List<MetricResultViewModel>> metricResultViewModelsAll = new List<List<MetricResultViewModel>>();
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                var globalGroupedMetricResults = await db.ErrorResults.Where(o =>
+                                                     (o.TimePoint >= from) ||
+                                                     (o.TimePoint <= to))
+                                                    .ToListAsync();
+
+                    List<MetricResultViewModel> metricResultViewModels = new List<MetricResultViewModel>();
+                    foreach (var groupedMetricResult in globalGroupedMetricResults)
+                    {
+                        var metricResult = new MetricResultViewModel()
+                        {
+                            ClassName = groupedMetricResult.ClassName,
+                            StartPoint = groupedMetricResult.TimePoint,
+                            EndPoint = groupedMetricResult.TimePoint,
+                            MethodName = groupedMetricResult.MethodName,
+                            Tag = groupedMetricResult.Tag
+                        };
+                        metricResultViewModels.Add(metricResult);
+                    }
+                return metricResultViewModels;
+            }
+        }
+        public async Task<int> AnalyzeProblemsCount()
+        {
+            return 1;
+        }
     }
 }

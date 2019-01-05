@@ -29,6 +29,13 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
                                                  .GetResultsRuntime();
             return results;
         }
+        [HttpGet("[action]")]
+        public async Task<List<MetricResultViewModel>> GetErrorsMetricsResultsRuntime()
+        {
+            var results = await FlashTunaAnalyzer.Results
+                                                 .GetErrorsResultsRuntime();
+            return results;
+        }
 
         [HttpPost("[action]")]
         public async Task<List<MetricResultViewModel>> GetMetricsResults([FromBody] MetricsResultsRequest model)
