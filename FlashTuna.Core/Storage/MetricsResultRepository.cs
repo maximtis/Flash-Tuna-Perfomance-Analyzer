@@ -54,6 +54,22 @@ namespace FlashTuna.Core.Storage
             return metricResultViewModels;
         }
 
+        public async Task<List<string>> GetAvailableMetrics()
+        {
+            List<string> metricResultViewModels = new List<string>();
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                var test = await db.OperationMetricResults.ToListAsync();
+                var result = await db.OperationMetricResults
+                                                    .Select(x => x.MethodName)
+                                                    .Distinct()
+                                                    .ToListAsync();
+                metricResultViewModels = result;
+            }
+            return metricResultViewModels;
+        }
+
+
         public async Task<List<MetricResultViewModel>> GetResultsByPeriod(DateTime from, DateTime to, string methodName)
         {
             List<MetricResultViewModel> metricResultViewModels = new List<MetricResultViewModel>();
@@ -90,10 +106,14 @@ namespace FlashTuna.Core.Storage
 
         public async Task<List<List<MetricResultViewModel>>> GetResultsRuntime()
         {
+            var from = DateTime.Now.AddDays(-1);
+            var to = DateTime.Now;
             List<List<MetricResultViewModel>> metricResultViewModelsAll = new List<List<MetricResultViewModel>>();
             using (FlashTunaDbContext db = new FlashTunaDbContext())
             {
-                var globalGroupedMetricResults = await db.OperationMetricResults
+                var globalGroupedMetricResults = await db.OperationMetricResults.Where(o =>
+                     (o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Started && o.TimePoint >= from)||
+                     (o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Stopped && o.TimePoint <= to))
                                                     .GroupBy(x => x.MethodName)
                                                     .ToListAsync();
                 foreach(var methodGroupedMetricResult in globalGroupedMetricResults)
@@ -124,6 +144,39 @@ namespace FlashTuna.Core.Storage
                 
             }
             return metricResultViewModelsAll;
+        }
+
+        public async Task<List<MetricResultViewModel>> GetErrorsResultsRuntime()
+        {
+            var from = DateTime.Now.AddDays(-1);
+            var to = DateTime.Now;
+            List<List<MetricResultViewModel>> metricResultViewModelsAll = new List<List<MetricResultViewModel>>();
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                var globalGroupedMetricResults = await db.ErrorResults.Where(o =>
+                                                     (o.TimePoint >= from) ||
+                                                     (o.TimePoint <= to))
+                                                    .ToListAsync();
+
+                    List<MetricResultViewModel> metricResultViewModels = new List<MetricResultViewModel>();
+                    foreach (var groupedMetricResult in globalGroupedMetricResults)
+                    {
+                        var metricResult = new MetricResultViewModel()
+                        {
+                            ClassName = groupedMetricResult.ClassName,
+                            StartPoint = groupedMetricResult.TimePoint,
+                            EndPoint = groupedMetricResult.TimePoint,
+                            MethodName = groupedMetricResult.MethodName,
+                            Tag = groupedMetricResult.Tag
+                        };
+                        metricResultViewModels.Add(metricResult);
+                    }
+                return metricResultViewModels;
+            }
+        }
+        public async Task<int> AnalyzeProblemsCount()
+        {
+            return 1;
         }
     }
 }

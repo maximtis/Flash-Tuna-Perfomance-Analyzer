@@ -8,7 +8,7 @@ namespace FlashTuna.Core.Modules.Runtime
 {
     public interface RuntimeMetricsNotification
     {
-        Task MetricsUpdatetdBroadcast(string methodName);
+        Task MetricsUpdatedBroadcast();
     }
     public class NotifyHub:Hub<RuntimeMetricsNotification>
     {

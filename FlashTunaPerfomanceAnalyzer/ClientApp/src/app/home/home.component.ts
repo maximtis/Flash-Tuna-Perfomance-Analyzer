@@ -4,8 +4,6 @@ import * as _ from 'underscore';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MetricsResultService } from '../services/metrics-result.service';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
-import { TimerObservable } from "rxjs/observable/TimerObservable";
-import 'rxjs/add/operator/takeWhile';
 
 @Component({
   selector: 'home',
@@ -60,11 +58,11 @@ export class HomeComponent implements OnInit {
     try {
       this.metricsList = await this.metricsService.getMetricsByPeriod(this.dataRequestForm.value);
       this.selectedMethod = this.metricsList[2];
-          TimerObservable.create(1000, this.interval)
-          .takeWhile(() => this.alive)
-          .subscribe(async () => {
-            await this.updateMetricsResultAuto();
-          }); 
+          //TimerObservable.create(1000, this.interval)
+          //.takeWhile(() => this.alive)
+          //.subscribe(async () => {
+          //  await this.updateMetricsResultAuto();
+          //}); 
     }
     catch (e) {
       console.log('there was an error');
