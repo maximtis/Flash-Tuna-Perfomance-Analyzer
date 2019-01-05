@@ -8,6 +8,7 @@ namespace DemoApp
 {
     internal class ProductionClassB:MeteredClass
     {
+        bool throwEx = false;
         public ProductionClassB() : base(typeof(ProductionClassB))
         {
 
@@ -17,11 +18,24 @@ namespace DemoApp
         {
             using (await StartRecording())
             {
-                for (int i = 0; i < 10; i++)
+                try
                 {
-                    Thread.Sleep(100);
-                    Console.WriteLine("ShortOperation");
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Thread.Sleep(100);
+                        Console.WriteLine("ShortOperation");
+                        if (throwEx)
+                        {
+                            throwEx = !throwEx;
+                            throw new ArgumentException("TestArgumentEx");
+                        }
+                    }
                 }
+                catch(Exception ex)
+                {
+                    await RecordExeption(ex);
+                }
+                
             }
             await Task.FromResult(0);
         }
@@ -31,11 +45,23 @@ namespace DemoApp
         {
             using (await StartRecording())
             {
-                for (int i = 0; i < 5; i++)
+                try
                 {
-                    var sleepTime = new Random(Environment.TickCount).Next(0, 500);
-                    Thread.Sleep(sleepTime);
-                    Console.WriteLine("LoginOperation");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        var sleepTime = new Random(Environment.TickCount).Next(0, 500);
+                        Thread.Sleep(sleepTime);
+                        Console.WriteLine("LoginOperation");
+                        if (throwEx)
+                        {
+                            throwEx = !throwEx;
+                            throw new InvalidCastException("TestInvalidCastException");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await RecordExeption(ex);
                 }
             }
             await Task.FromResult(0);
@@ -46,11 +72,22 @@ namespace DemoApp
         {
             using (await StartRecording())
             {
-                for (int i = 0; i < 5; i++)
+                try { 
+                    for (int i = 0; i < 5; i++)
+                    {
+                        var sleepTime = new Random(Environment.TickCount).Next(0, 200);
+                        Thread.Sleep(sleepTime);
+                        Console.WriteLine("TestOperation");
+                        if (throwEx)
+                        {
+                            throwEx = !throwEx;
+                            throw new OperationCanceledException("TestOperationCanceledException");
+                        }
+                    }
+                }
+                catch (Exception ex)
                 {
-                    var sleepTime = new Random(Environment.TickCount).Next(0, 200);
-                    Thread.Sleep(sleepTime);
-                    Console.WriteLine("TestOperation");
+                    await RecordExeption(ex);
                 }
             }
             await Task.FromResult(0);
@@ -61,11 +98,22 @@ namespace DemoApp
         {
             using (await StartRecording())
             {
-                for (int i = 0; i < 5; i++)
+                try { 
+                    for (int i = 0; i < 5; i++)
+                    {
+                        var sleepTime = new Random(Environment.TickCount).Next(0, 300);
+                        Thread.Sleep(sleepTime);
+                        Console.WriteLine("RemoveUser");
+                        if (throwEx)
+                        {
+                            throwEx = !throwEx;
+                            throw new TimeoutException("TestTimeoutException");
+                        }
+                    }
+                }
+                catch (Exception ex)
                 {
-                    var sleepTime = new Random(Environment.TickCount).Next(0, 300);
-                    Thread.Sleep(sleepTime);
-                    Console.WriteLine("RemoveUser");
+                    await RecordExeption(ex);
                 }
             }
             await Task.FromResult(0);
@@ -76,11 +124,23 @@ namespace DemoApp
         {
             using (await StartRecording())
             {
-                for (int i = 0; i < 5; i++)
+                try
                 {
-                    var sleepTime = new Random(Environment.TickCount).Next(0, 700);
-                    Thread.Sleep(sleepTime);
-                    Console.WriteLine("PingTestMethod");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        var sleepTime = new Random(Environment.TickCount).Next(0, 700);
+                        Thread.Sleep(sleepTime);
+                        Console.WriteLine("PingTestMethod");
+                        if (throwEx)
+                        {
+                            throwEx = !throwEx;
+                            throw new NullReferenceException("TestNullReferenceException");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await RecordExeption(ex);
                 }
             }
             await Task.FromResult(0);

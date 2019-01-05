@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\Errors\" />
     <Folder Include="Modules\Usage\" />
     <Folder Include="Modules\Perfomance\" />
   </ItemGroup>

@@ -34,7 +34,7 @@ namespace FlashTuna.Core.Configuration
         {
             Initialize();
             _builder = builder;
-            CurrentTimeLine.SetStorageProvider(_builder.DbConxtext);
+           // CurrentTimeLine.SetStorageProvider(_builder.DbConxtext);
             InitializeMetrics();
         }
         public static async Task<string> PrintMetricsResult()

@@ -53,14 +53,5 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
                                                  .GetAvailableMetrics();
             return results;
         }
-
-
-        [HttpGet("[action]")]
-        public async Task GetRuntime()
-        {
-            await _hubContext.Clients.All.MetricsUpdatedBroadcast();
-        }
-
-
     }
 }

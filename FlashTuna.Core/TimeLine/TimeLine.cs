@@ -3,6 +3,7 @@ using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics;
 using FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric;
 using FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric;
+using FlashTuna.Core.Modules.Errors;
 using FlashTuna.Core.Modules.Runtime;
 using FlashTuna.Core.Storage.DataBase;
 using Microsoft.AspNetCore.SignalR;
@@ -20,9 +21,6 @@ namespace FlashTuna.Core.TimeLine
         private FlashTunaDbContext db = null;
         private HashSet<IMetric> _metrics = new HashSet<IMetric>();
         private List<IMetricResult> _metricsResults = new List<IMetricResult>();
-        public void SetStorageProvider(IFlashTunaDbContext storageProvider){
-             //db = storageProvider as FlashTunaDbContext;
-        }
 
         public TimeLine()
         {
@@ -47,6 +45,15 @@ namespace FlashTuna.Core.TimeLine
         {
             var targetMetric = _metrics.SingleOrDefault(x => x.ClassName == className && x.MethodName == methodName);
             return await targetMetric.StartAsync();
+        }
+
+        public async Task CollectException(IErrorResult errorResult)
+        {
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                await db.ErrorResults.AddAsync(errorResult as ErrorResult);
+                await db.SaveChangesAsync();
+            }
         }
     }
 }

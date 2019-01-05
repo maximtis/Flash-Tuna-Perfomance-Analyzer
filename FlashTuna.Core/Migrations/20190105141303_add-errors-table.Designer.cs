@@ -4,14 +4,16 @@ using FlashTuna.Core.Storage.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlashTuna.Core.Migrations
 {
     [DbContext(typeof(FlashTunaDbContext))]
-    partial class FlashTunaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190105141303_add-errors-table")]
+    partial class adderrorstable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
