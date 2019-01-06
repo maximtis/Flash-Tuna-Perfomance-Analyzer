@@ -10,8 +10,6 @@ namespace FlashTuna.Core.Modules.Usage
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public string Name { get; set; }
-
-        public long ConfigurationId { get; set; }
-        public virtual Setting Configuration { get; set; }
+        public string ClassName { get; set; }
     }
 }

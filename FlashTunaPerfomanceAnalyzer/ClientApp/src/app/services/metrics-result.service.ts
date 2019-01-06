@@ -4,6 +4,7 @@ import { MetricsResultModel } from "../models/metrics-result.model";
 import { Observable, Subject } from 'rxjs';
 import { map } from "rxjs/operators";
 import { StatisticReportModel } from '../models/statistic-report.model';
+import { TrackableMethodModel } from '../models/trackable-method.model';
 
 @Injectable()
 export class MetricsResultService{
@@ -23,15 +24,15 @@ export class MetricsResultService{
                          .toPromise<MetricsResultModel[]>();
     }
 
-    async getMetricsByPeriod(form: any): Promise<string[]> {
-      return this._http.post<string[]>(this._baseUrl + 'api/MetricResults/GetMetrics', form)
-                         .toPromise<string[]>();
+  async getMetricsByPeriod(form: any): Promise<TrackableMethodModel[]> {
+      return this._http.post<TrackableMethodModel[]>(this._baseUrl + 'api/MetricResults/GetMetrics', form)
+        .toPromise<TrackableMethodModel[]>();
   }
 
 
-  async getAllMetrics(): Promise<string[]> {
-    return this._http.get<string[]>(this._baseUrl + 'api/MetricResults/GetMetrics')
-      .toPromise<string[]>();
+  async getAllMetrics(): Promise<TrackableMethodModel[]> {
+    return this._http.get<TrackableMethodModel[]>(this._baseUrl + 'api/MetricResults/GetMetrics')
+      .toPromise<TrackableMethodModel[]>();
   }
 
     async getMetricsRuntime(): Promise<MetricsResultModel[][]> {
@@ -47,8 +48,17 @@ export class MetricsResultService{
       .toPromise<MetricsResultModel[]>();
   }
 
-    async getRuntime(): Promise<any> {
-        return this._http.get<any>(this._baseUrl + 'api/MetricResults/GetRuntime')
-          .toPromise<any>();
-    }
+  async getTrackableMethods(): Promise<TrackableMethodModel[]> {
+    return this._http.get<TrackableMethodModel[]>(this._baseUrl + 'api/MetricResults/GetTrackableMethods')
+      .toPromise<TrackableMethodModel[]>();
+  }
+  async postSetTrackableMethod(metric: TrackableMethodModel): Promise<any> {
+    return this._http.post<any>(this._baseUrl + 'api/MetricResults/SetTrackableMethod', metric)
+      .toPromise<any>();
+  }
+
+  async getRuntime(): Promise<any> {
+    return this._http.get<any>(this._baseUrl + 'api/MetricResults/GetRuntime')
+      .toPromise<any>();
+  }
 }

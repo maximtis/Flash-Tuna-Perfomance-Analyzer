@@ -9,7 +9,7 @@ namespace FlashTuna.Core.Modules.Usage
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
-        //1-Days,2-minutes,3-seconds
+        //1-Days,2-hours,3-menutes
         public long PeriodType;
         public long Period;
         public string ConnectionString { get; set; }

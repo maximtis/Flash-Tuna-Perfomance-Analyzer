@@ -14,6 +14,8 @@ namespace FlashTuna.Core.Storage.DataBase
     {
         public FlashTunaDbContext() : base(){}
         public DbSet<OperationMetricResult> OperationMetricResults { get; set; }
+        public DbSet<TrackedMethod> TrackedMethods { get; set; }
+        public DbSet<Setting> Settings { get; set; }
         public DbSet<ErrorResult> ErrorResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

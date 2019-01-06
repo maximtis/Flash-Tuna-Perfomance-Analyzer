@@ -14,7 +14,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { RuntimeComponent } from './runtime/runtime.component';
 import { PeriodComponent } from './period/period.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCheckboxModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatCheckboxModule, MatProgressSpinnerModule, MatSelectModule, MatDividerModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -34,6 +34,8 @@ import { MatCheckboxModule, MatProgressSpinnerModule } from '@angular/material';
     MatProgressSpinnerModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
+    MatDividerModule,
     FormsModule,
     ChartsModule,
     ReactiveFormsModule,

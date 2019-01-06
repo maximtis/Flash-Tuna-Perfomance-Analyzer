@@ -35,11 +35,20 @@ namespace FlashTuna.Core.Storage
             return metricResultViewModels;
         }
 
-        public async Task<List<string>> GetMetricsByPeriod(DateTime from, DateTime to)
+        public async Task<List<TrackedMethod>> GetTrackedMethods()
+        {
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                var trackedMethods = await db.TrackedMethods.ToListAsync();
+                return trackedMethods;
+            }
+        }
+
+        public async Task<List<TrackableMethodViewModel>> GetMetricsByPeriod(DateTime from, DateTime to)
         {
             from = new DateTime(2000, 1, 1);
             to = new DateTime(2019, 1, 1);
-            List<string> metricResultViewModels = new List<string>();
+            List<TrackableMethodViewModel> metricResultViewModels = new List<TrackableMethodViewModel>();
             using (FlashTunaDbContext db = new FlashTunaDbContext())
             {
                 var test = await db.OperationMetricResults.ToListAsync();
@@ -47,7 +56,11 @@ namespace FlashTuna.Core.Storage
                                                     .Where(o => 
                      (o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Started && o.TimePoint >= from) ||
                      (o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Stopped && o.TimePoint <= to))
-                                                    .Select(x=>x.MethodName)
+                                                    .Select(x=> new TrackableMethodViewModel()
+                                                    {
+                                                        MethodName = x.MethodName,
+                                                        ClassName = x.ClassName
+                                                    })
                                                     .Distinct()
                                                     .ToListAsync();
                 metricResultViewModels = result;
@@ -55,14 +68,18 @@ namespace FlashTuna.Core.Storage
             return metricResultViewModels;
         }
 
-        public async Task<List<string>> GetAvailableMetrics()
+        public async Task<List<TrackableMethodViewModel>> GetAvailableMetrics()
         {
-            List<string> metricResultViewModels = new List<string>();
+            List<TrackableMethodViewModel> metricResultViewModels = new List<TrackableMethodViewModel>();
             using (FlashTunaDbContext db = new FlashTunaDbContext())
             {
                 var test = await db.OperationMetricResults.ToListAsync();
                 var result = await db.OperationMetricResults
-                                                    .Select(x => x.MethodName)
+                                                    .Select(x => new TrackableMethodViewModel()
+                                                    {
+                                                        MethodName = x.MethodName,
+                                                        ClassName = x.ClassName
+                                                    })
                                                     .Distinct()
                                                     .ToListAsync();
                 metricResultViewModels = result;
@@ -70,6 +87,71 @@ namespace FlashTuna.Core.Storage
             return metricResultViewModels;
         }
 
+        public async Task SetMethodToTrack(TrackableMethodViewModel method)
+        {
+            var trackedMethods = await GetTrackedMethods();
+            if (trackedMethods.Count >= 5 && method.Selected)
+            {
+                throw new InvalidOperationException("Already selected 5 methods");
+            }
+            
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                if(await db.TrackedMethods
+                    .AnyAsync(x=>x.Name == method.MethodName &&
+                                 x.ClassName == method.ClassName) &&
+                                                method.Selected)
+                {
+                    throw new InvalidOperationException($"Method {method.MethodName} already tracked by System.");
+                }
+                if ((!await db.TrackedMethods
+                    .AnyAsync(x => x.Name == method.MethodName &&
+                                 x.ClassName == method.ClassName)) &&
+                                                (!method.Selected))
+                {
+                    throw new InvalidOperationException($"Method {method.MethodName} not tracked by System yet.");
+                }
+                if (method.Selected)
+                {
+                    await db.TrackedMethods.AddAsync(new TrackedMethod()
+                    {
+                        ClassName = method.ClassName,
+                        Name = method.MethodName
+                    });
+                    await db.SaveChangesAsync();
+                }
+                else
+                {
+                    var trackedMethod = await db.TrackedMethods.FirstAsync(x => x.ClassName == method.ClassName && x.Name == method.MethodName);
+                    db.TrackedMethods.Remove(trackedMethod);
+                    await db.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async Task UpdateInterval(long intervalType, long intervalValue)
+        {
+            if (intervalType >1 && (intervalValue> 30 || intervalValue < 0))
+            {
+                throw new InvalidOperationException("You cannot selec more than 30 days to track.");
+            }
+            if (intervalType > 2 && (intervalValue > 720 || intervalValue < 0))
+            {
+                throw new InvalidOperationException("You cannot selec more than 30 days to track.");
+            }
+            if (intervalType > 3 && (intervalValue > 43200 || intervalValue < 0))
+            {
+                throw new InvalidOperationException("You cannot selec more than 30 days to track.");
+            }
+
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                var currentSettings = await db.Settings.FirstAsync();
+                currentSettings.Period = intervalValue;
+                currentSettings.PeriodType = intervalType;
+                await 
+            }
+        }
 
         public async Task<List<MetricResultViewModel>> GetResultsByPeriod(DateTime from, DateTime to, string methodName)
         {
