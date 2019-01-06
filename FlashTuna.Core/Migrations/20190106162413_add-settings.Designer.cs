@@ -4,14 +4,16 @@ using FlashTuna.Core.Storage.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlashTuna.Core.Migrations
 {
     [DbContext(typeof(FlashTunaDbContext))]
-    partial class FlashTunaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190106162413_add-settings")]
+    partial class addsettings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,7 +83,7 @@ namespace FlashTuna.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings");
+                    b.ToTable("Setting");
                 });
 
             modelBuilder.Entity("FlashTuna.Core.Modules.Usage.TrackedMethod", b =>
@@ -90,24 +92,23 @@ namespace FlashTuna.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ClassName");
+                    b.Property<long>("ConfigurationId");
 
                     b.Property<string>("Name");
 
-                    b.Property<long?>("SettingId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SettingId");
+                    b.HasIndex("ConfigurationId");
 
-                    b.ToTable("TrackedMethods");
+                    b.ToTable("TrackedMethod");
                 });
 
             modelBuilder.Entity("FlashTuna.Core.Modules.Usage.TrackedMethod", b =>
                 {
-                    b.HasOne("FlashTuna.Core.Modules.Usage.Setting")
+                    b.HasOne("FlashTuna.Core.Modules.Usage.Setting", "Configuration")
                         .WithMany("TrackedMethods")
-                        .HasForeignKey("SettingId");
+                        .HasForeignKey("ConfigurationId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

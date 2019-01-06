@@ -6,6 +6,7 @@ using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric;
 using FlashTuna.Core.Configuration;
 using FlashTuna.Core.Modules.Runtime;
+using FlashTuna.Core.Modules.Usage;
 using FlashTunaPerfomanceAnalyzer.Classes.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -37,6 +38,15 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
             return results;
         }
 
+        [HttpGet("[action]")]
+        public async Task<StatisticReportModel> GetStatisticReport()
+        {
+            var results = await FlashTunaAnalyzer.Results
+                                                 .GetStatisticReport();
+            return results;
+        }
+        
+
         [HttpPost("[action]")]
         public async Task<List<MetricResultViewModel>> GetMetricsResults([FromBody] MetricsResultsRequest model)
         {
@@ -46,15 +56,49 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<List<string>> GetMetrics([FromBody] MetricsResultsRequest model)
+        public async Task<List<TrackableMethodViewModel>> GetMetrics([FromBody] MetricsResultsRequest model)
         {
             var results = await FlashTunaAnalyzer.Results
                                                  .GetMetricsByPeriod(model.PeriodFrom, model.PeriodTo);
             return results;
         }
+        [HttpGet("[action]")]
+        public async Task<List<TrackableMethodViewModel>> GetTrackableMethods()
+        {
+            var results = await FlashTunaAnalyzer.Results
+                                                 .GetAvailableMetrics();
+            var trackedMethods = await FlashTunaAnalyzer.Results.GetTrackedMethods();
+
+            results.ForEach(x =>
+            {
+                if (trackedMethods.Any(t => t.ClassName == x.ClassName && t.Name == x.MethodName))
+                {
+                    x.Selected = true;
+                }
+            });
+
+            return results;
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> SetTrackableMethod(TrackableMethodViewModel method)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                await FlashTunaAnalyzer.Results.SetMethodToTrack(method);
+            }
+            catch (InvalidOperationException ex)
+            {
+                BadRequest(ex.Message);
+            }
+            return Ok();
+        }
 
         [HttpGet("[action]")]
-        public async Task<List<string>> GetMetrics()
+        public async Task<List<TrackableMethodViewModel>> GetMetrics()
         {
             var results = await FlashTunaAnalyzer.Results
                                                  .GetAvailableMetrics();

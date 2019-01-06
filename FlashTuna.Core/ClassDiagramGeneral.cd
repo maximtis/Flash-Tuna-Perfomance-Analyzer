@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FlashTuna.Core.Attributes.Common.OperationMetricAttribute">
+    <Position X="9.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Attributes\Common\MeasurableAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Common.Metric.MetricsFactory.MetricsFactory">
+    <Position X="11.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Common\Metric\MetricsFactory\MetricsFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Common.Metric.BaseErrorResult" Collapsed="true">
+    <Position X="1.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAACgAAAAAAAAEAAAAAAAAAACAAADAAAAAAA=</HashCode>
+      <FileName>Common\Metric\BaseErrorResult.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FlashTuna.Core.Common.Metric.BaseMetric">
+    <Position X="1.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAACkAQACAAAAAAAAAAAAAAASAQACAAAAAAA=</HashCode>
+      <FileName>Common\Metric\BaseMetric.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FlashTuna.Core.Common.Metric.BaseMetricCall" Collapsed="true">
+    <Position X="3.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAABAADAAAAAAEAAAAAgAAAAAAIAAIFABQgAAAAA=</HashCode>
+      <FileName>Common\Metric\BaseMetricCall.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FlashTuna.Core.Common.Metric.BaseMetricResult">
+    <Position X="3.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCgAAAAACgAAAAAAAAAAAAAAAAAAACAAACAAAIAAA=</HashCode>
+      <FileName>Common\Metric\BaseMetricResult.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FlashTuna.Core.Common.Metric.MeteredClass">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAEAACAAAEAAAEAAAgAAAAA=</HashCode>
+      <FileName>Common\Metric\MeteredClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric.MetricResultViewModel">
+    <Position X="9.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAACgQAAAAAAAAAAAAAAAAAACAAACAAAAAAg=</HashCode>
+      <FileName>Common\PerfomanceMetrics\OperationMetric\MetricResultViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric.OperationMetricResult">
+    <Position X="3.25" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Common\PerfomanceMetrics\OperationMetric\OperationMetricResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric.OperationMetric">
+    <Position X="1.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Common\PerfomanceMetrics\OperationMetric\OperationMetric.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric.OperationMetricCall" Collapsed="true">
+    <Position X="3.5" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIEAAAAAAAAA=</HashCode>
+      <FileName>Common\PerfomanceMetrics\OperationMetric\OperationMetricCall.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Configuration.FlashTunaAnalyzer">
+    <Position X="7.5" Y="0.5" Width="1.75" />
+    <NestedTypes>
+      <Class Name="FlashTuna.Core.Configuration.FlashTunaAnalyzer.FlashTunaBuilder" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Configuration\FlashTuna.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAQAAAABoAAEASAAAAACCAAAAAAAACEA=</HashCode>
+      <FileName>Configuration\FlashTuna.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Configuration.FlashTunaConfiguration" Collapsed="true">
+    <Position X="11.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Configuration\FlashTuna.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Modules.Errors.ErrorResult" Collapsed="true">
+    <Position X="1.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modules\Errors\ErrorResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Modules.Runtime.NotifyHub" Collapsed="true">
+    <Position X="11.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modules\Runtime\INotifyHub.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Modules.Tasks.TaskSessionIdentifier">
+    <Position X="13.5" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAQAAAAAAAAAAAAABAAAAAAgAAgAAAA=</HashCode>
+      <FileName>Modules\Tasks\TaskSessionIdentifier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Modules.Tasks.TaskSessionMetadata">
+    <Position X="5.5" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAACAAAAAAAAAAAAAAAQQAAAAAAAAAg=</HashCode>
+      <FileName>Modules\Tasks\TaskSessionMetadata.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Modules.Usage.StatisticReportModel">
+    <Position X="11.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modules\Usage\StatisticReportModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.Storage.DataBase.FlashTunaDbContext" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQA=</HashCode>
+      <FileName>Storage\DataBase\FlashTunaDbContext.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FlashTuna.Core.Storage.MetricsResultRepository">
+    <Position X="13.5" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAAACAAAAAAAAIAAEAAAAQMAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Storage\MetricsResultRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlashTuna.Core.TimeLine.TimeLine" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAQAACAAAAAQEAAQAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>TimeLine\TimeLine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" Collapsed="true" />
+  </Class>
+  <Interface Name="FlashTuna.Core.Common.Metric.Interfaces.IErrorResult" Collapsed="true">
+    <Position X="5.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAACgAAAAAAAAAAAAAAAAAAACAAACAAAAAAA=</HashCode>
+      <FileName>Common\Metric\Interfaces\IErrorResult.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FlashTuna.Core.Common.Metric.Interfaces.IMetric">
+    <Position X="9.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACgAAAAAAAAAAAAAAAAAAACAQACAAAAAAA=</HashCode>
+      <FileName>Common\Metric\Interfaces\IMetric.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FlashTuna.Core.Common.Metric.Interfaces.IMetricCall" Collapsed="true">
+    <Position X="11.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Common\Metric\Interfaces\IMetricCall.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FlashTuna.Core.Common.Metric.Interfaces.IMetricResult" Collapsed="true">
+    <Position X="11.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAgAAAAACgAAAAAAAAAAAAAAAAAAACAAACAAAIAAA=</HashCode>
+      <FileName>Common\Metric\Interfaces\IMetricResult.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FlashTuna.Core.Modules.Runtime.RuntimeMetricsNotification" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modules\Runtime\INotifyHub.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FlashTuna.Core.Storage.DataBase.IFlashTunaDbContext" Collapsed="true">
+    <Position X="9.75" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Storage\DataBase\IFlashTunaDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FlashTuna.Core.TimeLine.ITimeLine" Collapsed="true">
+    <Position X="5.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAACAAAAAQAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>TimeLine\ITimeLine.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="FlashTuna.Core.Common.Metric.MetricResultStatus" Collapsed="true">
+    <Position X="1.25" Y="7.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Metric\MetricResultStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

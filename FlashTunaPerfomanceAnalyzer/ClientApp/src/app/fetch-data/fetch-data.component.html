@@ -1,5 +1,7 @@
-<div class="col-md-12">
-  <h3>Runtime Page Configuration <span class="badge badge-secondary"><span class="glyphicon glyphicon-align-left"></span></span></h3>
+<div class="row">
+  <div class="col-md-12">
+    <h3>Runtime Page Configuration <span class="badge badge-secondary"><span class="glyphicon glyphicon-align-left"></span></span></h3>
+  </div>
 </div>
 <div class="row">
   <div class="col-md-12">
@@ -11,8 +13,27 @@
       </div>
     </div>
     <div class="list-group">
-      <span href="#" cursor="hand" *ngFor="let metric of metricsList | filter : searchText" (click)="updateMetricsResult(metric)" class="list-group-item list-group-item-action">{{metric}}</span>
+      <span (click)="setTracked(metric)" href="#" cursor="hand" *ngFor="let metric of metricsList | filter : searchText" (click)="updateMetricsResult(metric)" class="list-group-item list-group-item-action">{{metric.methodName}}<span class="glyphicon glyphicon-ok" *ngIf="metric.selected"></span></span>
 
     </div>
   </div>
 </div>
+<mat-divider></mat-divider>
+<div class="row">
+  <div class="col-md-12">
+    <h3>Setting Runtime Tracking Interval <span class="badge badge-secondary"><span class="glyphicon glyphicon-text-width"></span></span></h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <mat-select placeholder="Tracking Interval">
+      <mat-option *ngFor="let interval of intervalTypes" [value]="interval.value">
+        {{interval.viewValue}}
+      </mat-option>
+    </mat-select>
+    <br />
+    <h5>Enter interval value:</h5>
+    <input type="number" [(ngModel)]="intervalNumber" />
+   </div>
+</div>
+<mat-divider></mat-divider>
