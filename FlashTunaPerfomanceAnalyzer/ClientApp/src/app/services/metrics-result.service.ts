@@ -3,6 +3,7 @@ import { Injectable, Inject } from "@angular/core";
 import { MetricsResultModel } from "../models/metrics-result.model";
 import { Observable, Subject } from 'rxjs';
 import { map } from "rxjs/operators";
+import { StatisticReportModel } from '../models/statistic-report.model';
 
 @Injectable()
 export class MetricsResultService{
@@ -36,6 +37,10 @@ export class MetricsResultService{
     async getMetricsRuntime(): Promise<MetricsResultModel[][]> {
       return this._http.get<MetricsResultModel[][]>(this._baseUrl + 'api/MetricResults/GetMetricsResultsRuntime')
         .toPromise<MetricsResultModel[][]>();
+  }
+  async getStatisticReport(): Promise<StatisticReportModel> {
+    return this._http.get<StatisticReportModel>(this._baseUrl + 'api/MetricResults/GetStatisticReport')
+      .toPromise<StatisticReportModel>();
   }
   async getErrorsMetricsRuntime(): Promise<MetricsResultModel[]> {
     return this._http.get<MetricsResultModel[]>(this._baseUrl + 'api/MetricResults/GetErrorsMetricsResultsRuntime')

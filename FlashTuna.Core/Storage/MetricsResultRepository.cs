@@ -1,5 +1,6 @@
 ﻿using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric;
+using FlashTuna.Core.Modules.Usage;
 using FlashTuna.Core.Storage.DataBase;
 using FlashTuna.Core.TimeLine;
 using Microsoft.EntityFrameworkCore;
@@ -174,9 +175,90 @@ namespace FlashTuna.Core.Storage
                 return metricResultViewModels;
             }
         }
+
         public async Task<int> AnalyzeProblemsCount()
         {
-            return 1;
+            var from = DateTime.Now.AddDays(-1);
+            var to = DateTime.Now;
+            List<List<MetricResultViewModel>> metricResultViewModelsAll = new List<List<MetricResultViewModel>>();
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                var globalGroupedMetricResults = await db.OperationMetricResults.Where(o =>
+                     (o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Started && o.TimePoint >= from) ||
+                     (o.MetricResultStatus == (int)Common.Metric.MetricResultStatus.Stopped && o.TimePoint <= to))
+                                                    .GroupBy(x => x.MethodName)
+                                                    .ToListAsync();
+                foreach (var methodGroupedMetricResult in globalGroupedMetricResults)
+                {
+                    List<MetricResultViewModel> metricResultViewModels = new List<MetricResultViewModel>();
+                    foreach (var groupedMetricResult in methodGroupedMetricResult.GroupBy(x => x.CallId))
+                    {
+                        var start = groupedMetricResult.OrderBy(x => x.MetricResultStatus).First();
+                        var end = groupedMetricResult.OrderBy(x => x.MetricResultStatus).Last();
+                        if (start == end)
+                            continue;
+                        var metricResult = new MetricResultViewModel()
+                        {
+                            ClassName = start.ClassName,
+                            StartPoint = start.TimePoint,
+                            EndPoint = end.TimePoint,
+                            Id = start.CallId,
+                            MethodName = start.MethodName,
+                            Milliseconds = (end.TimePoint.TimeOfDay - start.TimePoint.TimeOfDay).Milliseconds,
+                            ModuleName = start.ModuleName,
+                            Tag = start.Tag
+                        };
+                        metricResultViewModels.Add(metricResult);
+                    }
+
+                    metricResultViewModelsAll.Add(
+                        metricResultViewModels.OrderBy(x => x.StartPoint).ToList()
+                        );
+                }
+
+            }
+            int problemsCount = 0;
+            foreach(var result in metricResultViewModelsAll)
+            {
+                var timings = result.Select(x=>x.Milliseconds).OrderBy(x => x).ToArray();
+                var isProblematic = chechMethodProblem(timings);
+                if (isProblematic)
+                {
+                    problemsCount++;
+                }
+            }
+            return problemsCount;
+        }
+        public async Task<StatisticReportModel> GetStatisticReport()
+        {
+            var discoveredMethods = await GetAvailableMetrics();
+            var discoveredMethodsCount = discoveredMethods.Count;
+            var problemsCount = await AnalyzeProblemsCount();
+            var errors = await GetErrorsResultsRuntime();
+            var errorsCount = errors.Count;
+            var statistiResult = new StatisticReportModel()
+            {
+                DiscoveredMethods = discoveredMethodsCount,
+                ErrorsCount = errorsCount,
+                ProblemsCount = problemsCount
+            };
+            return statistiResult;
+        }
+
+        private bool chechMethodProblem(long[] timing)
+        {
+            long min = 0;
+            if (timing.Count() > 1)
+            {
+                min = timing[0];
+            }
+            var problemMarker = (long)min * 1.3;
+            foreach (var time in timing)
+            {
+                if (time > problemMarker)
+                    return true;
+            }
+            return false;
         }
     }
 }

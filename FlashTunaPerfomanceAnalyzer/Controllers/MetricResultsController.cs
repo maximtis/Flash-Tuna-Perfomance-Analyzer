@@ -6,6 +6,7 @@ using FlashTuna.Core.Common.Metric.Interfaces;
 using FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric;
 using FlashTuna.Core.Configuration;
 using FlashTuna.Core.Modules.Runtime;
+using FlashTuna.Core.Modules.Usage;
 using FlashTunaPerfomanceAnalyzer.Classes.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -36,6 +37,15 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
                                                  .GetErrorsResultsRuntime();
             return results;
         }
+
+        [HttpGet("[action]")]
+        public async Task<StatisticReportModel> GetStatisticReport()
+        {
+            var results = await FlashTunaAnalyzer.Results
+                                                 .GetStatisticReport();
+            return results;
+        }
+        
 
         [HttpPost("[action]")]
         public async Task<List<MetricResultViewModel>> GetMetricsResults([FromBody] MetricsResultsRequest model)

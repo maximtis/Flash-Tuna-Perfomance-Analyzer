@@ -1,6 +1,7 @@
 ﻿using FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric;
 using FlashTuna.Core.Common.PerfomanceMetrics.OperitionMetric;
 using FlashTuna.Core.Modules.Errors;
+using FlashTuna.Core.Modules.Usage;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,8 +21,14 @@ namespace FlashTuna.Core.Storage.DataBase
             optionsBuilder.UseSqlServer("Server=.;Database=Metrics;Trusted_Connection=True;");
             //optionsBuilder.UseSqlite("Data Source=Metrics.db");
             //DbContextOptionsBuilder builder = new DbContextOptionsBuilder().UseSqlite( )
-            
+           
         }
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Setting>()
+                .HasMany(x => x.TrackedMethods)
+                .WithOne(x => x.Configuration);
+        }
     }
+
 }
