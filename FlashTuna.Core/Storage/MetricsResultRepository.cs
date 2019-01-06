@@ -149,7 +149,7 @@ namespace FlashTuna.Core.Storage
                 var currentSettings = await db.Settings.FirstAsync();
                 currentSettings.Period = intervalValue;
                 currentSettings.PeriodType = intervalType;
-                await 
+                await db.SaveChangesAsync();
             }
         }
 

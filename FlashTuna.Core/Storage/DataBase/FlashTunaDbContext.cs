@@ -28,8 +28,7 @@ namespace FlashTuna.Core.Storage.DataBase
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Setting>()
-                .HasMany(x => x.TrackedMethods)
-                .WithOne(x => x.Configuration);
+                .HasMany(x => x.TrackedMethods);
         }
     }
 
