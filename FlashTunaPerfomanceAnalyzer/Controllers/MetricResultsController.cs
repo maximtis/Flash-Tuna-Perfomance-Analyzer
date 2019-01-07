@@ -97,6 +97,24 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
             return Ok();
         }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UpdateInterval(TrackableMethodViewModel method)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                await FlashTunaAnalyzer.Results.SetMethodToTrack(method);
+            }
+            catch (InvalidOperationException ex)
+            {
+                BadRequest(ex.Message);
+            }
+            return Ok();
+        }
+
+
         [HttpGet("[action]")]
         public async Task<List<TrackableMethodViewModel>> GetMetrics()
         {

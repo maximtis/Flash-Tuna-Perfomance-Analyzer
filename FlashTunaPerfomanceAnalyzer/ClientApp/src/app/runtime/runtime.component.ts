@@ -9,9 +9,9 @@ import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
   selector: 'runtime',
   templateUrl: './runtime.component.html'
 })
-export class RuntimeComponent implements AfterViewChecked, OnDestroy {
+export class RuntimeComponent implements AfterViewChecked, OnDestroy,OnInit {
     ngOnDestroy(): void {
-      clearInterval(this.interval);
+      this._hubConnection.stop();
     }
 
   private _hubConnection: HubConnection;
@@ -26,7 +26,7 @@ export class RuntimeComponent implements AfterViewChecked, OnDestroy {
   private isRunning: boolean;
   private timerObservable: any;
 
-  constructor(public metricsService: MetricsResultService, private fb: FormBuilder, @Inject('BASE_URL') baseUrl: string) {
+  constructor(public metricsService: MetricsResultService, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrlHost = baseUrl;
     this.selectedMetricsDates = [];//["2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24"];
     this.metricsList = [];
@@ -39,11 +39,16 @@ export class RuntimeComponent implements AfterViewChecked, OnDestroy {
 
     this._hubConnection.on('MetricsUpdatedBroadcast', async () => {
       console.log('Ok Received');
-      debugger;
-      await this.updateMetricsResultAuto();
+      if(!this.isRunning)
+        await this.updateMetricsResultAuto();
     });
-    this.startConnection();
   }
+
+  ngOnInit(): void {
+
+      this.startConnection();
+
+    }
 
   private startConnection(): void {
     this._hubConnection

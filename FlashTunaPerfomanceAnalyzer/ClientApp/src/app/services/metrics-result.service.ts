@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { map } from "rxjs/operators";
 import { StatisticReportModel } from '../models/statistic-report.model';
 import { TrackableMethodModel } from '../models/trackable-method.model';
+import { IntervalSettingsModel } from '../models/interval-settings.model';
 
 @Injectable()
 export class MetricsResultService{
@@ -56,6 +57,11 @@ export class MetricsResultService{
     return this._http.post<any>(this._baseUrl + 'api/MetricResults/SetTrackableMethod', metric)
       .toPromise<any>();
   }
+  async postUpdateInterval(intervalData: IntervalSettingsModel): Promise<any> {
+    return this._http.post<any>(this._baseUrl + 'api/MetricResults/UpdateInterval', intervalData)
+      .toPromise<any>();
+  }
+
 
   async getRuntime(): Promise<any> {
     return this._http.get<any>(this._baseUrl + 'api/MetricResults/GetRuntime')

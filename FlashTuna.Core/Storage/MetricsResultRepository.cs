@@ -129,26 +129,26 @@ namespace FlashTuna.Core.Storage
             }
         }
 
-        public async Task UpdateInterval(long intervalType, long intervalValue)
+        public async Task UpdateInterval(IntervalSettingsModel intervalSettingsModel)
         {
-            if (intervalType >1 && (intervalValue> 30 || intervalValue < 0))
+            if (intervalSettingsModel.IntervalType >1 && (intervalSettingsModel.IntervalValue> 30 || intervalSettingsModel.IntervalValue < 0))
             {
                 throw new InvalidOperationException("You cannot selec more than 30 days to track.");
             }
-            if (intervalType > 2 && (intervalValue > 720 || intervalValue < 0))
+            if (intervalSettingsModel.IntervalType > 2 && (intervalSettingsModel.IntervalValue > 720 || intervalSettingsModel.IntervalValue < 0))
             {
                 throw new InvalidOperationException("You cannot selec more than 30 days to track.");
             }
-            if (intervalType > 3 && (intervalValue > 43200 || intervalValue < 0))
+            if (intervalSettingsModel.IntervalType >  3 && (intervalSettingsModel.IntervalValue > 43200 || intervalSettingsModel.IntervalValue < 0))
             {
-                throw new InvalidOperationException("You cannot selec more than 30 days to track.");
+                throw new InvalidOperationException("You cannot select more than 30 days to track.");
             }
 
             using (FlashTunaDbContext db = new FlashTunaDbContext())
             {
                 var currentSettings = await db.Settings.FirstAsync();
-                currentSettings.Period = intervalValue;
-                currentSettings.PeriodType = intervalType;
+                currentSettings.Period = intervalSettingsModel.IntervalValue;
+                currentSettings.PeriodType = intervalSettingsModel.IntervalType;
                 await db.SaveChangesAsync();
             }
         }

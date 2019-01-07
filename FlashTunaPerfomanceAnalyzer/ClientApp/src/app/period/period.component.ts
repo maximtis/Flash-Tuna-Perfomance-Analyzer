@@ -6,6 +6,7 @@ import { MetricsResultService } from '../services/metrics-result.service';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import { TimerObservable } from "rxjs/observable/TimerObservable";
 import 'rxjs/add/operator/takeWhile';
+import { TrackableMethodModel } from '../models/trackable-method.model';
 
 @Component({
   selector: 'period',
@@ -14,7 +15,7 @@ import 'rxjs/add/operator/takeWhile';
 export class PeriodComponent implements OnInit {
 
   private _hubConnection: HubConnection;
-  metricsList: string[];
+  metricsList: TrackableMethodModel[];
   fromDate: any;
   toDate: any;
   selectedMetricsTimes: number[];
@@ -29,7 +30,7 @@ export class PeriodComponent implements OnInit {
   constructor(public metricsService: MetricsResultService, private fb: FormBuilder, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrlHost = baseUrl;
     this.selectedMetricsDates = [];//["2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24", "2018-12-24"];
-    this.metricsList = [];
+    this.metricsList= [];
     this.fromDate = '2017-10-19';
     this.toDate = '2018-12-30';
     this.alive = true;

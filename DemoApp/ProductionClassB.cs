@@ -8,7 +8,7 @@ namespace DemoApp
 {
     internal class ProductionClassB:MeteredClass
     {
-        bool throwEx = false;
+        bool throwEx = true;
         public ProductionClassB() : base(typeof(ProductionClassB))
         {
 
