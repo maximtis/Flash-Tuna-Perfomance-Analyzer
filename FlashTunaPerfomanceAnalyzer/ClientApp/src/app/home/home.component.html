@@ -1,7 +1,8 @@
 <div class="row">
-  <div class="col-md-12">
-    <h3>Welcome to Flash Tuan Perfomance Analyzer <span class="badge badge-secondary">Start</span></h3>
-  </div>
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    <div class="col-md-12">
+      <h3>Welcome to Flash Tuan Perfomance Analyzer <span class="badge badge-secondary">Start</span></h3>
+    </div>
 </div>
 <div class="row" style="font-size:1.2em">
   <div class="col-md-3">
@@ -51,6 +52,61 @@
           <span class="glyphicon glyphicon-screenshot"></span>
           <div>
             <strong class="text-center">{{statistic.errorsCount}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<mat-divider></mat-divider>
+<div class="row" style="font-size:1.2em">
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">Tracked Methods</div>
+      <div class="panel-body ">
+        <div class="alert alert-info text-center">
+          <span class="glyphicon glyphicon-ok"></span>
+          <p *ngFor="let method of statistic.methods">
+            <strong>{{method.methodName}}</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">Runtime Update Interval</div>
+      <div class="panel-body ">
+        <div class="alert alert-info text-center">
+          <span class="glyphicon glyphicon-time"></span>
+          <div>
+            <strong>{{statistic.updateInterval}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">Tracking Period</div>
+      <div class="panel-body ">
+        <div class="alert alert-info text-center">
+          <span class="glyphicon glyphicon-text-width"></span>
+          <div>
+            <strong class="text-center">{{statistic.trackingPeriod}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">Notification Service</div>
+      <div class="panel-body ">
+        <div class="alert alert-success text-center">
+          <span class="glyphicon glyphicon-screenshot"></span>
+          <div>
+            <strong class="text-center">OK</strong>
           </div>
         </div>
       </div>

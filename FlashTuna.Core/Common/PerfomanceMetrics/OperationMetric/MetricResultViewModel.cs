@@ -12,5 +12,10 @@ namespace FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric
         public DateTime StartPoint { get; set; }
         public DateTime EndPoint { get; set; }
         public Guid Id { get; set; }
-    } 
+    }
+    public class ErrorsResultViewModel
+    {
+        public string MethodName { get; set; }
+        public int ErrorsCount { get; set; }
+    }
 }

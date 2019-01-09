@@ -7,6 +7,7 @@ using FlashTuna.Core.Common.PerfomanceMetrics.OperationMetric;
 using FlashTuna.Core.Configuration;
 using FlashTuna.Core.Modules.Runtime;
 using FlashTuna.Core.Modules.Usage;
+using FlashTuna.Core.Storage;
 using FlashTunaPerfomanceAnalyzer.Classes.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -31,10 +32,10 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
             return results;
         }
         [HttpGet("[action]")]
-        public async Task<List<MetricResultViewModel>> GetErrorsMetricsResultsRuntime()
+        public async Task<List<ErrorsResultViewModel>> GetErrorsMetricsResultsRuntime()
         {
             var results = await FlashTunaAnalyzer.Results
-                                                 .GetErrorsResultsRuntime();
+                                                 .GetErrorsRuntime();
             return results;
         }
 
@@ -81,31 +82,31 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> SetTrackableMethod(TrackableMethodViewModel method)
+        public async Task<IActionResult> SetTrackableMethod([FromBody] TrackableMethodViewModel method)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
+            TrackableMethodViewModel updatedMethod = null;
             try
             {
-                await FlashTunaAnalyzer.Results.SetMethodToTrack(method);
+                updatedMethod = await FlashTunaAnalyzer.Results.SetMethodToTrack(method);
             }
             catch (InvalidOperationException ex)
             {
                 BadRequest(ex.Message);
             }
-            return Ok();
+            return Ok(updatedMethod);
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> UpdateInterval(TrackableMethodViewModel method)
+        public async Task<IActionResult> UpdateInterval([FromBody]IntervalSettingsModel interval)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await FlashTunaAnalyzer.Results.SetMethodToTrack(method);
+                await FlashTunaAnalyzer.Results.UpdateInterval(interval);
             }
             catch (InvalidOperationException ex)
             {

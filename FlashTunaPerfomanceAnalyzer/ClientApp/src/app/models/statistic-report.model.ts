@@ -1,3 +1,5 @@
+import { TrackableMethodModel } from './trackable-method.model';
+
 export class StatisticReportModel
 {
     constructor(discoveredMethods: number,
@@ -11,6 +13,9 @@ export class StatisticReportModel
 
     discoveredMethods: number;
     errorsCount: number;
-    problemsCount: number;
+  problemsCount: number;
+  methods: TrackableMethodModel[];
+  trackingPeriod: string;
+  UpdateInterval: string;
 }
 

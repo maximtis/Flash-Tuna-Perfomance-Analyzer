@@ -46,8 +46,6 @@ namespace FlashTuna.Core.Storage
 
         public async Task<List<TrackableMethodViewModel>> GetMetricsByPeriod(DateTime from, DateTime to)
         {
-            from = new DateTime(2000, 1, 1);
-            to = new DateTime(2019, 1, 1);
             List<TrackableMethodViewModel> metricResultViewModels = new List<TrackableMethodViewModel>();
             using (FlashTunaDbContext db = new FlashTunaDbContext())
             {
@@ -87,7 +85,7 @@ namespace FlashTuna.Core.Storage
             return metricResultViewModels;
         }
 
-        public async Task SetMethodToTrack(TrackableMethodViewModel method)
+        public async Task<TrackableMethodViewModel> SetMethodToTrack(TrackableMethodViewModel method)
         {
             var trackedMethods = await GetTrackedMethods();
             if (trackedMethods.Count >= 5 && method.Selected)
@@ -126,6 +124,12 @@ namespace FlashTuna.Core.Storage
                     db.TrackedMethods.Remove(trackedMethod);
                     await db.SaveChangesAsync();
                 }
+                return new TrackableMethodViewModel()
+                {
+                    ClassName = method.ClassName,
+                    MethodName = method.MethodName,
+                    Selected = method.Selected
+                };
             }
         }
 
@@ -152,6 +156,44 @@ namespace FlashTuna.Core.Storage
                 await db.SaveChangesAsync();
             }
         }
+        public async Task<IntervalSettingsViewModel> GetTrackingPeriod()
+        {
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                if(!await db.Settings.AnyAsync())
+                {
+                    await db.Settings.AddAsync(new Setting()
+                    {
+                        ConnectionString = "test",
+                        Period = 1,
+                        PeriodType = 1
+                    });
+                    await db.SaveChangesAsync();
+                }
+                var currentSettings = await db.Settings.FirstAsync();
+                var trackingPeriod = new IntervalSettingsViewModel()
+                {
+                    IntervalType = ParseIntervalType(currentSettings.PeriodType),
+                    IntervalValue = currentSettings.Period.ToString()
+                };
+                return trackingPeriod;
+            }
+        }
+
+        private string ParseIntervalType(long value)
+        {
+            switch (value)
+            {
+                case 1:
+                    return "Days";
+                case 2:
+                    return "Hours";
+                case 3:
+                    return "Minutes";
+            }
+            return "";
+        }
+
 
         public async Task<List<MetricResultViewModel>> GetResultsByPeriod(DateTime from, DateTime to, string methodName)
         {
@@ -170,6 +212,8 @@ namespace FlashTuna.Core.Storage
                 {
                     var start = groupedMetricResult.OrderBy(x => x.MetricResultStatus).First();
                     var end = groupedMetricResult.OrderBy(x => x.MetricResultStatus).Last();
+                    if (start == end)
+                        continue;
                     var metricResult = new MetricResultViewModel()
                     {
                         ClassName = start.ClassName,
@@ -206,6 +250,8 @@ namespace FlashTuna.Core.Storage
                     {
                         var start = groupedMetricResult.OrderBy(x => x.MetricResultStatus).First();
                         var end = groupedMetricResult.OrderBy(x => x.MetricResultStatus).Last();
+                        if (start == end)
+                            continue;
                         var metricResult = new MetricResultViewModel()
                         {
                             ClassName = start.ClassName,
@@ -227,6 +273,30 @@ namespace FlashTuna.Core.Storage
                 
             }
             return metricResultViewModelsAll;
+        }
+
+        public async Task<List<ErrorsResultViewModel>> GetErrorsRuntime()
+        {
+            var from = DateTime.Now.AddDays(-1);
+            var to = DateTime.Now;
+            List<ErrorsResultViewModel> metricErrorsResultViewModelsAll = new List<ErrorsResultViewModel>();
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                var globalGroupedMetricResults = await db.ErrorResults.Where(o =>
+                     (o.TimePoint>from && o.TimePoint<to))
+                                                    .GroupBy(x => x.MethodName)
+                                                    .ToListAsync();
+                foreach (var methodGroupedMetricResult in globalGroupedMetricResults)
+                {
+                    metricErrorsResultViewModelsAll.Add(new ErrorsResultViewModel()
+                    {
+                        MethodName = methodGroupedMetricResult.Key,
+                        ErrorsCount = methodGroupedMetricResult.Count()
+                    });
+                }
+
+            }
+            return metricErrorsResultViewModelsAll;
         }
 
         public async Task<List<MetricResultViewModel>> GetErrorsResultsRuntime()
@@ -311,6 +381,7 @@ namespace FlashTuna.Core.Storage
             }
             return problemsCount;
         }
+
         public async Task<StatisticReportModel> GetStatisticReport()
         {
             var discoveredMethods = await GetAvailableMetrics();
@@ -318,12 +389,24 @@ namespace FlashTuna.Core.Storage
             var problemsCount = await AnalyzeProblemsCount();
             var errors = await GetErrorsResultsRuntime();
             var errorsCount = errors.Count;
+            var trackingMethods = await GetTrackedMethods();
+            var period = await GetTrackingPeriod();
+            var convertedMethods = trackingMethods.Select(x => new TrackableMethodViewModel()
+            {
+                ClassName = x.ClassName,
+                MethodName = x.Name,
+                Selected = true
+            }).ToList();
             var statistiResult = new StatisticReportModel()
             {
                 DiscoveredMethods = discoveredMethodsCount,
                 ErrorsCount = errorsCount,
-                ProblemsCount = problemsCount
+                ProblemsCount = problemsCount,
+                Methods = convertedMethods,
+                TrackingPeriod = $"{period.IntervalValue} {period.IntervalType}",
+                UpdateInterval = "5 second"
             };
+            
             return statistiResult;
         }
 

@@ -1,3 +1,8 @@
+<div class="row">
+  <div class="col-md-12">
+    <h3>Runtime Metrics Visualization <span class="badge badge-secondary"><span class="glyphicon glyphicon-align-left"></span></span></h3>
+  </div>
+</div>
 <div class="row justify-conten-center">
     <div class="col-md-12" *ngIf="lineChartData[0].data.length==0">
       <br />
@@ -23,17 +28,27 @@
                 (chartHover)="chartHovered($event)"
                 (chartClick)="chartClicked($event)"></canvas>
       </div>
-      <span class="btn btn-primary" (click)="loadData()">Load Data</span>
-    </div>
-    <div class="col-md-12">
-      <table>
-        <tr>
-          <th *ngFor="let label of selectedMetricsDates">{{label}}</th>
-        </tr>
-        <tr *ngFor="let d of lineChartData">
-          <span>{{d.label}}</span>
-          <td *ngFor="let label of selectedMetricsDates; let j=index">{{ d.data[j] }}</td>
-        </tr>
-      </table>
     </div>
   </div>
+<mat-divider></mat-divider>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <h3>Runtime Errors Visualization <span class="badge badge-secondary"><span class="glyphicon glyphicon-fire"></span></span></h3>
+  </div>
+</div>
+<div class="row justify-conten-center">
+  <div class="col-md-offset-5 col-md-2">
+    <mat-spinner *ngIf="pieChartData.length==0"></mat-spinner>
+  </div>
+  <div class="col-md-12" *ngIf="pieChartData.length>0">
+    <div style="display: block;">
+      <canvas baseChart width="400" height="200"
+              [data]="pieChartData"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"
+              (chartHover)="pieChartHovered($event)"
+              (chartClick)="pieChartClicked($event)"></canvas>
+    </div>
+  </div>
+</div>

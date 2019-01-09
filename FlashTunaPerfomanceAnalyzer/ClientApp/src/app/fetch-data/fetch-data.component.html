@@ -21,12 +21,12 @@
 <mat-divider></mat-divider>
 <div class="row">
   <div class="col-md-12">
-    <h3>Setting Runtime Tracking Interval <span class="badge badge-secondary"><span class="glyphicon glyphicon-text-width"></span></span></h3>
+    <h3>Setting Runtime Tracking Period <span class="badge badge-secondary"><span class="glyphicon glyphicon-text-width"></span></span></h3>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
-    <mat-select placeholder="Tracking Interval">
+    <mat-select placeholder="Tracking Period">
       <mat-option *ngFor="let interval of intervalTypes" [value]="interval.value">
         {{interval.viewValue}}
       </mat-option>

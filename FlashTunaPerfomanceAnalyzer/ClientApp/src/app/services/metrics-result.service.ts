@@ -6,6 +6,7 @@ import { map } from "rxjs/operators";
 import { StatisticReportModel } from '../models/statistic-report.model';
 import { TrackableMethodModel } from '../models/trackable-method.model';
 import { IntervalSettingsModel } from '../models/interval-settings.model';
+import { ErrorsResultModel } from '../models/errors-result.model';
 
 @Injectable()
 export class MetricsResultService{
@@ -40,22 +41,26 @@ export class MetricsResultService{
       return this._http.get<MetricsResultModel[][]>(this._baseUrl + 'api/MetricResults/GetMetricsResultsRuntime')
         .toPromise<MetricsResultModel[][]>();
   }
+  async getErrorsRuntime(): Promise<MetricsResultModel[][]> {
+    return this._http.get<MetricsResultModel[][]>(this._baseUrl + 'api/MetricResults/GetMetricsResultsRuntime')
+      .toPromise<MetricsResultModel[][]>();
+  }
   async getStatisticReport(): Promise<StatisticReportModel> {
     return this._http.get<StatisticReportModel>(this._baseUrl + 'api/MetricResults/GetStatisticReport')
       .toPromise<StatisticReportModel>();
   }
-  async getErrorsMetricsRuntime(): Promise<MetricsResultModel[]> {
-    return this._http.get<MetricsResultModel[]>(this._baseUrl + 'api/MetricResults/GetErrorsMetricsResultsRuntime')
-      .toPromise<MetricsResultModel[]>();
+  async getErrorsMetricsRuntime(): Promise<ErrorsResultModel[]> {
+    return this._http.get<ErrorsResultModel[]>(this._baseUrl + 'api/MetricResults/GetErrorsMetricsResultsRuntime')
+      .toPromise<ErrorsResultModel[]>();
   }
 
   async getTrackableMethods(): Promise<TrackableMethodModel[]> {
     return this._http.get<TrackableMethodModel[]>(this._baseUrl + 'api/MetricResults/GetTrackableMethods')
       .toPromise<TrackableMethodModel[]>();
   }
-  async postSetTrackableMethod(metric: TrackableMethodModel): Promise<any> {
-    return this._http.post<any>(this._baseUrl + 'api/MetricResults/SetTrackableMethod', metric)
-      .toPromise<any>();
+  async postSetTrackableMethod(metric: TrackableMethodModel): Promise<TrackableMethodModel> {
+    return this._http.post<TrackableMethodModel>(this._baseUrl + 'api/MetricResults/SetTrackableMethod', metric)
+      .toPromise<TrackableMethodModel>();
   }
   async postUpdateInterval(intervalData: IntervalSettingsModel): Promise<any> {
     return this._http.post<any>(this._baseUrl + 'api/MetricResults/UpdateInterval', intervalData)

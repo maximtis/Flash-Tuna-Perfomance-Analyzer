@@ -76,6 +76,7 @@ export class RuntimeComponent implements AfterViewChecked, OnDestroy,OnInit {
   public async updateMetricsResultAuto() {
     this.isRunning = true;
     await this.updateMetricsResult();
+    await this.updateErrorsResult();
     console.log("updateExecuted.");
     this.isRunning = false;
   }
@@ -112,6 +113,20 @@ export class RuntimeComponent implements AfterViewChecked, OnDestroy,OnInit {
 
   }
 
+  public async updateErrorsResult() {
+    let errorsResults = await this.metricsService.getErrorsMetricsRuntime();
+    var pieData = [];
+    var pieLabels = [];
+    for (var mi = 0; mi < errorsResults.length; mi++) // for acts as a foreach  
+    {
+      pieData.push(errorsResults[mi].errorsCount);
+      pieLabels.push(errorsResults[mi].methodName);
+
+    }
+    this.pieChartData = pieData;
+    this.pieChartLabels = pieLabels;
+
+  }
   // lineChart
   public lineChartData: Array<any> = [
     { data: [], label: ' ' },
@@ -119,8 +134,19 @@ export class RuntimeComponent implements AfterViewChecked, OnDestroy,OnInit {
     { data: [], label: ' ' },
     { data: [], label: ' ' },
     { data: [], label: ' ' },
-    { data: [], label: ' ' }
   ];
+
+  public pieChartLabels: string[] = [' ', ' ', ' ', ' ', ' '];
+  public pieChartData: number[] = [];
+  public pieChartType: string = 'pie';
+  // events
+
+  public pieChartClicked(e: any): void {
+    console.log(e);
+  }
+  public pieChartHovered(e: any): void {
+    console.log(e);
+  }
 
   public lineChartLabels: Array<any> = [''];
   public lineChartOptions: any = {

@@ -24,7 +24,7 @@ export class PeriodComponent implements OnInit {
   private alive: boolean; // used to unsubscribe from the TimerObservable
   // when OnDestroy is called.
   private interval: number;
-  public selectedMethod: string;
+  public selectedMethod: TrackableMethodModel;
   
 
   constructor(public metricsService: MetricsResultService, private fb: FormBuilder, @Inject('BASE_URL') baseUrl: string) {
@@ -33,8 +33,6 @@ export class PeriodComponent implements OnInit {
     this.metricsList= [];
     this.fromDate = '2017-10-19';
     this.toDate = '2018-12-30';
-    this.alive = true;
-    this.interval = 1000;
   }
 
   ngOnInit(): void {
@@ -61,11 +59,6 @@ export class PeriodComponent implements OnInit {
     try {
       this.metricsList = await this.metricsService.getMetricsByPeriod(this.dataRequestForm.value);
       this.selectedMethod = this.metricsList[2];
-          TimerObservable.create(1000, this.interval)
-          .takeWhile(() => this.alive)
-          .subscribe(async () => {
-            await this.updateMetricsResultAuto();
-          }); 
     }
     catch (e) {
       console.log('there was an error');
@@ -76,9 +69,9 @@ export class PeriodComponent implements OnInit {
     await this.updateMetricsResult(this.selectedMethod);
     console.log("updateExecuted.");
   }
-  public async updateMetricsResult(methodName: string) {
+  public async updateMetricsResult(methodName: TrackableMethodModel) {
     this.selectedMethod = methodName;
-    let metricResults = await this.metricsService.getMetricResultsByPeriod(this.fromDate, this.toDate, methodName);
+    let metricResults = await this.metricsService.getMetricResultsByPeriod(this.fromDate, this.toDate, methodName.methodName);
     console.log(metricResults);
     
     var mapResult = _.map(metricResults, function (metricModel) {

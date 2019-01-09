@@ -24,7 +24,7 @@ namespace DemoApp
                     {
                         Thread.Sleep(100);
                         Console.WriteLine("ShortOperation");
-                        if (throwEx)
+                        if (true)//if (throwEx)
                         {
                             throwEx = !throwEx;
                             throw new ArgumentException("TestArgumentEx");
@@ -52,7 +52,7 @@ namespace DemoApp
                         var sleepTime = new Random(Environment.TickCount).Next(0, 500);
                         Thread.Sleep(sleepTime);
                         Console.WriteLine("LoginOperation");
-                        if (throwEx)
+                        if (true)//if (throwEx)
                         {
                             throwEx = !throwEx;
                             throw new InvalidCastException("TestInvalidCastException");
@@ -78,7 +78,7 @@ namespace DemoApp
                         var sleepTime = new Random(Environment.TickCount).Next(0, 200);
                         Thread.Sleep(sleepTime);
                         Console.WriteLine("TestOperation");
-                        if (throwEx)
+                        if (true)//if (throwEx)
                         {
                             throwEx = !throwEx;
                             throw new OperationCanceledException("TestOperationCanceledException");
@@ -104,7 +104,7 @@ namespace DemoApp
                         var sleepTime = new Random(Environment.TickCount).Next(0, 300);
                         Thread.Sleep(sleepTime);
                         Console.WriteLine("RemoveUser");
-                        if (throwEx)
+                        if (true)//if (throwEx)
                         {
                             throwEx = !throwEx;
                             throw new TimeoutException("TestTimeoutException");
@@ -131,7 +131,7 @@ namespace DemoApp
                         var sleepTime = new Random(Environment.TickCount).Next(0, 700);
                         Thread.Sleep(sleepTime);
                         Console.WriteLine("PingTestMethod");
-                        if (throwEx)
+                        if (true)//if (throwEx)
                         {
                             throwEx = !throwEx;
                             throw new NullReferenceException("TestNullReferenceException");

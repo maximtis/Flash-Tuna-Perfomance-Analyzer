@@ -28,9 +28,11 @@ export class FetchDataComponent {
   }
   public async setTracked(metric) {
     try {
-      await this.metricsService.postSetTrackableMethod(metric);
+      metric.selected = !metric.selected;
+      let updatedMetric = await this.metricsService.postSetTrackableMethod(metric);
+      metric.selected = updatedMetric.selected;
     } catch (error) {
-      alert(error);
+      metric.selected = !metric.selected;
     }
   }
 }
