@@ -9,7 +9,7 @@ namespace FlashTuna.Core.Attributes.Common
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class OperationMetricAttribute : Attribute
     {
-        public OperationMetricAttribute(string className, [CallerMemberName] string methodName = null, string tag = null) : base()
+        public OperationMetricAttribute(string className, string tag = null, [CallerMemberName] string methodName = null) : base()
         {
             MetricsFactory.CreateMetric(className, methodName, tag);
         }

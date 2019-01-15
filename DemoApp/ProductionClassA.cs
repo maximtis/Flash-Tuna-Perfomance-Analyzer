@@ -12,6 +12,7 @@ namespace DemoApp
         {
 
         }
+
         [OperationMetric(nameof(ProductionClassA))]
         public async Task LongOperation()
         {

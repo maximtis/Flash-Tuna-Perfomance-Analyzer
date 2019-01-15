@@ -54,6 +54,11 @@ export class MetricsResultService{
       .toPromise<ErrorsResultModel[]>();
   }
 
+  async getClearDatabase(): Promise<any> {
+    return this._http.get<any>(this._baseUrl + 'api/MetricResults/ClearDatabase')
+      .toPromise<any>();
+  }
+
   async getTrackableMethods(): Promise<TrackableMethodModel[]> {
     return this._http.get<TrackableMethodModel[]>(this._baseUrl + 'api/MetricResults/GetTrackableMethods')
       .toPromise<TrackableMethodModel[]>();

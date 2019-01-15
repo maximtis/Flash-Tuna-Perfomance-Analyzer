@@ -409,6 +409,43 @@ namespace FlashTuna.Core.Storage
             
             return statistiResult;
         }
+        public async Task ClearData()
+        {
+            using (FlashTunaDbContext db = new FlashTunaDbContext())
+            {
+                foreach (var row in db.ErrorResults)
+                {
+                    db.ErrorResults.Remove(row);
+                }
+                await db.SaveChangesAsync();
+
+                foreach (var row in db.OperationMetricResults)
+                {
+                    db.OperationMetricResults.Remove(row);
+                }
+                await db.SaveChangesAsync();
+
+                foreach (var row in db.TrackedMethods)
+                {
+                    db.TrackedMethods.Remove(row);
+                }
+                await db.SaveChangesAsync();
+
+                foreach (var row in db.Settings)
+                {
+                    db.Settings.Remove(row);
+                }
+                await db.SaveChangesAsync();
+
+                Setting setting = new Setting()
+                {
+                    Period = 30,
+                    PeriodType = 3,
+                };
+                db.Settings.Add(setting);
+                await db.SaveChangesAsync();
+            }
+        }
 
         private bool chechMethodProblem(long[] timing)
         {

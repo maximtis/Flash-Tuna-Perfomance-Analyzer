@@ -22,7 +22,9 @@ export class FetchDataComponent {
       this.metricsList = data;
     })
   }
-
+  public async clearDatabase() {
+    await this.metricsService.getClearDatabase();
+  }
   public async updateInterval() {
 
   }

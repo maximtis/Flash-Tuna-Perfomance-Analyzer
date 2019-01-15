@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using FlashTuna.Core.Storage.DataBase;
 using Microsoft.AspNetCore.SignalR;
+using DemoApp.ServerWithLoad;
 
 namespace DemoApp
 {
@@ -23,24 +24,25 @@ namespace DemoApp
                                                 .SetModuleName("Test Module")
                                                 .SetTargetAssembly(typeof(Program).Assembly)
                                                 .Build());
+            ServerWorkingScenario serverWorkingScenario = new ServerWorkingScenario();
+            serverWorkingScenario.InitializeAndRunScenarios();
+            //ProductionClassA classA = new ProductionClassA();
+            //classA.LongOperation().Wait();
 
-            ProductionClassA classA = new ProductionClassA();
-            classA.LongOperation().Wait();
+            //ProductionClassB classB = new ProductionClassB();
+            //List<Task> tasks = new List<Task>();
+            //for (int i = 0;i < 10; i++)
+            //{
+            //    tasks.Add(Task.Run(async () => await classB.ShortOperation()));
+            //    tasks.Add(Task.Run(async () => await classB.LoginOperation()));
+            //    tasks.Add(Task.Run(async () => await classB.PingTestMethod()));
+            //    tasks.Add(Task.Run(async () => await classB.RemoveUser()));
+            //    tasks.Add(Task.Run(async () => await classB.TestOperation()));
+            //}
+            //Task.WaitAll(tasks.ToArray());
+            //classB.ShortOperation().Wait();
 
-            ProductionClassB classB = new ProductionClassB();
-            List<Task> tasks = new List<Task>();
-            for (int i = 0;i < 10; i++)
-            {
-                tasks.Add(Task.Run(async () => await classB.ShortOperation()));
-                tasks.Add(Task.Run(async () => await classB.LoginOperation()));
-                tasks.Add(Task.Run(async () => await classB.PingTestMethod()));
-                tasks.Add(Task.Run(async () => await classB.RemoveUser()));
-                tasks.Add(Task.Run(async () => await classB.TestOperation()));
-            }
-            Task.WaitAll(tasks.ToArray());
-            classB.ShortOperation().Wait();
-
-            print();
+            //print();
 
         }
 

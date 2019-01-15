@@ -115,6 +115,14 @@ namespace FlashTunaPerfomanceAnalyzer.Controllers
             return Ok();
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> ClearDatabase()
+        {
+            await FlashTunaAnalyzer.Results.ClearData();
+            return Ok();
+        }
+
+
 
         [HttpGet("[action]")]
         public async Task<List<TrackableMethodViewModel>> GetMetrics()
