@@ -258,7 +258,7 @@ namespace FlashTuna.Core.Storage
                             StartPoint = start.TimePoint,
                             EndPoint = end.TimePoint,
                             Id = start.CallId,
-                            MethodName = start.MethodName,
+                            MethodName = start.Tag!= "Operation"? start.Tag + start.MethodName: start.MethodName,
                             Milliseconds = (end.TimePoint.TimeOfDay - start.TimePoint.TimeOfDay).Milliseconds,
                             ModuleName = start.ModuleName,
                             Tag = start.Tag

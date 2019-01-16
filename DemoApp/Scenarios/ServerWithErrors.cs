@@ -32,7 +32,7 @@ namespace DemoApp.ServerWithLoad
                 
             }
         }
-
+        #region
         private async Task InvalidateUserData()
         {
             int errorStart = 7;
@@ -43,8 +43,9 @@ namespace DemoApp.ServerWithLoad
             foreach(var user in UsersRequests)
             {
                 user.Data = new Random().Next(1, 999999);
-                Thread.Sleep(100);
+                
             }
+            Thread.Sleep(450);
             await Task.CompletedTask;
         }
 
@@ -54,5 +55,6 @@ namespace DemoApp.ServerWithLoad
         }
 
         public List<User> UsersRequests { get; set; } = new List<User>();
+        #endregion
     }
 }

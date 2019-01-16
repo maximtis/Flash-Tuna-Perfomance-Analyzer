@@ -19,7 +19,7 @@
       </div>    
     </div>
     <div class="list-group">
-      <span href="#" cursor="hand" *ngFor="let metric of metricsList | filter : searchText" (click)="updateMetricsResult(metric)" class="list-group-item list-group-item-action">{{metric}}</span>
+      <span href="#" cursor="hand" *ngFor="let metric of metricsList | filter : searchText" (click)="updateMetricsResult(metric)" class="list-group-item list-group-item-action">{{metric.methodName}}</span>
 
     </div>
   </div>

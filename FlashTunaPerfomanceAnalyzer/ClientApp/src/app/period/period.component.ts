@@ -51,7 +51,7 @@ export class PeriodComponent implements OnInit {
 
   public dataRequestForm = this.fb.group({
     PeriodFrom: ['2017-10-19', [Validators.required]],
-    PeriodTo: ['2018-12-30', [Validators.required]],
+    PeriodTo: ['2019-12-30', [Validators.required]],
     MethodName: ['ShortOperation', [Validators.required]]
   });
 

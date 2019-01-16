@@ -43,7 +43,6 @@ import { MatCheckboxModule, MatProgressSpinnerModule, MatSelectModule, MatProgre
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'runtime', component: RuntimeComponent },
       { path: 'period', component: PeriodComponent },

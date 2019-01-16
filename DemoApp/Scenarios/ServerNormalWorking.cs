@@ -24,9 +24,10 @@ namespace DemoApp.ServerWithLoad
             }
         }
 
+        #region
         private async Task InvalidateUserData()
         {
-            var time = new Random().Next(1, 50);
+            var time = new Random(Environment.TickCount).Next(1, 20);
 
             var user = UsersRequests.Last();
                 user.Data = time;
@@ -41,4 +42,5 @@ namespace DemoApp.ServerWithLoad
 
         public List<User> UsersRequests { get; set; } = new List<User>();
     }
+    #endregion
 }

@@ -22,14 +22,15 @@ namespace DemoApp.ServerWithLoad
                 InvalidateUserData().Wait();
             }
         }
-
+        #region helpers
         private async Task InvalidateUserData()
         {
+            var time = 100;
             foreach(var user in UsersRequests)
             {
-                user.Data = new Random().Next(1, 999999);
-                Thread.Sleep(100);
+                time += 100;
             }
+            Thread.Sleep(time);
             await Task.CompletedTask;
         }
 
@@ -45,4 +46,5 @@ namespace DemoApp.ServerWithLoad
     {
         public int Data { get; set; }
     }
+    #endregion;
 }

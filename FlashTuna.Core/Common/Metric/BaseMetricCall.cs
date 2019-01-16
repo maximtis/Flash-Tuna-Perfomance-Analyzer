@@ -16,10 +16,12 @@ namespace FlashTuna.Core.Common.Metric
                               string tag,
                               ITimeLine timeLine)
         {
+            _moduleName = moduleName;
             _boundedTimeLine = timeLine;
             _className = className;
             _methodName = methodName;
             _timePoint = DateTime.Now;
+            _tag = tag;
             _metricResultStatus = (int)MetricResultStatus.Started;
             _callId = Guid.NewGuid();
             //Collect Start Data

@@ -13,7 +13,7 @@ namespace DemoApp.ServerWithLoad
     {
         public ServerChaoticTime():base(typeof(ServerChaoticTime)) { }
 
-        [OperationMetric(nameof(ServerChaoticTime),"WithLoad")]
+        [OperationMetric(nameof(ServerChaoticTime),"Chaotic")]
         public async Task UserDataProcAsync(User user)
         {
             using (await StartRecording())
@@ -23,9 +23,11 @@ namespace DemoApp.ServerWithLoad
             }
         }
 
+        #region
+
         private async Task InvalidateUserData()
         {
-            var time = new Random(Environment.TickCount).Next(1, 300);
+            var time = new Random(Environment.TickCount).Next(1, 800);
             foreach (var user in UsersRequests)
             {
                 user.Data = new Random().Next(1, 999999);
@@ -41,4 +43,5 @@ namespace DemoApp.ServerWithLoad
 
         public List<User> UsersRequests { get; set; } = new List<User>();
     }
+    #endregion
 }
